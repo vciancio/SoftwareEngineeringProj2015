@@ -8,7 +8,7 @@ function readJSON($path){
   return fread($file, filesize($path));
 }
 
-funciton generateError($reason){
+function generateError($reason){
     return "{\"error\":\"true\", \"message\":\"".$reason."\"}";
 }
 
@@ -22,5 +22,7 @@ if($_GET["name"] && $_GET["userid"] && $_GET["student_email"]){
     echo generateError("Student not Found");
   }
 }
+
+
 echo var_dump($_GET);
 ?>
