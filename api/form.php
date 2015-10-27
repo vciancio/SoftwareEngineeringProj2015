@@ -3,9 +3,8 @@
  * This is the Endpoint allows for saving and loading the form data
  */
 
-function readJSON($path){
-  $file = fopen($path, "r");
-  return fread($file, filesize($path));
+function readRawJSON($path){
+  return file_get_contents($path);
 }
 
 function generateError($reason){
@@ -14,9 +13,9 @@ function generateError($reason){
 
 if($_GET["name"] && $_GET["userid"] && $_GET["student_email"]){
   $userName = str_replace(' ', '_', $_GET["name"]);
-  $filePath = "db/".$_GET["userid"].".".$userName;
+  $filePath = "db/".$_GET["userid"].".".$userName.".json";
   if(file_exists($filePath)){
-    echo "{\"error\":\"false\", \"content\":".readJSON($path)."}";
+    echo "{\"error\":\"false\", \"content\":".readRawJSON($filePath)."}";
   }
   else{
     echo generateError("Student not Found");
@@ -24,5 +23,5 @@ if($_GET["name"] && $_GET["userid"] && $_GET["student_email"]){
 }
 
 
-echo var_dump($_GET);
+//echo var_dump($_GET);
 ?>
