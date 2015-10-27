@@ -58,26 +58,110 @@
             </tr>
         </table>
 
-        <div>
-            <h3>1. Approved Transfer Credit </h3>
-            <h4>(maximu 9 quarter units)</h4>
-            <p>(NOTE: 3 semester units = 4.5 quarer units)</p>
-            <table>
-                <tr>
-                    <th>Course</th>
-                    <th>Institution</th>
-                    <th>Grade</th>
-                    <th>Quarter Units</th>
-                </tr>
-                <tr>
-                    <td><input type="text" name="course1" value="%(course)s"></td>
-                    <td><input type="text" name="instt1" value="%(instt)s"></td>
-                    <td><input type="text" name="grade1" value="%(grade)s"></td>
-                    <td><input type="text" name="qunit1" value="%(qunit)s"></td>
-                </tr>
-                
-            </table>
-            
+        <div class="tier1">
+            <div class="tier2-1">
+                <h3>1. Approved Transfer Credit </h3>
+                <h4>(maximu 9 quarter units)</h4>
+                <p>(NOTE: 3 semester units = 4.5 quarer units)</p>
+            </div>
+            <div class="tier2-2">
+                <table>
+                    <tr>
+                        <th>Course</th>
+                        <th>Institution</th>
+                        <th>Grade</th>
+                        <th>Quarter Units</th>
+                    </tr>
+                    <tr>
+                        <td><input type="text" name="course1" value="%(course)s"></td>
+                        <td><input type="text" name="instt1" value="%(instt)s"></td>
+                        <td><input type="text" name="grade1" value="%(grade)s"></td>
+                        <td><input type="text" name="qunit1" value="%(qunit)s"></td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        
+        <div class="tier1">
+           <div class="tier2-1">
+               <h3>2. Foundational Courses</h3>
+               <p>Mark the courses (or equivalences) the student is required to take. Note: Labs are not required.</p>
+           </div>
+           <div class="tier2-2">
+               <table>
+                    <tr>
+                        <th>Course #</th>
+                        <th>Title</th>
+                        <th>Checkbox</th>
+                    </tr>
+                    <tr>
+                        <td>COEN20</td>
+                        <td>Assembly Language</td>
+                        <td><input type='checkbox' name='coen20' value="coen20"></td>
+                    </tr>
+                    <tr>
+                        <td>COEN21</td>
+                        <td>Logic Design</td>
+                        <td><input type='checkbox' name='coen20' value="coen21"></td>
+                    </tr>
+                    <tr>
+                        <td>COEN12</td>
+                        <td>Data Structures</td>
+                        <td><input type='checkbox' name='coen12' value="coen12"></td>
+                    </tr>
+                    <tr>
+                        <td>COEN19</td>
+                        <td>Discrete Math</td>
+                        <td><input type='checkbox' name='coen19' value="coen19"></td>
+                    </tr>
+                    <tr>
+                        <td>AMTH210</td>
+                        <td>Probability</td>
+                        <td><input type='checkbox' name='amth210' value="amth210"></td>
+                        <!--add the option to choose one of the followings-->
+                    </tr> 
+                </table>
+           </div>
+        </div>
+         <div class="tier1">
+           <div class="tier2-1">
+               <h3>3. Computer Science and Engineering Core Courses:</h3>
+               <p>Mark the courses the student is required to take.</p>
+           </div>
+           <div class="tier2-2">
+               <table>
+                    <tr>
+                        <th>Course #</th>
+                        <th>Title</th>
+                        <th>Checkbox</th>
+                    </tr>
+                    <tr>
+                        <td>COEN210</td>
+                        <td>Computer Architecture</td>
+                        <td><input type='checkbox' name='coen20' value="coen20"></td>
+                    </tr>
+                    <tr>
+                        <td>COEN279</td>
+                        <td>Design &amp Analysis: Algorithms </td>
+                        <td><input type='checkbox' name='coen20' value="coen21"></td>
+                    </tr>
+                    <tr>
+                        <td>COEN283</td>
+                        <td>Data Structures</td>
+                        <td><input type='checkbox' name='coen12' value="coen12"></td>
+                    </tr>
+                    <tr>
+                        <td>COEN19</td>
+                        <td>Discrete Math</td>
+                        <td><input type='checkbox' name='coen19' value="coen20"></td>
+                    </tr>
+                    <tr>
+                        <td>AMTH210</td>
+                        <td>Probability</td>
+                        <td><input type='checkbox' name='amth210' value="coen20"></td>
+                    </tr> 
+                </table>
+           </div>
         </div>
     <input type="submit">
     </form>
