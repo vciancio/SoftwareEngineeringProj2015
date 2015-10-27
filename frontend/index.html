@@ -38,17 +38,12 @@
         <table>
             <tr>
                 <td class="label">name</td>
-                <td><input type="text" name="username" value="%(username)s"></td>
+                <td><input type="text" name="name" value="%(name)s"></td>
                 <td class="error"></td>
             </tr>
             <tr>
-                <td class="label">date</td>
-                <td><input type="password" name="password" value="%(password)s"></td>
-                <td class="error"></td>
-            </tr>
-            <tr>
-                <td class="label">Student ID</td>
-                <td><input type="password" name="verify" value="%(verify)s"></td>
+                <td class="label">student id</td>
+                <td><input type="text" name="stdid" value="%(stdid)s"></td>
                 <td class="error"></td>
             </tr>
             <tr>
@@ -154,6 +149,7 @@
                         <td><input type='checkbox' name='coen238' value="coen12"></td>
                         <td>(4 units)</td>
                     </tr>
+                    <!--SUGGESTION make input type option to pick one of them-->
                 </table>
            </div>
         </div>
@@ -164,37 +160,63 @@
            </div>
            <div class="tier2-2">
               <div class="tier3">
-                  <ul>
-                      <h3>Emerging Topics in Engineering</h3>
+                  <ul id="emgtop">
+                      <li>
+                          <h4>Emerging Topics in Engineering</h4>
+                          <div class="tier4">
+                              <label><select>
+                                  <option name="a" value="a">a</option>
+                                  <option name="b" value="b">b</option>
+                                  <option name="c" value="c">c</option>
+                                  <option name="d" value="d">d</option>
+                              </select> 4 units</label>
+                          </div>
+                      </li>
+                      <li>
+                          <h4>Engineering and Business/Entrepreneurship</h4>
+                          <div class="tier4">
+                              <label><select>
+                                  <option name="a" value="a">a</option>
+                                  <option name="b" value="b">b</option>
+                                  <option name="c" value="c">c</option>
+                                  <option name="d" value="d">d</option>
+                              </select>4 units</label>
+                          </div>
+                      </li>
+                      <li>
+                          <h4>Engineering and Society</h4>
+                          <div class="tier4">
+                              <label><select>
+                                  <option name="a" value="a">a</option>
+                                  <option name="b" value="b">b</option>
+                                  <option name="c" value="c">c</option>
+                                  <option name="d" value="d">d</option>
+                              </select>4 units</label>
+                          </div>
+                      </li>
                   </ul>
               </div>
-               <table>
-                    <tr>
-                        <th>Course #</th>
-                        <th>Title</th>
-                        <th>Checkbox</th>
-                        <th>Unit</th>
-                    </tr>
-                    <tr>
-                        <td>COEN210</td>
-                        <td>Computer Architecture</td>
-                        <td><input type='checkbox' name='coen20' value="coen20"></td>
-                        <td>(4 units)</td>
-                    </tr>
-                    <tr>
-                        <td>COEN279</td>
-                        <td>Design &amp Analysis: Algorithms </td>
-                        <td><input type='checkbox' name='coen20' value="coen21"></td>
-                        <td>(4 units)</td>
-                    </tr>
-                    <tr>
-                        <td>COEN283</td>
-                        <td>Data Structures</td>
-                        <td><input type='checkbox' name='coen12' value="coen12"></td>
-                        <td>(4 units)</td>
-                    </tr>
-                </table>
            </div>
+        </div>
+        <div class="tier1">
+            <div class="tier2">
+                <h3>Track</h3>
+                <p>List track courses and additional courses totaling to 45 grduate units  (MUST INCLUDE A MINIMUM OF 8 UNITS OF COEN COURSES WITH COURSE NUMBERS GREATER THAN 300. NO EXCEPTIONS.)</p>
+            </div>
+            <table>
+                <tr>
+                    <th>Course #</th>
+                    <th>Unit</th>
+                </tr>
+                <tr>
+                    <td><input type='text' name='track1' value="track1"></td>
+                    <td><input type='text' name='unit1' value="unit1"></td>
+                </tr>
+                <tr>
+                    <td><input type='text' name='track2' value="track2"></td>
+                    <td><input type='text' name='unit2' value="unit2"></td>
+                </tr>
+            </table>
         </div>
     <input type="submit">
     </form>
