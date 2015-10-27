@@ -8,7 +8,7 @@ Program of Studies Web Form.
 1. User can save/edit form 
 2. User can print form nicely
 3. Intelligence/error checking on form:
-..*Proper unit totals 
-..*210/279/283 courses handled properly 
-..*Check double listing 
-..*Transfer totals 
+...-Proper unit totals 
+...-210/279/283 courses handled properly 
+...-Check double listing 
+...-Transfer totals 
