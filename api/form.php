@@ -8,6 +8,10 @@ function readJSON($path){
   return fread($file, filesize($path));
 }
 
+funciton generateError($reason){
+    return "{\"error\":\"true\", \"message\":\"".$reason."\"}";
+}
+
 if($_GET["name"] && $_GET["userid"] && $_GET["student_email"]){
   $userName = str_replace(' ', '_', $_GET["name"]);
   $filePath = "db/".$_GET["userid"].".".$userName;
@@ -15,7 +19,8 @@ if($_GET["name"] && $_GET["userid"] && $_GET["student_email"]){
     echo "{\"error\":\"false\", \"content\":".readJSON($path)."}";
   }
   else{
-    echo "{\"error\":\"true\"}";
+    echo generateError("Student not Found");
   }
 }
+echo var_dump($_GET);
 ?>
