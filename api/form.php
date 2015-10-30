@@ -21,23 +21,41 @@ function generateError($reason){
     return "{\"error\":\"true\", \"message\":\"".$reason."\"}";
 }
 
-if($_GET["name"] && $_GET["userid"] && $_GET["student_email"]){
-  $userName = strtolower(str_replace(' ', '_', $_GET["name"]));
-  $filePath = generatePath(strtolower($_GET["userid"]), $userName);
-  if(file_exists($filePath)){
-    echo "{\"error\":\"false\", \"content\":".readRawJSON($filePath)."}";
+function handle_get(){
+  if($_GET["name"] && $_GET["userid"] && $_GET["student_email"]){
+    $userName = strtolower(str_replace(' ', '_', $_GET["name"]));
+    $filePath = generatePath(strtolower($_GET["userid"]), $userName);
+    if(file_exists($filePath)){
+      echo "{\"error\":\"false\", \"content\":".readRawJSON($filePath)."}";
+    }
+    else{
+      echo generateError("Student not Found");
+    }
   }
-  else{
-    echo generateError("Student not Found");
-  }
-}
-else if($_POST["name"] && $_POST["userid"]){
-  $username = strtolower(str_replace(' ', '_', $_POST["name"]));
-  $filePath = generatePath(strtolower($_POST["userid"]), $userName);
-  $json = file_get_contents('php://input'); 
-  writeJson($filePath, $json); 
 }
 
+function handle_post(){
+  if($_POST["name"] && $_POST["userid"]){
+    $username = strtolower(str_replace(' ', '_', $_POST["name"]));
+    $filePath = generatePath(strtolower($_POST["userid"]), $userName);
+    $json = file_get_contents('php://input'); 
+    writeJson($filePath, $json); 
+  }
+  else{
+    echo generateError("Error while generating / saving");
+}
+
+$method = $_SERVER['REQUEST_METHOD'];
+$request = explode("/", substr(@$_SERVER['PATH_INFO'], 1));
+
+switch ($method) {
+    case 'POST':
+      handle_post();
+      break;
+    case 'GET':
+      handle_get(); 
+      break;
+}
 
 //echo var_dump($_GET);
 ?>
