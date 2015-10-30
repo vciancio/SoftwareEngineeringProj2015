@@ -43,6 +43,7 @@ function handle_post(){
   }
   else{
     echo generateError("Error while generating / saving");
+  }
 }
 
 $method = $_SERVER['REQUEST_METHOD'];
