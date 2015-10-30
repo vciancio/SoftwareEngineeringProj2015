@@ -35,9 +35,9 @@ function handle_get(){
 }
 
 function handle_post(){
-  if($_POST["name"] && $_POST["userid"]){
-    $username = strtolower(str_replace(' ', '_', $_POST["name"]));
-    $filePath = generatePath(strtolower($_POST["userid"]), $userName);
+  if($_GET["name"] && $_GET["userid"]){
+    $userName = strtolower(str_replace(' ', '_', $_GET["name"]));
+    $filePath = generatePath(strtolower($_GET["userid"]), $userName);
     $json = file_get_contents('php://input'); 
     writeJson($filePath, $json); 
   }
@@ -58,5 +58,6 @@ switch ($method) {
       break;
 }
 
-//echo var_dump($_GET);
+echo var_dump($_GET)."/n";
+echo var_dump($_POST);
 ?>
