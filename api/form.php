@@ -2,9 +2,12 @@
 /**
  * This is the Endpoint allows for saving and loading the form data
  */
+function generateError($reason){
+    return "{\"error\":\"true\", \"message\":\"".$reason."\"}";
+}
 
 function generatePath($userid, $name){
-  return "db/".$userid.".".$name.".json";
+  return getcwd()."/db/".$userid.".".$name.".json";
 }
 
 function readRawJSON($path){
@@ -12,13 +15,27 @@ function readRawJSON($path){
 }
 
 function writeJson($path, $json){
-  $file = fopen($path, "w");
-  fwrite($file,$json);
-  fclose($file); 
-}
+  if(is_writable(getcwd()."/db/")){
+    echo (getcwd()."/db/")." is Writable!\n";
+  }
+  else{
+    echo (getcwd()."/db/")." is not writable. gg rip\n";
+  }
 
-function generateError($reason){
-    return "{\"error\":\"true\", \"message\":\"".$reason."\"}";
+  if(file_exists($path)){
+    echo $path." exists!\n";
+  }
+  else{
+    echo $path." doesn't exist. Creating File.\n";
+  }
+  $file = null;
+  if(!$file = fopen($path, 'w')){
+    echo generateError("Cannot open file");
+  }
+  else{
+    fwrite($file,$json);
+    fclose($file); 
+  }
 }
 
 function handle_get(){
@@ -58,6 +75,6 @@ switch ($method) {
       break;
 }
 
-echo var_dump($_GET)."/n";
-echo var_dump($_POST);
+//echo var_dump($_GET)."/n";
+//echo var_dump($_POST);
 ?>
