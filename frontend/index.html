@@ -1,44 +1,16 @@
-<!--<form action="http://google.com/search">-->
-
-<!--use label element & attributes for input element
-<form>
-	<label>
-		One
-		<input type='radio' name='q' value="one">
-	</label>
-
-	<label>
-		Two
-		<input type='radio' name='q' value="two">
-	</label>
-
-	<label>
-		Three
-		<input type='radio' name='q' value="three">
-	</label>
-
-	<br>
-	<input type='submit'>
-</form>-->
-
-
-<!-- PROBLEM2 HW1
-<h2>Enter some text to ROT13</h2>
-<form method='post'>
-	<textarea name='text' style="height: 100px; width: 400px;"></textarea>
-	<br>
-	<input type="submit">
-</form>
--->
-
 <!DOCTYPE html>
 <html>
 
 <head>
     <script>
-        var counter = 0;
-        function add() {
-            counter += 1;
+        function addTransferRow() {
+            var table = document.getElementById("transferTable");
+            var tableRow = $("<tr>");
+            for (var c = 1; c <= 4; c++) {
+                var input = $("<input />");
+                $("<td>").append(input).appendTo(tableRow);
+            }
+            tableRow.appendTo(table);
         }
     </script>
 </head>
@@ -299,9 +271,9 @@
                 <p>List track courses and additional courses totaling to 45 grduate units (MUST INCLUDE A MINIMUM OF 8 UNITS OF COEN COURSES WITH COURSE NUMBERS GREATER THAN 300. NO EXCEPTIONS.)</p>
                 <!--if you list a course that falls under #3, it needs to exclude-->
                 <!--regular expression might be needed to uiformly accept the input
-                    i.e. "coen", "COEN", "coEn", "COen" should give you the same input
-                    
-                    -->
+                        i.e. "coen", "COEN", "coEn", "COen" should give you the same input
+
+                        -->
             </div>
             <table>
                 <tr>

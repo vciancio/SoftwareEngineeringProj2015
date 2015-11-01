@@ -1,42 +1,25 @@
 <!DOCTYPE html>
+<!-- capitalize any words -->
+
 <html>
 
 <head>
     <title>student identification test</title>
-    <script language="JavaScript" src="frontend/js/temp.js"></script>
+    <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+
 </head>
 
 <body>
+    <p>Type something and then click or tab out of the input.</p>
+    <input type="text" value="type something">
 
-    <h2>Program of Studies - Computer Science and Engineering MS</h2>
-    <h3>(for students admitted beginning in fall 2008 and after)</h3>
-    <form name="myform" method="post">
-        <table>
-            <tr>
-                <td class="label">name</td>
-                <td>
-                    <input type="text" id="name" value="">
-                </td>
-                <td class="error"></td>
-            </tr>
-            <tr>
-                <td class="label">student id</td>
-                <td>
-                    <input type="text" id="stdid" value="">
-                </td>
-                <td class="error"></td>
-            </tr>
-            <tr>
-                <td class="label">email (school)</td>
-                <td>
-                    <input type="text" id="email" value="">
-                </td>
-                <td class="error"></td>
-            </tr>
-        </table>
-        <input type="submit"></input>
-        <input type="submit" name="save" value="Save"></input>
-    </form>
+    <script>
+        $("input").on("blur", function () {
+            $(this).val(function (i, val) {
+                return val.toUpperCase();
+            });
+        });
+    </script>
 </body>
 
 </html>
