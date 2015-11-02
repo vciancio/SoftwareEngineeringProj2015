@@ -4,6 +4,8 @@
 <head>
     <link rel="stylesheet" type="text/css" href="css/form.css">
     <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script type="text/javascript" src="js/utils.js"></script>
+
     <script type="text/javascript">
         /* JQUERY FUNCTIONS */
         $(document).ready(function () {
@@ -276,42 +278,6 @@
 
         }); /* END OF JQUERY FUNCTION */
 
-
-
-
-        /* JSON REQUEST / SERVER HANDLING */
-        function getSelectionValue(name) {
-            return $('select[name="' + name + '"]').val();
-        }
-
-        function buildJSON_reqs() {
-            var json = ', "reqs":"{'
-            var req_emerg = getSelectionValue("req_emerg");
-            var req_business = getSelectionValue("req_business");
-            var req_society = getSelectionValue("req_business");
-
-
-            json = json + "\"req_emerg\":\"" + req_emerg + "\"";
-            json = json + ", \"req_business\":\"" + req_business + "\"";
-            json = json + ", \"req_business\":\"" + req_society + "\"";
-            return json;
-        }
-
-        function buildJSON() {
-            var name = $('input[name="name"]').val();
-            var stdid = $('input[name="stdid"]').val();
-            var email = $('input[name="email"]').val();
-
-            var json = "{";
-
-            json = json + '"name":"' + name + '", "stdid":"' + stdid +
-                '", "email":"' + email + '"';
-
-            json = json + buildJSON_reqs();
-
-            json = json + "}";
-            alert(json);
-        }
     </script>
 </head>
 
@@ -507,9 +473,9 @@
                 <input type=button id="tally3" value="tally" />
                 <input type=button id="select_all3" value="select all" />
                 <input type=button id="deselect_all3" value="deselect all" />
-                <div id=messageBox3-1></div>
-                <div id=messageBox3-2></div>
-                <div id=messageBox3-3></div>
+                <div id="messageBox3-1"></div>
+                <div id="messageBox3-2"></div>
+                <div id="messageBox3-3"></div>
             </div>
             <br>
             <br>
@@ -527,8 +493,8 @@
                             </div>
                             <div class="table-cell">
                                 <label>
-                                    <select id="req_emrg">
-                                        <option value="" selected>------------------ Emerging Topics in Engineering ------------------</option>
+                                    <select id="req_emrg" name="req_emerg">
+                                        <option value="none" selected>------------------ Emerging Topics in Engineering ------------------</option>
                                         <option value="amth308">AMTH 308 Theory of Wavelets</option>
                                         <option value="amth351">AMTH 351 Quantum Computing</option>
                                         <option value="amth367">AMTH 367 Mathematical Finance</option>
@@ -556,8 +522,8 @@
                                 <h4>Engineering and Business/Entrepreneurship</h4></div>
                             <div class="table-cell">
                                 <label>
-                                    <select id="req_bsns">
-                                        <option value="" selected>------------ Engineering and Business/Entrepreneurship ------------</option>
+                                    <select id="req_bsns" name="req_business">
+                                        <option value="none" selected>------------ Engineering and Business/Entrepreneurship ------------</option>
                                         <option value="amth367">AMTH 367 Mathematical Finance</option>
                                         <option value="amth351">CENG 208 Engineering Economics and Project Finance</option>
                                         <option value="coen287">COEN 287 Software Development Process Management</option>
@@ -574,8 +540,8 @@
                             </div>
                             <div class="table-cell">
                                 <label>
-                                    <select id="req_soc">
-                                        <option value="" selected>------------------ Emerging Topics in Engineering ------------------</option>
+                                    <select id="req_soc" name="req_society">
+                                        <option value="none" selected>------------------ Emerging Topics in Engineering ------------------</option>
                                         <option value="amth308">AMTH 308 Theory of Wavelets</option>
                                         <option value="amth351">AMTH 351 Quantum Computing</option>
                                         <option value="amth367">AMTH 367 Mathematical Finance</option>
@@ -604,9 +570,9 @@
                 <input type=button id="check_valid4" value="check valid" />
                 <input type=button id="tally4" value="tally" />
                 <input type=button id="reset" value="reset" />
-                <div id=messageBox4-1></div>
-                <div id=messageBox4-2></div>
-                <div id=messageBox4-3 class="warning"></div>
+                <div id="messageBox4-1"></div>
+                <div id="messageBox4-2"></div>
+                <div id="messageBox4-3" class="warning"></div>
             </div>
             <br>
             <br>
@@ -639,11 +605,10 @@
                 </div>
                 <p class=note>NOTE: must include a minimum of 8 units of COEN courses with course numbers greater than 300. No exception.</p>
                 <input type="button" id="analysis5" value="analysis"></input>
-                <div id=messageBox5></div>
+                <div id="messageBox5"></div>
             </div>
             <br>
             <br>
             <input type="submit">
 </body>
-
 </html>
