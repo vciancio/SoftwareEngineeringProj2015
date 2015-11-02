@@ -27,24 +27,51 @@
     <script type="text/javascript">
         /* JQUERY FUNCTIONS */
         $(document).ready(function () {
-            $('#check_valid').click(function () { // on click check valid button
+                
+            /* ##2. FOUNDATIONAL COURSES */
+            $('#check_valid1').click(function () { // on click check valid button
                 var val = [];
-                $('.classlist:checked').each(function (i) { // loop through classlist 
+                $('.classlist1:checked').each(function (i) { // loop through classlist 
                     val[i] = $(this).val();
                 });
                 //console.log(val);
 
                 if (jQuery.inArray("coen20", val) == -1 || jQuery.inArray("coen21", val) == -1 || jQuery.inArray("coen12", val) == -1 || jQuery.inArray("coen19", val) == -1 || jQuery.inArray("amth210", val) == -1) { //check if all the courses are selected
-                    document.getElementById("messageBox").innerHTML = false;
+                    document.getElementById("messageBox1").innerHTML = false;
                 } else {
-                    document.getElementById("messageBox").innerHTML = true;
+                    document.getElementById("messageBox1").innerHTML = true;
                 }
             });
 
-            $('#select_all').click(function () { // on click select all button
-                $(".classlist").prop('checked', true);
+            $('#select_all1').click(function () { // on click select all button
+                $(".classlist1").prop('checked', true);
+            });
+            $('#deselect_all1').click(function () { // on click select all button
+                $(".classlist1").prop('checked', false);
             });
 
+
+            /* ##3. CS AND ENGR CORE COURSES## */
+            $('#check_valid2').click(function () { // on click check valid button
+                var val = [];
+                $('.classlist2:checked').each(function (i) { // loop through classlist 
+                    val[i] = $(this).val();
+                });
+                //console.log(val);
+
+                if (val.length == 0) {
+                    document.getElementById("messageBox2").innerHTML = "none";
+                } else {
+                    document.getElementById("messageBox2").innerHTML = val.join(", ");
+                }
+            });
+
+            $('#select_all2').click(function () { // on click select all button
+                $(".classlist2").prop('checked', true);
+            });
+            $('#deselect_all2').click(function () { // on click select all button
+                $(".classlist2").prop('checked', false);
+            });
         });
 
 
@@ -172,7 +199,6 @@
         <div class="tier2-1">
             <h3>2. Foundational Courses</h3>
             <p>Mark the courses (or equivalences) the student is required to take. Note: Labs are not required.</p>
-            <br>
         </div>
         <div class="table">
             <div class="table-heading">
@@ -190,7 +216,7 @@
                 <div class="table-cell">Assembly Language</div>
                 <div class="table-cell">4</div>
                 <div class="table-cell">
-                    <input type='checkbox' class='classlist' value="coen20" />
+                    <input type='checkbox' class='classlist1' value="coen20" />
                 </div>
 
             </div>
@@ -199,7 +225,7 @@
                 <div class="table-cell">Logic Design</div>
                 <div class="table-cell">4</div>
                 <div class="table-cell">
-                    <input type='checkbox' class='classlist' value="coen21" />
+                    <input type='checkbox' class='classlist1' value="coen21" />
                 </div>
             </div>
             <div class="table-row">
@@ -207,7 +233,7 @@
                 <div class="table-cell">Data Structure</div>
                 <div class="table-cell">4</div>
                 <div class="table-cell">
-                    <input type='checkbox' class='classlist' value="coen12" />
+                    <input type='checkbox' class='classlist1' value="coen12" />
                 </div>
             </div>
             <div class="table-row">
@@ -215,7 +241,7 @@
                 <div class="table-cell">Discrete Math</div>
                 <div class="table-cell">4</div>
                 <div class="table-cell">
-                    <input type='checkbox' class='classlist' value="coen19" />
+                    <input type='checkbox' class='classlist1' value="coen19" />
                 </div>
             </div>
             <div class="table-row">
@@ -223,111 +249,63 @@
                 <div class="table-cell">Probability</div>
                 <div class="table-cell">4</div>
                 <div class="table-cell">
-                    <input type='checkbox' class='classlist' value="amth210" />
+                    <input type='checkbox' class='classlist1' value="amth210" />
                 </div>
             </div>
-
-
-
         </div>
-        <input type=button id="check_valid" value="check valid" />
-        <input type=button id="select_all" value="select all" />
-        <div id=messageBox></div>
+        <input type=button id="check_valid1" value="check valid" />
+        <input type=button id="select_all1" value="select all" />
+        <input type=button id="deselect_all1" value="deselect all" />
+        <div id=messageBox1></div>
     </div>
+    <br>
+    <br>
 
-    <div class="tier1">
-        <div class="tier2-1">
-            <h3>2. Foundational Courses</h3>
-
-            <p>Mark the courses (or equivalences) the student is required to take. Note: Labs are not required.</p>
-        </div>
-        <div class="tier2-2">
-            <table>
-                <tr>
-                    <th>Course #</th>
-                    <th>Title</th>
-                    <th>Checkbox</th>
-                </tr>
-                <tr>
-                    <td>COEN20</td>
-                    <td>Assembly Language</td>
-                    <td>
-                        <input type='checkbox' name='coen20' value="coen20">
-                    </td>
-                </tr>
-                <tr>
-                    <td>COEN21</td>
-                    <td>Logic Design</td>
-                    <td>
-                        <input type='checkbox' name='coen20' value="coen21">
-                    </td>
-                </tr>
-                <tr>
-                    <td>COEN12</td>
-                    <td>Data Structures</td>
-                    <td>
-                        <input type='checkbox' name='coen12' value="coen12">
-                    </td>
-                </tr>
-                <tr>
-                    <td>COEN19</td>
-                    <td>Discrete Math</td>
-                    <td>
-                        <input type='checkbox' name='coen19' value="coen19">
-                    </td>
-                </tr>
-                <tr>
-                    <td>AMTH210</td>
-                    <td>Probability</td>
-                    <td>
-                        <input type='checkbox' name='amth210' value="amth210">
-                    </td>
-                    <!--add the option to choose one of the followings-->
-                </tr>
-            </table>
-        </div>
-    </div>
     <div class="tier1">
         <div class="tier2-1">
             <h3>3. Computer Science and Engineering Core Courses:</h3>
             <p>Mark the courses the student is required to take.</p>
         </div>
-        <div class="tier2-2">
-            <table>
-                <tr>
-                    <th>Course #</th>
-                    <th>Title</th>
-                    <th>Checkbox</th>
-                    <th>Unit</th>
-                </tr>
-                <tr>
-                    <td>COEN210</td>
-                    <td>Computer Architecture</td>
-                    <td>
-                        <input type='checkbox' name='coen210' value="coen20">
-                    </td>
-                    <td>(4 units)</td>
-                </tr>
-                <tr>
-                    <td>COEN279</td>
-                    <td>Design &amp Analysis: Algorithms </td>
-                    <td>
-                        <input type='checkbox' name='coen279' value="coen21">
-                    </td>
-                    <td>(4 units)</td>
-                </tr>
-                <tr>
-                    <td>COEN283</td>
-                    <td>Data Structures</td>
-                    <td>
-                        <input type='checkbox' name='coen238' value="coen12">
-                    </td>
-                    <td>(4 units)</td>
-                </tr>
-                <!--SUGGESTION make input type option to pick one of them-->
-            </table>
+        <div class="table">
+            <div class="table-heading">
+                <div class="table-cell">Course #</div>
+                <div class="table-cell">Title</div>
+                <div class="table-cell">Units</div>
+                <div class="table-cell">Checkbox</div>
+            </div>
+            <div class="table-row">
+                <div class="table-cell">COEN210</div>
+                <div class="table-cell">Computer Architecture</div>
+                <div class="table-cell">4</div>
+                <div class="table-cell">
+                    <input type='checkbox' class='classlist2' value="coen210">
+                </div>
+            </div>
+            <div class="table-row">
+                <div class="table-cell">COEN279</div>
+                <div class="table-cell">Design &amp Analysis: Algorithms </div>
+                <div class="table-cell">4</div>
+                <div class="table-cell">
+                    <input type='checkbox' class='classlist2' value="coen279">
+                </div>
+            </div>
+            <div class="table-row">
+                <div class="table-cell">COEN283</div>
+                <div class="table-cell">Data Structures </div>
+                <div class="table-cell">4</div>
+                <div class="table-cell">
+                    <input type='checkbox' class='classlist2' value="coen283">
+                </div>
+            </div>
         </div>
+        <input type=button id="check_valid2" value="check valid" />
+        <input type=button id="select_all2" value="select all" />
+        <input type=button id="deselect_all2" value="deselect all" />
+        <div id=messageBox2></div>
     </div>
+    <br>
+    <br>
+
     <div class="tier1">
         <div class="tier2-1">
             <h3>4. **SCU Graduate Core Requirements </h3>
