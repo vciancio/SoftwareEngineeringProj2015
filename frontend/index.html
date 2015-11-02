@@ -2,6 +2,63 @@
 <html>
 
 <head>
+    <style type="text/css">
+        .table {
+            display: table;
+        }
+        
+        .table-heading {
+            display: table-row;
+            font-weight: bold;
+        }
+        
+        .table-row {
+            display: table-row;
+        }
+        
+        .table-cell {
+            display: table-cell;
+            padding-left: 5px;
+            padding-right: 5px;
+        }
+    </style>
+
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script type="text/javascript">
+        /* JQUERY FUNCTIONS */
+        $(document).ready(function () {
+            $('#check_valid').click(function () { // on click check valid button
+                var val = [];
+                $('.classlist:checked').each(function (i) { // loop through classlist 
+                    val[i] = $(this).val();
+                });
+                //console.log(val);
+
+                if (jQuery.inArray("coen20", val) == -1 || jQuery.inArray("coen21", val) == -1 || jQuery.inArray("coen12", val) == -1 || jQuery.inArray("coen19", val) == -1 || jQuery.inArray("amth210", val) == -1) { //check if all the courses are selected
+                    document.getElementById("messageBox").innerHTML = false;
+                } else {
+                    document.getElementById("messageBox").innerHTML = true;
+                }
+            });
+
+            $('#select_all').click(function () { // on click select all button
+                $(".classlist").prop('checked', true);
+            });
+
+        });
+
+
+        function addTransferRow() {
+            var table = document.getElementById("transferTable");
+            var tableRow = $("<tr>");
+            for (var c = 1; c <= 4; c++) {
+                var input = $("<input />");
+                $("<td>").append(input).appendTo(tableRow);
+            }
+            tableRow.appendTo(table);
+        }
+    </script>
+
     <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
     <script type="text/javascript">
         function addTransferRow() {
@@ -13,7 +70,41 @@
             }
             tableRow.appendTo(table);
         }
+
+        function getSelectionValue(name) {
+            return $('select[name="' + name + '"]').val();
+        }
+
+        function buildJSON_reqs() {
+            var json = ', "reqs":"{'
+            var req_emerg = getSelectionValue("req_emerg");
+            var req_business = getSelectionValue("req_business");
+            var req_society = getSelectionValue("req_business");
+
+
+            json = json + "\"req_emerg\":\"" + req_emerg + "\"";
+            json = json + ", \"req_business\":\"" + req_business + "\"";
+            json = json + ", \"req_business\":\"" + req_society + "\"";
+            return json;
+        }
+
+        function buildJSON() {
+            var name = $('input[name="name"]').val();
+            var stdid = $('input[name="stdid"]').val();
+            var email = $('input[name="email"]').val();
+
+            var json = "{";
+
+            json = json + '"name":"' + name + '", "stdid":"' + stdid +
+                '", "email":"' + email + '"';
+
+            json = json + buildJSON_reqs();
+
+            json = json + "}";
+            alert(json);
+        }
     </script>
+    >>>>>>> 010bd91e7ac1a3efbb8f67b78702dd7e48f3188e
 </head>
 
 <body>
@@ -75,6 +166,73 @@
             <br>
             <button onclick="addTransferRow()">Add row</button>
         </div>
+    </div>
+
+    <div class="tier1">
+        <div class="tier2-1">
+            <h3>2. Foundational Courses</h3>
+            <p>Mark the courses (or equivalences) the student is required to take. Note: Labs are not required.</p>
+            <br>
+        </div>
+        <div class="table">
+            <div class="table-heading">
+                <div class="table-cell">
+                    <h4>Course #</h4></div>
+                <div class="table-cell">
+                    <h4>Title</h4></div>
+                <div class="table-cell">
+                    <h4>Units</h4></div>
+                <div class="table-cell">
+                    <h4>Checkbox</h4></div>
+            </div>
+            <div class="table-row">
+                <div class="table-cell">COEN20</div>
+                <div class="table-cell">Assembly Language</div>
+                <div class="table-cell">4</div>
+                <div class="table-cell">
+                    <input type='checkbox' class='classlist' value="coen20" />
+                </div>
+
+            </div>
+            <div class="table-row">
+                <div class="table-cell">COEN21</div>
+                <div class="table-cell">Logic Design</div>
+                <div class="table-cell">4</div>
+                <div class="table-cell">
+                    <input type='checkbox' class='classlist' value="coen21" />
+                </div>
+            </div>
+            <div class="table-row">
+                <div class="table-cell">COEN12</div>
+                <div class="table-cell">Data Structure</div>
+                <div class="table-cell">4</div>
+                <div class="table-cell">
+                    <input type='checkbox' class='classlist' value="coen12" />
+                </div>
+            </div>
+            <div class="table-row">
+                <div class="table-cell">COEN19</div>
+                <div class="table-cell">Discrete Math</div>
+                <div class="table-cell">4</div>
+                <div class="table-cell">
+                    <input type='checkbox' class='classlist' value="coen19" />
+                </div>
+            </div>
+            <div class="table-row">
+                <div class="table-cell">AMTH210</div>
+                <div class="table-cell">Probability</div>
+                <div class="table-cell">4</div>
+                <div class="table-cell">
+                    <input type='checkbox' class='classlist' value="amth210" />
+                </div>
+            </div>
+
+
+
+        </div>
+        <input type=button id="check_valid" value="check valid" />
+        <input type=button id="select_all" value="select all" />
+        <div id=messageBox></div>
     </div>
 
     <div class="tier1">
@@ -182,27 +340,26 @@
                         <h4>Emerging Topics in Engineering</h4>
                         <div class="tier4">
                             <label>
-                                <select>
-                                    <option name="none" value="">------------------ Emerging Topics in Engineering ------------------</option>
-                                    <option name="amth308" value="amth308">AMTH 308 Theory of Wavelets</option>
-                                    <option name="amth351" value="amth351">AMTH 351 Quantum Computing
-                                    </option>
-                                    <option name="amth367" value="amth367">AMTH 367 Mathematical Finance</option>
-                                    <option name="amth387" value="amth387">AMTH 387 Cryptology</option>
-                                    <option name="bioe256" value="bioe256">BIOE 256/ENGR 256 Introduction to Nanobioengineering</option>
-                                    <option name="ceng219" value="ceng219">CENG 219 Designing for Sustainable Construction</option>
-                                    <option name="coen331" value="coen331">COEN 331 Wireless and Mobile Networks</option>
-                                    <option name="coen389" value="coen389">COEN 389 Energy Efficient Computing</option>
-                                    <option name="elen280" value="elen280">ELEN 280/MECH 287 Introduction to Alternative Energy Systems</option>
-                                    <option name="engr260" value="engr260">ENGR 260 Nanoscale Science and Technology</option>
-                                    <option name="engr262" value="engr262">ENGR 262 Nanomaterials</option>
-                                    <option name="engr273" value="engr273">ENGR 273 Sustainable Energy and Ethics</option>
-                                    <option name="engr337" value="engr337">ENGR 337 Sustainability and Green Information Technology</option>
-                                    <option name="engr371" value="engr371">ENGR 371 Space Systems Design and Engineering I Technology</option>
-                                    <option name="engr372" value="engr372">ENGR 372 Space Systems Design and Engineering II Technology</option>
-                                    <option name="mech234" value="mech234">MECH 234 Combustion Technology</option>
-                                    <option name="mech268" value="mech268">MECH 268 Computational Fluid Dynamics I</option>
-                                    <option name="mech295" value="mech295">MECH 295 Fire Dynamics - Spec Top</option>
+                                <select name="req_emerg">
+                                    <option value="none">------------------ Emerging Topics in Engineering ------------------</option>
+                                    <option value="amth308">AMTH 308 Theory of Wavelets</option>
+                                    <option value="amth351">AMTH 351 Quantum Computing</option>
+                                    <option value="amth367">AMTH 367 Mathematical Finance</option>
+                                    <option value="amth387">AMTH 387 Cryptology</option>
+                                    <option value="bioe256">BIOE 256/ENGR 256 Introduction to Nanobioengineering</option>
+                                    <option value="ceng219">CENG 219 Designing for Sustainable Construction</option>
+                                    <option value="coen331">COEN 331 Wireless and Mobile Networks</option>
+                                    <option value="coen389">COEN 389 Energy Efficient Computing</option>
+                                    <option value="elen280">ELEN 280/MECH 287 Introduction to Alternative Energy Systems</option>
+                                    <option value="engr260">ENGR 260 Nanoscale Science and Technology</option>
+                                    <option value="engr262">ENGR 262 Nanomaterials</option>
+                                    <option value="engr273">ENGR 273 Sustainable Energy and Ethics</option>
+                                    <option value="engr337">ENGR 337 Sustainability and Green Information Technology</option>
+                                    <option value="engr371">ENGR 371 Space Systems Design and Engineering I Technology</option>
+                                    <option value="engr372">ENGR 372 Space Systems Design and Engineering II Technology</option>
+                                    <option value="mech234">MECH 234 Combustion Technology</option>
+                                    <option value="mech268">MECH 268 Computational Fluid Dynamics I</option>
+                                    <option value="mech295">MECH 295 Fire Dynamics - Spec Top</option>
 
                                 </select> 4 units</label>
                         </div>
@@ -211,17 +368,15 @@
                         <h4>Engineering and Business/Entrepreneurship</h4>
                         <div class="tier4">
                             <label>
-                                <select>
-                                    <option name="none" value="">------------ Engineering and Business/Entrepreneurship ------------</option>
-                                    <option name="amth367" value="amth367">AMTH 367 Mathematical Finance</option>
-                                    <option name="ceng208" value="amth351">CENG 208 Engineering Economics and Project Finance
-                                    </option>
-                                    <option name="coen287" value="coen287">COEN 287 Software Development Process Management
-                                    </option>
-                                    <option name="engr302" value="engr302">ENGR 302 Managing in the Multicultural Environment</option>
-                                    <option name="engr304" value="engr304">ENGR 304 Building Global Teams</option>
-                                    <option name="engr336" value="engr336">ENGR 336 Engineering for the Developing World</option>
-                                    <option name="engr338" value="engr338">ENGR 338 Mobile Applications for Emerging Markets</option>
+                                <select name="req_business">
+                                    <option value="none">------------ Engineering and Business/Entrepreneurship ------------</option>
+                                    <option value="amth367">AMTH 367 Mathematical Finance</option>
+                                    <option value="amth351">CENG 208 Engineering Economics and Project Finance</option>
+                                    <option value="coen287">COEN 287 Software Development Process Management</option>
+                                    <option value="engr302">ENGR 302 Managing in the Multicultural Environment</option>
+                                    <option value="engr304">ENGR 304 Building Global Teams</option>
+                                    <option value="engr336">ENGR 336 Engineering for the Developing World</option>
+                                    <option value="engr338">ENGR 338 Mobile Applications for Emerging Markets</option>
                                 </select> 4 units</label>
 
                         </div>
@@ -230,35 +385,31 @@
                         <h4>Engineering and Society</h4>
                         <div class="tier4">
                             <label>
-                                <select>
-                                    <option name="none" value="">------------------------------------------ Engineering and Society ------------------------------------------</option>
-                                    <option name="bioe210" value="bioe210">BIOE 210 Ethical Issues in Bioengineering</option>
-                                    <option name="coen250" value="coen250">COEN 250 Information Security Management</option>
-                                    <option name="coen288" value="coen288">COEN 288 Software Ethics</option>
-                                    <option name="engr302" value="engr302">ENGR 302 Managing in the Multicultural Environment</option>
-                                    <option name="elen217" value="elen217">ELEN 217 Chaos Theory, Metamathematics, and the Limits of Science: An Engineering Perspective on Religion</option>
-                                    <option name="engr261" value="engr261">ENGR 261 Nanotechnology and Society</option>
-                                    <option name="engr272" value="engr272">ENGR 272 Energy Public Policy</option>
-                                    <option name="engr273" value="engr273">ENGR 273 Sustainable Energy and Ethics</option>
-                                    <option name="engr302" value="engr302">ENGR 302 Sustainable Energy and Ethics</option>
-                                    <option name="engr303" value="engr303">ENGR 303 Gender and Engineering</option>
-                                    <option name="engr304" value="engr304">ENGR 304 Building Global Teams</option>
-                                    <option name="engr306" value="engr306">ENGR 306 Engineering and the Law</option>
-                                    <option name="engr310" value="engr310">ENGR 310 Engineering Ethics</option>
-                                    <option name="engr330" value="engr330">ENGR 330 Law, Technology, and Intellectual Property</option>
-                                    <option name="engr332" value="engr332">ENGR 332 Emergent Human Systems</option>
-                                    <option name="engr333" value="engr333">ENGR 333 Forms of Nature</option>
-                                    <option name="engr334" value="engr334">ENGR 334 Energy, Climate Change, and Social Justice</option>
-                                    <option name="engr336" value="engr336">ENGR 336 Engineering for the Developing World</option>
-                                    <option name="engr340" value="engr340">ENGR 340 Distributed &amp Renewable Energy For the Developing World</option>
-                                    <option name="engr341" value="engr341">ENGR 341 Innovation, Design and Spirituality</option>
-                                    <option name="engr342" value="engr342">ENGR 342 3D Print Technology and Society</option>
-                                    <option name="engr343" value="engr343">ENGR 343 Science, Religion and the Limits of Knowledge</option>
-                                    <option name="engr349" value="engr349">ENGR 349 Topics in Frugal Engineering</option>
-
-
-
-
+                                <select name="req_society">
+                                    <option value="none">------------------------------------------ Engineering and Society ------------------------------------------</option>
+                                    <option value="bioe210">BIOE 210 Ethical Issues in Bioengineering</option>
+                                    <option value="coen250">COEN 250 Information Security Management</option>
+                                    <option value="coen288">COEN 288 Software Ethics</option>
+                                    <option value="engr302">ENGR 302 Managing in the Multicultural Environment</option>
+                                    <option value="elen217">ELEN 217 Chaos Theory, Metamathematics, and the Limits of Science: An Engineering Perspective on Religion</option>
+                                    <option value="engr261">ENGR 261 Nanotechnology and Society</option>
+                                    <option value="engr272">ENGR 272 Energy Public Policy</option>
+                                    <option value="engr273">ENGR 273 Sustainable Energy and Ethics</option>
+                                    <option value="engr302">ENGR 302 Sustainable Energy and Ethics</option>
+                                    <option value="engr303">ENGR 303 Gender and Engineering</option>
+                                    <option value="engr304">ENGR 304 Building Global Teams</option>
+                                    <option value="engr306">ENGR 306 Engineering and the Law</option>
+                                    <option value="engr310">ENGR 310 Engineering Ethics</option>
+                                    <option value="engr330">ENGR 330 Law, Technology, and Intellectual Property</option>
+                                    <option value="engr332">ENGR 332 Emergent Human Systems</option>
+                                    <option value="engr333">ENGR 333 Forms of Nature</option>
+                                    <option value="engr334">ENGR 334 Energy, Climate Change, and Social Justice</option>
+                                    <option value="engr336">ENGR 336 Engineering for the Developing World</option>
+                                    <option value="engr340">ENGR 340 Distributed &amp Renewable Energy For the Developing World</option>
+                                    <option value="engr341">ENGR 341 Innovation, Design and Spirituality</option>
+                                    <option value="engr342">ENGR 342 3D Print Technology and Society</option>
+                                    <option value="engr343">ENGR 343 Science, Religion and the Limits of Knowledge</option>
+                                    <option value="engr349">ENGR 349 Topics in Frugal Engineering</option>
                                 </select> 4 units</label>
                             <p><em>Please Note: Although certain courses (such as ENGR 302, ENGR 304, ENGR 336, and AMTH 367 for example) may appear in multiple categories, they cannot be used to satisfy more than one Core requirement.</em></p>
                         </div>
@@ -300,7 +451,7 @@
             </tr>
         </table>
     </div>
-    <input type="submit">
+    <input type="submit" onclick="buildJSON()">
 </body>
 
 </html>
