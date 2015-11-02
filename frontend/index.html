@@ -3,6 +3,17 @@
 
 <head>
     <style type="text/css">
+        .lowercase {
+            text-transform: lowercase;
+        }
+        .uppercase {
+            text-transform: uppercase;
+        }
+        
+        .capitalize {
+            text-transform: capitalize;
+        }
+        
         /*note font style*/
         
         p.note {
@@ -48,13 +59,14 @@
     <script type="text/javascript">
         /* JQUERY FUNCTIONS */
         $(document).ready(function () {
+
             /* ##1  APPROVED TRANSFER CREDITS */
             var c = 1;
 
             $('#add_row').click(function () {
                 var table = document.getElementById("transferTable");
                 var tableRow = $("<div class='table-row row" + (c + 1) + "'>");
-                var input = $("<input type='text' name='course' id=course" + (c + 1) + " />");
+                var input = $("<input type='text' class='lowercase' name='course' id=course" + (c + 1) + " />");
                 $("<div class='table-cell'>").append(input).appendTo(tableRow);
                 var input = $("<input type='text' name='inst' id=inst" + (c + 1) + " />");
                 $("<div class='table-cell'>").append(input).appendTo(tableRow);
@@ -108,7 +120,6 @@
                   if (course !== "") {
                   val.push(course);*/
             });
-
 
             /* ##2. FOUNDATIONAL COURSES */
             $('#check_valid2').click(function () { // on click check valid button
@@ -197,7 +208,7 @@
                 ct++;
 
             });
-            
+
             $('#remove_row5').click(function () {
                 if (ct > 1) {
                     $(".row" + ct).remove();
@@ -226,6 +237,11 @@
                     });
                 }
             });
+
+            /*change text input to uppercase*/
+            $('input[type=text]').val(function () {
+                return this.value.toUpperCase();
+            })
 
         }); /* END OF JQUERY FUNCTION */
 
@@ -279,27 +295,33 @@
         <div class="tier2-2">
             <div class="table">
                 <div class="table-heading">
-                    <div class="table-cell">name</div>
+                    <div class="table-cell">first name</div>
+                    <div class="table-cell">last name</div>
                     <div class="table-cell">student id</div>
                     <div class="table-cell">email (school)</div>
                 </div>
                 <div class="table-row">
                     <div class="table-cell">
-                        <input type="text" name="name" value="%(name)s">
+                        <input type="text" name="fname" class=capitalize placeholder="Jon">
                     </div>
                     <div class="table-cell">
-                        <input type="text" name="stdid" value="%(stdid)s">
+                        <input type="text" name="lname" class=capitalize placeholder="Doh">
                     </div>
                     <div class="table-cell">
-                        <input type="text" name="email" value="%(email)s">
+                        <input type="text" name="stdid" placeholder="i.e. W082391">
+                    </div>
+                    <div class="table-cell">
+                        <input type="text" name="email" placeholder="i.e. jdoh@scu.edu">
                     </div>
 
                 </div>
             </div>
+            <br>
+            <br>
 
             <div class="tier1">
                 <div class="tier2-1">
-                    <h2>1. Approved Transfer Credit </h2>
+                    <h2>1. Approved Transfer Credit: </h2>
                     <p>(maximu 9 quarter units)</P>
                 </div>
                 <div class="tier2-2">
@@ -317,16 +339,16 @@
                         </div>
                         <div class='table-row row1'>
                             <div class="table-cell">
-                                <input type="text" class="course row1" id="course1" />
+                                <input type="text" class='uppercase' name="course" id="course1" />
                             </div>
                             <div class="table-cell">
-                                <input type="text" class="inst row1" id="inst1" />
+                                <input type="text" name="inst" id="inst1" />
                             </div>
                             <div class="table-cell">
-                                <input type="text" class="grade row1" id="grade1" />
+                                <input type="text" name="grade" id="grade1" />
                             </div>
                             <div class="table-cell">
-                                <input type="text" class="qunit row1" id="qunit1" />
+                                <input type="text" name="qunit" id="qunit1" />
                             </div>
                         </div>
                     </div>
@@ -538,7 +560,7 @@
                             </div>
                         </div>
                     </div>
-                    <p><em><b>Please Note: Although certain courses (such as ENGR 302, ENGR 304, ENGR 336, and AMTH 367 for example) may appear in multiple categories, they cannot be used to satisfy more than one Core requirement.</b></em></p>
+                    <p><em><b>NOTE: Although certain courses (such as ENGR 302, ENGR 304, ENGR 336, and AMTH 367 for example) may appear in multiple categories, they cannot be used to satisfy more than one Core requirement.</b></em></p>
 
                 </div>
                 <input type=button id="check_valid4" value="check valid" />
@@ -580,6 +602,7 @@
             </div>
             <br>
             <br>
+            <input type="submit">
 </body>
 
 </html>
