@@ -2,20 +2,18 @@
 <html>
 
 <head>
-<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-<script type="text/javascript">
-    
-function addTransferRow() {
-    var table = document.getElementById("transferTable");
-    var tableRow = $("<tr>");
-    for (var c = 1; c <= 4; c++) {
-      var input = $("<input />");
-      $("<td>").append(input).appendTo(tableRow);
-    }
-    tableRow.appendTo(table);
-}
-    
-</script>
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script type="text/javascript">
+        function addTransferRow() {
+            var table = document.getElementById("transferTable");
+            var tableRow = $("<tr>");
+            for (var c = 1; c <= 4; c++) {
+                var input = $("<input />");
+                $("<td>").append(input).appendTo(tableRow);
+            }
+            tableRow.appendTo(table);
+        }
+    </script>
 </head>
 
 <body>
