@@ -3,7 +3,15 @@
  * This is the Endpoint allows for saving and loading the form data
  */
 function generateError($reason){
-    return "{\"error\":\"true\", \"message\":\"".$reason."\"}";
+  return "{\"error\":\"true\", \"message\":\"".$reason."\"}";
+}
+
+function generateSuccess($content, $message){
+ return "{\"error\":\"false\", \"message\":\"".$message."\", \"content\":\"".$content."\"}";
+}
+
+function generateSuccess($content){
+  return "{\"error\":\"false\", \"content\":\"".$content."\"}";
 }
 
 function generatePath($userid, $name){
@@ -15,7 +23,7 @@ function readRawJSON($path){
 }
 
 function writeJson($path, $json){
-  if(is_writable(getcwd()."/db/")){
+/*  if(is_writable(getcwd()."/db/")){
     echo (getcwd()."/db/")." is Writable!\n";
   }
   else{
@@ -28,6 +36,7 @@ function writeJson($path, $json){
   else{
     echo $path." doesn't exist. Creating File.\n";
   }
+ */
   $file = null;
   if(!$file = fopen($path, 'w')){
     echo generateError("Cannot open file");
@@ -35,6 +44,7 @@ function writeJson($path, $json){
   else{
     fwrite($file,$json);
     fclose($file); 
+    echo generateSuccess("", "Opened File");
   }
 }
 
@@ -43,7 +53,7 @@ function handle_get(){
     $userName = strtolower(str_replace(' ', '_', $_GET["name"]));
     $filePath = generatePath(strtolower($_GET["userid"]), $userName);
     if(file_exists($filePath)){
-      echo "{\"error\":\"false\", \"content\":".readRawJSON($filePath)."}";
+      echo generateSuccess(readRawJSON($filePath));
     }
     else{
       echo generateError("Student not Found");
