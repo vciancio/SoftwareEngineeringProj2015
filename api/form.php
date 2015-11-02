@@ -10,10 +10,6 @@ function generateSuccess($content, $message){
  return "{\"error\":\"false\", \"message\":\"".$message."\", \"content\":\"".$content."\"}";
 }
 
-function generateSuccess($content){
-  return "{\"error\":\"false\", \"content\":\"".$content."\"}";
-}
-
 function generatePath($userid, $name){
   return getcwd()."/db/".$userid.".".$name.".json";
 }
@@ -53,7 +49,7 @@ function handle_get(){
     $userName = strtolower(str_replace(' ', '_', $_GET["name"]));
     $filePath = generatePath(strtolower($_GET["userid"]), $userName);
     if(file_exists($filePath)){
-      echo generateSuccess(readRawJSON($filePath));
+      echo generateSuccess(readRawJSON($filePath), "");
     }
     else{
       echo generateError("Student not Found");
