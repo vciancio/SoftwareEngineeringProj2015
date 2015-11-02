@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<!-- capitalize any words -->
+
+<html>
+
+<head>
+    <title>student identification test</title>
+    <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+
+</head>
+
+<body>
+    <p>Type something and then click or tab out of the input.</p>
+    <input type="text" value="type something">
+
+    <script>
+        $("input").on("blur", function () {
+            $(this).val(function (i, val) {
+                return val.toUpperCase();
+            });
+        });
+    </script>
+</body>
+
+</html>
