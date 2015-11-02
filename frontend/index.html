@@ -3,6 +3,8 @@
 
 <head>
     <style type="text/css">
+        /*TABLE STYLING*/
+        
         .table {
             display: table;
         }
@@ -21,13 +23,26 @@
             padding-left: 5px;
             padding-right: 5px;
         }
+        /*CHECKBOX STYLING*/
+        
+        input[type=checkbox] {
+            -ms-transform: scale(1.5);
+            /*Internet Explorer*/
+            -moz-transform: scale(1.5);
+            /*Mozilla Firefox*/
+            -webkit-transform: scale(1.5);
+            /* Safari and Chrome */
+            -o-transform: scale(1.5);
+            /* Opera */
+            padding: 10px;
+        }
     </style>
 
     <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
     <script type="text/javascript">
         /* JQUERY FUNCTIONS */
         $(document).ready(function () {
-                
+
             /* ##2. FOUNDATIONAL COURSES */
             $('#check_valid1').click(function () { // on click check valid button
                 var val = [];
@@ -72,6 +87,32 @@
             $('#deselect_all2').click(function () { // on click select all button
                 $(".classlist2").prop('checked', false);
             });
+
+
+            /* ##4. SCU Graduate Core Requirements*/
+            $('#check_valid3').click(function () {
+                var val = [];
+                req_emrg = $('#req_emrg option:selected').val();
+                req_bsns = $('#req_bsns option:selected').val();
+                req_soc = $('#req_soc option:selected').val();
+
+                if (req_emrg !== "") val.push(req_emrg);
+                if (req_bsns !== "") val.push(req_bsns);
+                if (req_soc !== "") val.push(req_soc);
+            
+                console.log(val);
+                if (val.length == 0) {
+                    document.getElementById("messageBox3").innerHTML = "none";
+                } else {
+                    document.getElementById("messageBox3").innerHTML = val.join(", ");
+                }
+            });
+
+            $('#reset').click(function () {
+                $('#req_emrg>option:eq(0)').attr('selected', true);
+                $('#req_bsns>option:eq(0)').attr('selected', true);
+                $('#req_soc>option:eq(0)').attr('selected', true);
+            });
         });
 
 
@@ -79,25 +120,14 @@
             var table = document.getElementById("transferTable");
             var tableRow = $("<tr>");
             for (var c = 1; c <= 4; c++) {
-                var input = $("<input />");
-                $("<td>").append(input).appendTo(tableRow);
-            }
-            tableRow.appendTo(table);
-        }
-    </script>
-
-    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-    <script type="text/javascript">
-        function addTransferRow() {
-            var table = document.getElementById("transferTable");
-            var tableRow = $("<tr>");
-            for (var c = 1; c <= 4; c++) {
-                var input = $("<input />");
+                var input =
+                    $("<input />");
                 $("<td>").append(input).appendTo(tableRow);
             }
             tableRow.appendTo(table);
         }
 
+        /* JSON REQUEST / SERVER HANDLING */
         function getSelectionValue(name) {
             return $('select[name="' + name + '"]').val();
         }
@@ -131,7 +161,6 @@
             alert(json);
         }
     </script>
-    >>>>>>> 010bd91e7ac1a3efbb8f67b78702dd7e48f3188e
 </head>
 
 <body>
@@ -312,90 +341,94 @@
             <p>(min. 6 units), 1 course from each area:</p>
         </div>
         <div class="tier2-2">
-            <div class="tier3">
-                <ul id="emgtop">
-                    <li>
+            <div class="table">
+                <div class="table-row">
+                    <div class="table-cell">
                         <h4>Emerging Topics in Engineering</h4>
-                        <div class="tier4">
-                            <label>
-                                <select name="req_emerg">
-                                    <option value="none">------------------ Emerging Topics in Engineering ------------------</option>
-                                    <option value="amth308">AMTH 308 Theory of Wavelets</option>
-                                    <option value="amth351">AMTH 351 Quantum Computing</option>
-                                    <option value="amth367">AMTH 367 Mathematical Finance</option>
-                                    <option value="amth387">AMTH 387 Cryptology</option>
-                                    <option value="bioe256">BIOE 256/ENGR 256 Introduction to Nanobioengineering</option>
-                                    <option value="ceng219">CENG 219 Designing for Sustainable Construction</option>
-                                    <option value="coen331">COEN 331 Wireless and Mobile Networks</option>
-                                    <option value="coen389">COEN 389 Energy Efficient Computing</option>
-                                    <option value="elen280">ELEN 280/MECH 287 Introduction to Alternative Energy Systems</option>
-                                    <option value="engr260">ENGR 260 Nanoscale Science and Technology</option>
-                                    <option value="engr262">ENGR 262 Nanomaterials</option>
-                                    <option value="engr273">ENGR 273 Sustainable Energy and Ethics</option>
-                                    <option value="engr337">ENGR 337 Sustainability and Green Information Technology</option>
-                                    <option value="engr371">ENGR 371 Space Systems Design and Engineering I Technology</option>
-                                    <option value="engr372">ENGR 372 Space Systems Design and Engineering II Technology</option>
-                                    <option value="mech234">MECH 234 Combustion Technology</option>
-                                    <option value="mech268">MECH 268 Computational Fluid Dynamics I</option>
-                                    <option value="mech295">MECH 295 Fire Dynamics - Spec Top</option>
+                    </div>
+                    <div class="table-cell">
+                        <label>
+                            <select id="req_emrg">
+                                <option value="" selected>------------------ Emerging Topics in Engineering ------------------</option>
+                                <option value="amth308">AMTH 308 Theory of Wavelets</option>
+                                <option value="amth351">AMTH 351 Quantum Computing</option>
+                                <option value="amth367">AMTH 367 Mathematical Finance</option>
+                                <option value="amth387">AMTH 387 Cryptology</option>
+                                <option value="bioe256">BIOE 256/ENGR 256 Introduction to Nanobioengineering</option>
+                                <option value="ceng219">CENG 219 Designing for Sustainable Construction</option>
+                                <option value="coen331">COEN 331 Wireless and Mobile Networks</option>
+                                <option value="coen389">COEN 389 Energy Efficient Computing</option>
+                                <option value="elen280">ELEN 280/MECH 287 Introduction to Alternative Energy Systems</option>
+                                <option value="engr260">ENGR 260 Nanoscale Science and Technology</option>
+                                <option value="engr262">ENGR 262 Nanomaterials</option>
+                                <option value="engr273">ENGR 273 Sustainable Energy and Ethics</option>
+                                <option value="engr337">ENGR 337 Sustainability and Green Information Technology</option>
+                                <option value="engr371">ENGR 371 Space Systems Design and Engineering I Technology</option>
+                                <option value="engr372">ENGR 372 Space Systems Design and Engineering II Technology</option>
+                                <option value="mech234">MECH 234 Combustion Technology</option>
+                                <option value="mech268">MECH 268 Computational Fluid Dynamics I</option>
+                                <option value="mech295">MECH 295 Fire Dynamics - Spec Top</option>
 
-                                </select> 4 units</label>
-                        </div>
-                    </li>
-                    <li>
-                        <h4>Engineering and Business/Entrepreneurship</h4>
-                        <div class="tier4">
-                            <label>
-                                <select name="req_business">
-                                    <option value="none">------------ Engineering and Business/Entrepreneurship ------------</option>
-                                    <option value="amth367">AMTH 367 Mathematical Finance</option>
-                                    <option value="amth351">CENG 208 Engineering Economics and Project Finance</option>
-                                    <option value="coen287">COEN 287 Software Development Process Management</option>
-                                    <option value="engr302">ENGR 302 Managing in the Multicultural Environment</option>
-                                    <option value="engr304">ENGR 304 Building Global Teams</option>
-                                    <option value="engr336">ENGR 336 Engineering for the Developing World</option>
-                                    <option value="engr338">ENGR 338 Mobile Applications for Emerging Markets</option>
-                                </select> 4 units</label>
-
-                        </div>
-                    </li>
-                    <li>
+                            </select> 4 units</label>
+                    </div>
+                </div>
+                <div class="table-row">
+                    <div class="table-cell">
+                        <h4>Engineering and Business/Entrepreneurship</h4></div>
+                    <div class="table-cell">
+                        <label>
+                            <select id="req_bsns">
+                                <option value="" selected>------------ Engineering and Business/Entrepreneurship ------------</option>
+                                <option value="amth367">AMTH 367 Mathematical Finance</option>
+                                <option value="amth351">CENG 208 Engineering Economics and Project Finance</option>
+                                <option value="coen287">COEN 287 Software Development Process Management</option>
+                                <option value="engr302">ENGR 302 Managing in the Multicultural Environment</option>
+                                <option value="engr304">ENGR 304 Building Global Teams</option>
+                                <option value="engr336">ENGR 336 Engineering for the Developing World</option>
+                                <option value="engr338">ENGR 338 Mobile Applications for Emerging Markets</option>
+                            </select> 4 units</label>
+                    </div>
+                </div>
+                <div class="table-row">
+                    <div class="table-cell">
                         <h4>Engineering and Society</h4>
-                        <div class="tier4">
-                            <label>
-                                <select name="req_society">
-                                    <option value="none">------------------------------------------ Engineering and Society ------------------------------------------</option>
-                                    <option value="bioe210">BIOE 210 Ethical Issues in Bioengineering</option>
-                                    <option value="coen250">COEN 250 Information Security Management</option>
-                                    <option value="coen288">COEN 288 Software Ethics</option>
-                                    <option value="engr302">ENGR 302 Managing in the Multicultural Environment</option>
-                                    <option value="elen217">ELEN 217 Chaos Theory, Metamathematics, and the Limits of Science: An Engineering Perspective on Religion</option>
-                                    <option value="engr261">ENGR 261 Nanotechnology and Society</option>
-                                    <option value="engr272">ENGR 272 Energy Public Policy</option>
-                                    <option value="engr273">ENGR 273 Sustainable Energy and Ethics</option>
-                                    <option value="engr302">ENGR 302 Sustainable Energy and Ethics</option>
-                                    <option value="engr303">ENGR 303 Gender and Engineering</option>
-                                    <option value="engr304">ENGR 304 Building Global Teams</option>
-                                    <option value="engr306">ENGR 306 Engineering and the Law</option>
-                                    <option value="engr310">ENGR 310 Engineering Ethics</option>
-                                    <option value="engr330">ENGR 330 Law, Technology, and Intellectual Property</option>
-                                    <option value="engr332">ENGR 332 Emergent Human Systems</option>
-                                    <option value="engr333">ENGR 333 Forms of Nature</option>
-                                    <option value="engr334">ENGR 334 Energy, Climate Change, and Social Justice</option>
-                                    <option value="engr336">ENGR 336 Engineering for the Developing World</option>
-                                    <option value="engr340">ENGR 340 Distributed &amp Renewable Energy For the Developing World</option>
-                                    <option value="engr341">ENGR 341 Innovation, Design and Spirituality</option>
-                                    <option value="engr342">ENGR 342 3D Print Technology and Society</option>
-                                    <option value="engr343">ENGR 343 Science, Religion and the Limits of Knowledge</option>
-                                    <option value="engr349">ENGR 349 Topics in Frugal Engineering</option>
-                                </select> 4 units</label>
-                            <p><em>Please Note: Although certain courses (such as ENGR 302, ENGR 304, ENGR 336, and AMTH 367 for example) may appear in multiple categories, they cannot be used to satisfy more than one Core requirement.</em></p>
-                        </div>
-                    </li>
-                </ul>
+                    </div>
+                    <div class="table-cell">
+                        <label>
+                            <select id="req_soc">
+                                <option value="" selected>------------------ Emerging Topics in Engineering ------------------</option>
+                                <option value="amth308">AMTH 308 Theory of Wavelets</option>
+                                <option value="amth351">AMTH 351 Quantum Computing</option>
+                                <option value="amth367">AMTH 367 Mathematical Finance</option>
+                                <option value="amth387">AMTH 387 Cryptology</option>
+                                <option value="bioe256">BIOE 256/ENGR 256 Introduction to Nanobioengineering</option>
+                                <option value="ceng219">CENG 219 Designing for Sustainable Construction</option>
+                                <option value="coen331">COEN 331 Wireless and Mobile Networks</option>
+                                <option value="coen389">COEN 389 Energy Efficient Computing</option>
+                                <option value="elen280">ELEN 280/MECH 287 Introduction to Alternative Energy Systems</option>
+                                <option value="engr260">ENGR 260 Nanoscale Science and Technology</option>
+                                <option value="engr262">ENGR 262 Nanomaterials</option>
+                                <option value="engr273">ENGR 273 Sustainable Energy and Ethics</option>
+                                <option value="engr337">ENGR 337 Sustainability and Green Information Technology</option>
+                                <option value="engr371">ENGR 371 Space Systems Design and Engineering I Technology</option>
+                                <option value="engr372">ENGR 372 Space Systems Design and Engineering II Technology</option>
+                                <option value="mech234">MECH 234 Combustion Technology</option>
+                                <option value="mech268">MECH 268 Computational Fluid Dynamics I</option>
+                                <option value="mech295">MECH 295 Fire Dynamics - Spec Top</option>
+                            </select> 4 units</label>
+                    </div>
+                </div>
             </div>
+            <p><em><b>Please Note: Although certain courses (such as ENGR 302, ENGR 304, ENGR 336, and AMTH 367 for example) may appear in multiple categories, they cannot be used to satisfy more than one Core requirement.</b></em></p>
+
         </div>
+        <input type=button id="check_valid3" value="check valid" />
+        <input type=button id="reset" value="reset" />
+        <div id=messageBox3></div>
     </div>
+    <br>
+    <br>
+
     <div class="tier1">
         <div class="tier2">
             <h3>Track</h3>
