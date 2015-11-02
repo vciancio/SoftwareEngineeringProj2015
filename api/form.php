@@ -40,7 +40,7 @@ function writeJson($path, $json){
   else{
     fwrite($file,$json);
     fclose($file); 
-    echo generateSuccess("", "Opened File");
+    echo generateSuccess("", "Saved the File");
   }
 }
 
