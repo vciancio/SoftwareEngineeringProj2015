@@ -3,6 +3,12 @@
 
 <head>
     <style type="text/css">
+        /*note font style*/
+        
+        p.note {
+            font-weight: bold;
+            font-style: italic;
+        }
         /*TABLE STYLING*/
         
         .table {
@@ -42,31 +48,69 @@
     <script type="text/javascript">
         /* JQUERY FUNCTIONS */
         $(document).ready(function () {
+            /* ##1  APPROVED TRANSFER CREDITS */
+            var c = 1;
 
-            /* ##2. FOUNDATIONAL COURSES */
-            $('#check_valid1').click(function () { // on click check valid button
-                var val = [];
-                $('.classlist1:checked').each(function (i) { // loop through classlist 
-                    val[i] = $(this).val();
-                });
-                //console.log(val);
+            $('#add_row').click(function () {
+                var table = document.getElementById("transferTable");
+                var tableRow = $("<div class='table-row row" + (c + 1) + "'>");
+                var input = $("<input type='text' name='course' id=course" + (c + 1) + " />");
+                $("<div class='table-cell'>").append(input).appendTo(tableRow);
+                var input = $("<input type='text' name='inst' id=inst" + (c + 1) + " />");
+                $("<div class='table-cell'>").append(input).appendTo(tableRow);
+                var input = $("<input type='text' name='grade' id=grade" + (c + 1) + " />");
+                $("<div class='table-cell'>").append(input).appendTo(tableRow);
+                var input = $("<input type='text' name='qunit' id=qunit" + (c + 1) + " />");
+                $("<div class='table-cell'>").append(input).appendTo(tableRow);
+                tableRow.appendTo(table);
+                c++;
 
-                if (jQuery.inArray("coen20", val) == -1 || jQuery.inArray("coen21", val) == -1 || jQuery.inArray("coen12", val) == -1 || jQuery.inArray("coen19", val) == -1 || jQuery.inArray("amth210", val) == -1) { //check if all the courses are selected
-                    document.getElementById("messageBox1").innerHTML = false;
-                } else {
-                    document.getElementById("messageBox1").innerHTML = true;
+            });
+
+            $('#remove_row').click(function () {
+                if (c > 1) {
+                    $(".row" + c).remove();
+                    c--;
                 }
             });
 
-            $('#select_all1').click(function () { // on click select all button
-                $(".classlist1").prop('checked', true);
-            });
-            $('#deselect_all1').click(function () { // on click select all button
-                $(".classlist1").prop('checked', false);
+            $('#analysis').click(function () {
+                var arr = [];
+                for (i = 0; i < c; i++) {
+                    arr.push({
+                        course: $("#course" + (i + 1)).val(),
+                        inst: $("#inst" + (i + 1)).val(),
+                        grade: $("#grade" + (i + 1)).val(),
+                        qunit: $("#qunit" + (i + 1)).val()
+                    });
+                }
+                //console.log(arr);
+
+                if (arr.length == 0) {
+                    document.getElementById("messageBox1").innerHTML = "none";
+                } else {
+                    //document.getElementById("messageBox1").innerHTML = printArray(arr);
+                    jQuery.each(arr, function () {
+                        console.log("course: " + this.course);
+                        console.log("inst: " + this.inst);
+                        console.log("grade: " + this.grade);
+                        console.log("qunit: " + this.qunit)
+                        console.log(" ");
+                    });
+                }
+
+                /*   for (i = 0; i < c; i++) {
+                  course = $("#course" + (c+1)).val();
+                  inst = $("#inst" + (c+1)).val();
+                  grade = $("#grade" + (c+1)).val()
+                  qunit = $("#qunit" + (c+1)).val();
+                  
+                  if (course !== "") {
+                  val.push(course);*/
             });
 
 
-            /* ##3. CS AND ENGR CORE COURSES## */
+            /* ##2. FOUNDATIONAL COURSES */
             $('#check_valid2').click(function () { // on click check valid button
                 var val = [];
                 $('.classlist2:checked').each(function (i) { // loop through classlist 
@@ -74,10 +118,10 @@
                 });
                 //console.log(val);
 
-                if (val.length == 0) {
-                    document.getElementById("messageBox2").innerHTML = "none";
+                if (jQuery.inArray("coen20", val) == -1 || jQuery.inArray("coen21", val) == -1 || jQuery.inArray("coen12", val) == -1 || jQuery.inArray("coen19", val) == -1 || jQuery.inArray("amth210", val) == -1) { //check if all the courses are selected
+                    document.getElementById("messageBox2").innerHTML = false;
                 } else {
-                    document.getElementById("messageBox2").innerHTML = val.join(", ");
+                    document.getElementById("messageBox2").innerHTML = true;
                 }
             });
 
@@ -89,8 +133,32 @@
             });
 
 
+            /* ##3. CS AND ENGR CORE COURSES## */
+            $('#check_valid3').click(function () { // on click check valid button
+                var val = [];
+                $('.classlist3:checked').each(function (i) { // loop through classlist 
+                    val[i] = $(this).val();
+                });
+                console.log(val);
+
+                if (val.length == 0) {
+                    document.getElementById("messageBox3").innerHTML = "none";
+                } else {
+                    document.getElementById("messageBox3").innerHTML = val.join(", ");
+                }
+            });
+
+            $('#select_all3').click(function () { // on click select all button
+                $(".classlist3").prop('checked', true);
+            });
+            $('#deselect_all3').click(function () { // on click select all button
+                $(".classlist3").prop('checked', false);
+            });
+
+
+
             /* ##4. SCU Graduate Core Requirements*/
-            $('#check_valid3').click(function () {
+            $('#check_valid4').click(function () {
                 var val = [];
                 req_emrg = $('#req_emrg option:selected').val();
                 req_bsns = $('#req_bsns option:selected').val();
@@ -99,12 +167,12 @@
                 if (req_emrg !== "") val.push(req_emrg);
                 if (req_bsns !== "") val.push(req_bsns);
                 if (req_soc !== "") val.push(req_soc);
-            
+
                 console.log(val);
                 if (val.length == 0) {
-                    document.getElementById("messageBox3").innerHTML = "none";
+                    document.getElementById("messageBox4").innerHTML = "none";
                 } else {
-                    document.getElementById("messageBox3").innerHTML = val.join(", ");
+                    document.getElementById("messageBox4").innerHTML = val.join(", ");
                 }
             });
 
@@ -113,19 +181,56 @@
                 $('#req_bsns>option:eq(0)').attr('selected', true);
                 $('#req_soc>option:eq(0)').attr('selected', true);
             });
-        });
+
+            /* 5. TRACK */
+            var ct = 1; //count track courses
+
+            $('#add_row5').click(function () {
+                var table = document.getElementById("transferTable2");
+                console.log('hi');
+                var tableRow = $("<div class='table-row row" + (ct + 1) + "'>");
+                var input = $("<input type='text' name='course' id=course" + (ct + 1) + " />");
+                $("<div class='table-cell'>").append(input).appendTo(tableRow);
+                var input = $("<input type='text' name='units' id=units" + (ct + 1) + " />");
+                $("<div class='table-cell'>").append(input).appendTo(tableRow);
+                tableRow.appendTo(table);
+                ct++;
+
+            });
+            
+            $('#remove_row5').click(function () {
+                if (ct > 1) {
+                    $(".row" + ct).remove();
+                    ct--;
+                }
+            });
+
+            $('#analysis5').click(function () {
+                var arr = [];
+                for (i = 0; i < ct; i++) {
+                    arr.push({
+                        course: $("#course" + (i + 1)).val(),
+                        units: $("#units" + (i + 1)).val(),
+                    });
+                }
+                //console.log(arr);
+
+                if (arr.length == 0) {
+                    document.getElementById("messageBox5").innerHTML = "none";
+                } else {
+                    //document.getElementById("messageBox1").innerHTML = printArray(arr);
+                    jQuery.each(arr, function () {
+                        console.log("course: " + this.course);
+                        console.log("units: " + this.units);
+                        console.log(" ");
+                    });
+                }
+            });
+
+        }); /* END OF JQUERY FUNCTION */
 
 
-        function addTransferRow() {
-            var table = document.getElementById("transferTable");
-            var tableRow = $("<tr>");
-            for (var c = 1; c <= 4; c++) {
-                var input =
-                    $("<input />");
-                $("<td>").append(input).appendTo(tableRow);
-            }
-            tableRow.appendTo(table);
-        }
+
 
         /* JSON REQUEST / SERVER HANDLING */
         function getSelectionValue(name) {
@@ -164,305 +269,317 @@
 </head>
 
 <body>
-    <h2>Program of Studies - Computer Science and Engineering MS</h2>
-    <h3>(for students admitted beginning in fall 2008 and after)</h3>
-    <table>
-        <tr>
-            <td class="label">name</td>
-            <td>
-                <input type="text" name="name" value="%(name)s">
-            </td>
-            <td class="error"></td>
-        </tr>
-        <tr>
-            <td class="label">student id</td>
-            <td>
-                <input type="text" name="stdid" value="%(stdid)s">
-            </td>
-            <td class="error"></td>
-        </tr>
-        <tr>
-            <td class="label">Email (school)</td>
-            <td>
-                <input type="text" name="email" value="%(email)s">
-            </td>
-            <td class="error"></td>
-        </tr>
-    </table>
-
+    <h1>Program of Studies - Computer Science and Engineering MS</h1>
+    <h3>(this is for students admitted beginning in fall 2008 and after)</h3>
     <div class="tier1">
         <div class="tier2-1">
-            <h3>1. Approved Transfer Credit </h3>
-            <h4>(maximu 9 quarter units)</h4>
-            <p>(NOTE: 3 semester units = 4.5 quarer units)</p>
-        </div>
-        <div class="tier2-2">
-            <table id="transferTable">
-                <tr>
-                    <th>Course</th>
-                    <th>Institution</th>
-                    <th>Grade</th>
-                    <th>Quarter Units</th>
-                </tr>
-                <tr>
-                    <td>
-                        <input type="text" />
-                    </td>
-                    <td>
-                        <input type="text" />
-                    </td>
-                    <td>
-                        <input type="text" />
-                    </td>
-                    <td>
-                        <input type="text" />
-                    </td>
-                </tr>
-            </table>
-            <br>
-            <button onclick="addTransferRow()">Add row</button>
-        </div>
-    </div>
-
-    <div class="tier1">
-        <div class="tier2-1">
-            <h3>2. Foundational Courses</h3>
-            <p>Mark the courses (or equivalences) the student is required to take. Note: Labs are not required.</p>
-        </div>
-        <div class="table">
-            <div class="table-heading">
-                <div class="table-cell">
-                    <h4>Course #</h4></div>
-                <div class="table-cell">
-                    <h4>Title</h4></div>
-                <div class="table-cell">
-                    <h4>Units</h4></div>
-                <div class="table-cell">
-                    <h4>Checkbox</h4></div>
-            </div>
-            <div class="table-row">
-                <div class="table-cell">COEN20</div>
-                <div class="table-cell">Assembly Language</div>
-                <div class="table-cell">4</div>
-                <div class="table-cell">
-                    <input type='checkbox' class='classlist1' value="coen20" />
-                </div>
-
-            </div>
-            <div class="table-row">
-                <div class="table-cell">COEN21</div>
-                <div class="table-cell">Logic Design</div>
-                <div class="table-cell">4</div>
-                <div class="table-cell">
-                    <input type='checkbox' class='classlist1' value="coen21" />
-                </div>
-            </div>
-            <div class="table-row">
-                <div class="table-cell">COEN12</div>
-                <div class="table-cell">Data Structure</div>
-                <div class="table-cell">4</div>
-                <div class="table-cell">
-                    <input type='checkbox' class='classlist1' value="coen12" />
-                </div>
-            </div>
-            <div class="table-row">
-                <div class="table-cell">COEN19</div>
-                <div class="table-cell">Discrete Math</div>
-                <div class="table-cell">4</div>
-                <div class="table-cell">
-                    <input type='checkbox' class='classlist1' value="coen19" />
-                </div>
-            </div>
-            <div class="table-row">
-                <div class="table-cell">AMTH210</div>
-                <div class="table-cell">Probability</div>
-                <div class="table-cell">4</div>
-                <div class="table-cell">
-                    <input type='checkbox' class='classlist1' value="amth210" />
-                </div>
-            </div>
-        </div>
-        <input type=button id="check_valid1" value="check valid" />
-        <input type=button id="select_all1" value="select all" />
-        <input type=button id="deselect_all1" value="deselect all" />
-        <div id=messageBox1></div>
-    </div>
-    <br>
-    <br>
-
-    <div class="tier1">
-        <div class="tier2-1">
-            <h3>3. Computer Science and Engineering Core Courses:</h3>
-            <p>Mark the courses the student is required to take.</p>
-        </div>
-        <div class="table">
-            <div class="table-heading">
-                <div class="table-cell">Course #</div>
-                <div class="table-cell">Title</div>
-                <div class="table-cell">Units</div>
-                <div class="table-cell">Checkbox</div>
-            </div>
-            <div class="table-row">
-                <div class="table-cell">COEN210</div>
-                <div class="table-cell">Computer Architecture</div>
-                <div class="table-cell">4</div>
-                <div class="table-cell">
-                    <input type='checkbox' class='classlist2' value="coen210">
-                </div>
-            </div>
-            <div class="table-row">
-                <div class="table-cell">COEN279</div>
-                <div class="table-cell">Design &amp Analysis: Algorithms </div>
-                <div class="table-cell">4</div>
-                <div class="table-cell">
-                    <input type='checkbox' class='classlist2' value="coen279">
-                </div>
-            </div>
-            <div class="table-row">
-                <div class="table-cell">COEN283</div>
-                <div class="table-cell">Data Structures </div>
-                <div class="table-cell">4</div>
-                <div class="table-cell">
-                    <input type='checkbox' class='classlist2' value="coen283">
-                </div>
-            </div>
-        </div>
-        <input type=button id="check_valid2" value="check valid" />
-        <input type=button id="select_all2" value="select all" />
-        <input type=button id="deselect_all2" value="deselect all" />
-        <div id=messageBox2></div>
-    </div>
-    <br>
-    <br>
-
-    <div class="tier1">
-        <div class="tier2-1">
-            <h3>4. **SCU Graduate Core Requirements </h3>
-            <p>(min. 6 units), 1 course from each area:</p>
+            <h2>0. Student Information</h2>
+            <h4>Fill up SCU student info</h4>
         </div>
         <div class="tier2-2">
             <div class="table">
+                <div class="table-heading">
+                    <div class="table-cell">name</div>
+                    <div class="table-cell">student id</div>
+                    <div class="table-cell">email (school)</div>
+                </div>
                 <div class="table-row">
                     <div class="table-cell">
-                        <h4>Emerging Topics in Engineering</h4>
+                        <input type="text" name="name" value="%(name)s">
                     </div>
                     <div class="table-cell">
-                        <label>
-                            <select id="req_emrg">
-                                <option value="" selected>------------------ Emerging Topics in Engineering ------------------</option>
-                                <option value="amth308">AMTH 308 Theory of Wavelets</option>
-                                <option value="amth351">AMTH 351 Quantum Computing</option>
-                                <option value="amth367">AMTH 367 Mathematical Finance</option>
-                                <option value="amth387">AMTH 387 Cryptology</option>
-                                <option value="bioe256">BIOE 256/ENGR 256 Introduction to Nanobioengineering</option>
-                                <option value="ceng219">CENG 219 Designing for Sustainable Construction</option>
-                                <option value="coen331">COEN 331 Wireless and Mobile Networks</option>
-                                <option value="coen389">COEN 389 Energy Efficient Computing</option>
-                                <option value="elen280">ELEN 280/MECH 287 Introduction to Alternative Energy Systems</option>
-                                <option value="engr260">ENGR 260 Nanoscale Science and Technology</option>
-                                <option value="engr262">ENGR 262 Nanomaterials</option>
-                                <option value="engr273">ENGR 273 Sustainable Energy and Ethics</option>
-                                <option value="engr337">ENGR 337 Sustainability and Green Information Technology</option>
-                                <option value="engr371">ENGR 371 Space Systems Design and Engineering I Technology</option>
-                                <option value="engr372">ENGR 372 Space Systems Design and Engineering II Technology</option>
-                                <option value="mech234">MECH 234 Combustion Technology</option>
-                                <option value="mech268">MECH 268 Computational Fluid Dynamics I</option>
-                                <option value="mech295">MECH 295 Fire Dynamics - Spec Top</option>
+                        <input type="text" name="stdid" value="%(stdid)s">
+                    </div>
+                    <div class="table-cell">
+                        <input type="text" name="email" value="%(email)s">
+                    </div>
 
-                            </select> 4 units</label>
-                    </div>
-                </div>
-                <div class="table-row">
-                    <div class="table-cell">
-                        <h4>Engineering and Business/Entrepreneurship</h4></div>
-                    <div class="table-cell">
-                        <label>
-                            <select id="req_bsns">
-                                <option value="" selected>------------ Engineering and Business/Entrepreneurship ------------</option>
-                                <option value="amth367">AMTH 367 Mathematical Finance</option>
-                                <option value="amth351">CENG 208 Engineering Economics and Project Finance</option>
-                                <option value="coen287">COEN 287 Software Development Process Management</option>
-                                <option value="engr302">ENGR 302 Managing in the Multicultural Environment</option>
-                                <option value="engr304">ENGR 304 Building Global Teams</option>
-                                <option value="engr336">ENGR 336 Engineering for the Developing World</option>
-                                <option value="engr338">ENGR 338 Mobile Applications for Emerging Markets</option>
-                            </select> 4 units</label>
-                    </div>
-                </div>
-                <div class="table-row">
-                    <div class="table-cell">
-                        <h4>Engineering and Society</h4>
-                    </div>
-                    <div class="table-cell">
-                        <label>
-                            <select id="req_soc">
-                                <option value="" selected>------------------ Emerging Topics in Engineering ------------------</option>
-                                <option value="amth308">AMTH 308 Theory of Wavelets</option>
-                                <option value="amth351">AMTH 351 Quantum Computing</option>
-                                <option value="amth367">AMTH 367 Mathematical Finance</option>
-                                <option value="amth387">AMTH 387 Cryptology</option>
-                                <option value="bioe256">BIOE 256/ENGR 256 Introduction to Nanobioengineering</option>
-                                <option value="ceng219">CENG 219 Designing for Sustainable Construction</option>
-                                <option value="coen331">COEN 331 Wireless and Mobile Networks</option>
-                                <option value="coen389">COEN 389 Energy Efficient Computing</option>
-                                <option value="elen280">ELEN 280/MECH 287 Introduction to Alternative Energy Systems</option>
-                                <option value="engr260">ENGR 260 Nanoscale Science and Technology</option>
-                                <option value="engr262">ENGR 262 Nanomaterials</option>
-                                <option value="engr273">ENGR 273 Sustainable Energy and Ethics</option>
-                                <option value="engr337">ENGR 337 Sustainability and Green Information Technology</option>
-                                <option value="engr371">ENGR 371 Space Systems Design and Engineering I Technology</option>
-                                <option value="engr372">ENGR 372 Space Systems Design and Engineering II Technology</option>
-                                <option value="mech234">MECH 234 Combustion Technology</option>
-                                <option value="mech268">MECH 268 Computational Fluid Dynamics I</option>
-                                <option value="mech295">MECH 295 Fire Dynamics - Spec Top</option>
-                            </select> 4 units</label>
-                    </div>
                 </div>
             </div>
-            <p><em><b>Please Note: Although certain courses (such as ENGR 302, ENGR 304, ENGR 336, and AMTH 367 for example) may appear in multiple categories, they cannot be used to satisfy more than one Core requirement.</b></em></p>
 
-        </div>
-        <input type=button id="check_valid3" value="check valid" />
-        <input type=button id="reset" value="reset" />
-        <div id=messageBox3></div>
-    </div>
-    <br>
-    <br>
+            <div class="tier1">
+                <div class="tier2-1">
+                    <h2>1. Approved Transfer Credit </h2>
+                    <p>(maximu 9 quarter units)</P>
+                </div>
+                <div class="tier2-2">
+                    <div class="table" id="transferTable">
+                        <div class='table-heading'>
+                            <div class="table-cell">Course</div>
+                            <div class="table-cell">Institution</div>
+                            <div class="table-cell">Grade</div>
+                            <div class="table-cell">Quarter Units</div>
+                            <div class="table-cell">
+                                <input type="button" id="add_row" value="add row" />
+                                <br>
+                                <input type="button" id="remove_row" value="remove row" />
+                            </div>
+                        </div>
+                        <div class='table-row row1'>
+                            <div class="table-cell">
+                                <input type="text" class="course row1" id="course1" />
+                            </div>
+                            <div class="table-cell">
+                                <input type="text" class="inst row1" id="inst1" />
+                            </div>
+                            <div class="table-cell">
+                                <input type="text" class="grade row1" id="grade1" />
+                            </div>
+                            <div class="table-cell">
+                                <input type="text" class="qunit row1" id="qunit1" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <p class=note>NOTE: 3 semester units = 4.5 quarer units</p>
+                <input type="button" id="analysis" value="analysis"></input>
+                <div id=messageBox1></div>
+            </div>
+            <br>
+            <br>
 
-    <div class="tier1">
-        <div class="tier2">
-            <h3>Track</h3>
-            <p>List track courses and additional courses totaling to 45 grduate units (MUST INCLUDE A MINIMUM OF 8 UNITS OF COEN COURSES WITH COURSE NUMBERS GREATER THAN 300. NO EXCEPTIONS.)</p>
-            <!--if you list a course that falls under #3, it needs to exclude-->
-            <!--regular expression might be needed to uiformly accept the input
-                    i.e. "coen", "COEN", "coEn", "COen" should give you the same input
-                    
-                    -->
-        </div>
-        <table>
-            <tr>
-                <th>Course #</th>
-                <th>Unit</th>
-            </tr>
-            <tr>
-                <td>
-                    <input type='text' name='track1' value="track1">
-                </td>
-                <td>
-                    <input type='text' name='unit1' value="unit1">
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <input type='text' name='track2' value="track2">
-                </td>
-                <td>
-                    <input type='text' name='unit2' value="unit2">
-                </td>
-            </tr>
-        </table>
-    </div>
-    <input type="submit" onclick="buildJSON()">
+
+            <div class="tier1">
+                <div class="tier2-1">
+                    <h2>2. Foundational Courses</h2>
+                    <p>Mark the courses (or equivalences) the student is required to take.</p>
+                </div>
+                <div class="table">
+                    <div class="table-heading">
+                        <div class="table-cell">
+                            <h4>Course #</h4></div>
+                        <div class="table-cell">
+                            <h4>Title</h4></div>
+                        <div class="table-cell">
+                            <h4>Units</h4></div>
+                        <div class="table-cell">
+                            <h4>Checkbox</h4></div>
+                    </div>
+                    <div class="table-row">
+                        <div class="table-cell">COEN20</div>
+                        <div class="table-cell">Assembly Language</div>
+                        <div class="table-cell">4</div>
+                        <div class="table-cell">
+                            <input type='checkbox' class='classlist2' value="coen20" />
+                        </div>
+
+                    </div>
+                    <div class="table-row">
+                        <div class="table-cell">COEN21</div>
+                        <div class="table-cell">Logic Design</div>
+                        <div class="table-cell">4</div>
+                        <div class="table-cell">
+                            <input type='checkbox' class='classlist2' value="coen21" />
+                        </div>
+                    </div>
+                    <div class="table-row">
+                        <div class="table-cell">COEN12</div>
+                        <div class="table-cell">Data Structure</div>
+                        <div class="table-cell">4</div>
+                        <div class="table-cell">
+                            <input type='checkbox' class='classlist2' value="coen12" />
+                        </div>
+                    </div>
+                    <div class="table-row">
+                        <div class="table-cell">COEN19</div>
+                        <div class="table-cell">Discrete Math</div>
+                        <div class="table-cell">4</div>
+                        <div class="table-cell">
+                            <input type='checkbox' class='classlist2' value="coen19" />
+                        </div>
+                    </div>
+                    <div class="table-row">
+                        <div class="table-cell">AMTH210</div>
+                        <div class="table-cell">Probability</div>
+                        <div class="table-cell">4</div>
+                        <div class="table-cell">
+                            <input type='checkbox' class='classlist2' value="amth210" />
+                        </div>
+                    </div>
+                </div>
+                <p class=note>NOTE: Labs are not required.</p>
+                <input type=button id="check_valid2" value="check valid" />
+                <input type=button id="select_all2" value="select all" />
+                <input type=button id="deselect_all2" value="deselect all" />
+                <div id=messageBox2></div>
+            </div>
+            <br>
+            <br>
+
+
+            <div class="tier1">
+                <div class="tier2-1">
+                    <h2>3. Computer Science and Engineering Core Courses:</h2>
+                    <p>Mark the courses the student is required to take.</p>
+                    <br>
+                </div>
+                <div class="table">
+                    <div class="table-heading">
+                        <div class="table-cell">Course #</div>
+                        <div class="table-cell">Title</div>
+                        <div class="table-cell">Units</div>
+                        <div class="table-cell">Checkbox</div>
+                    </div>
+                    <div class="table-row">
+                        <div class="table-cell">COEN210</div>
+                        <div class="table-cell">Computer Architecture</div>
+                        <div class="table-cell">4</div>
+                        <div class="table-cell">
+                            <input type='checkbox' class='classlist3' value="coen210">
+                        </div>
+                    </div>
+                    <div class="table-row">
+                        <div class="table-cell">COEN279</div>
+                        <div class="table-cell">Design &amp Analysis: Algorithms </div>
+                        <div class="table-cell">4</div>
+                        <div class="table-cell">
+                            <input type='checkbox' class='classlist3' value="coen279">
+                        </div>
+                    </div>
+                    <div class="table-row">
+                        <div class="table-cell">COEN283</div>
+                        <div class="table-cell">Data Structures </div>
+                        <div class="table-cell">4</div>
+                        <div class="table-cell">
+                            <input type='checkbox' class='classlist3' value="coen283">
+                        </div>
+                    </div>
+                </div>
+                <input type=button id="check_valid3" value="check valid" />
+                <input type=button id="select_all3" value="select all" />
+                <input type=button id="deselect_all3" value="deselect all" />
+
+                <div id=messageBox3></div>
+            </div>
+            <br>
+            <br>
+
+            <div class="tier1">
+                <div class="tier2-1">
+                    <h2>4. **SCU Graduate Core Requirements </h2>
+                    <p>(min. 6 units), 1 course from each area:</p>
+                </div>
+                <div class="tier2-2">
+                    <div class="table">
+                        <div class="table-row">
+                            <div class="table-cell">
+                                <h4>Emerging Topics in Engineering</h4>
+                            </div>
+                            <div class="table-cell">
+                                <label>
+                                    <select id="req_emrg">
+                                        <option value="" selected>------------------ Emerging Topics in Engineering ------------------</option>
+                                        <option value="amth308">AMTH 308 Theory of Wavelets</option>
+                                        <option value="amth351">AMTH 351 Quantum Computing</option>
+                                        <option value="amth367">AMTH 367 Mathematical Finance</option>
+                                        <option value="amth387">AMTH 387 Cryptology</option>
+                                        <option value="bioe256">BIOE 256/ENGR 256 Introduction to Nanobioengineering</option>
+                                        <option value="ceng219">CENG 219 Designing for Sustainable Construction</option>
+                                        <option value="coen331">COEN 331 Wireless and Mobile Networks</option>
+                                        <option value="coen389">COEN 389 Energy Efficient Computing</option>
+                                        <option value="elen280">ELEN 280/MECH 287 Introduction to Alternative Energy Systems</option>
+                                        <option value="engr260">ENGR 260 Nanoscale Science and Technology</option>
+                                        <option value="engr262">ENGR 262 Nanomaterials</option>
+                                        <option value="engr273">ENGR 273 Sustainable Energy and Ethics</option>
+                                        <option value="engr337">ENGR 337 Sustainability and Green Information Technology</option>
+                                        <option value="engr371">ENGR 371 Space Systems Design and Engineering I Technology</option>
+                                        <option value="engr372">ENGR 372 Space Systems Design and Engineering II Technology</option>
+                                        <option value="mech234">MECH 234 Combustion Technology</option>
+                                        <option value="mech268">MECH 268 Computational Fluid Dynamics I</option>
+                                        <option value="mech295">MECH 295 Fire Dynamics - Spec Top</option>
+
+                                    </select> 4 units</label>
+                            </div>
+                        </div>
+                        <div class="table-row">
+                            <div class="table-cell">
+                                <h4>Engineering and Business/Entrepreneurship</h4></div>
+                            <div class="table-cell">
+                                <label>
+                                    <select id="req_bsns">
+                                        <option value="" selected>------------ Engineering and Business/Entrepreneurship ------------</option>
+                                        <option value="amth367">AMTH 367 Mathematical Finance</option>
+                                        <option value="amth351">CENG 208 Engineering Economics and Project Finance</option>
+                                        <option value="coen287">COEN 287 Software Development Process Management</option>
+                                        <option value="engr302">ENGR 302 Managing in the Multicultural Environment</option>
+                                        <option value="engr304">ENGR 304 Building Global Teams</option>
+                                        <option value="engr336">ENGR 336 Engineering for the Developing World</option>
+                                        <option value="engr338">ENGR 338 Mobile Applications for Emerging Markets</option>
+                                    </select> 4 units</label>
+                            </div>
+                        </div>
+                        <div class="table-row">
+                            <div class="table-cell">
+                                <h4>Engineering and Society</h4>
+                            </div>
+                            <div class="table-cell">
+                                <label>
+                                    <select id="req_soc">
+                                        <option value="" selected>------------------ Emerging Topics in Engineering ------------------</option>
+                                        <option value="amth308">AMTH 308 Theory of Wavelets</option>
+                                        <option value="amth351">AMTH 351 Quantum Computing</option>
+                                        <option value="amth367">AMTH 367 Mathematical Finance</option>
+                                        <option value="amth387">AMTH 387 Cryptology</option>
+                                        <option value="bioe256">BIOE 256/ENGR 256 Introduction to Nanobioengineering</option>
+                                        <option value="ceng219">CENG 219 Designing for Sustainable Construction</option>
+                                        <option value="coen331">COEN 331 Wireless and Mobile Networks</option>
+                                        <option value="coen389">COEN 389 Energy Efficient Computing</option>
+                                        <option value="elen280">ELEN 280/MECH 287 Introduction to Alternative Energy Systems</option>
+                                        <option value="engr260">ENGR 260 Nanoscale Science and Technology</option>
+                                        <option value="engr262">ENGR 262 Nanomaterials</option>
+                                        <option value="engr273">ENGR 273 Sustainable Energy and Ethics</option>
+                                        <option value="engr337">ENGR 337 Sustainability and Green Information Technology</option>
+                                        <option value="engr371">ENGR 371 Space Systems Design and Engineering I Technology</option>
+                                        <option value="engr372">ENGR 372 Space Systems Design and Engineering II Technology</option>
+                                        <option value="mech234">MECH 234 Combustion Technology</option>
+                                        <option value="mech268">MECH 268 Computational Fluid Dynamics I</option>
+                                        <option value="mech295">MECH 295 Fire Dynamics - Spec Top</option>
+                                    </select> 4 units</label>
+                            </div>
+                        </div>
+                    </div>
+                    <p><em><b>Please Note: Although certain courses (such as ENGR 302, ENGR 304, ENGR 336, and AMTH 367 for example) may appear in multiple categories, they cannot be used to satisfy more than one Core requirement.</b></em></p>
+
+                </div>
+                <input type=button id="check_valid4" value="check valid" />
+                <input type=button id="reset" value="reset" />
+                <div id=messageBox4></div>
+            </div>
+            <br>
+            <br>
+
+            <div class="tier1">
+                <div class="tier2-1">
+                    <h2>5. Track</h2>
+                    <p>List track courses and additional courses totaling to 45 grduate units</P>
+                </div>
+                <div class="tier2-2">
+                    <div class="table" id="transferTable2">
+                        <div class='table-heading'>
+                            <div class="table-cell">Course #</div>
+                            <div class="table-cell">Units</div>
+                            <div class="table-cell">
+                                <input type="button" id="add_row5" value="add row" />
+                                <br>
+                                <input type="button" id="remove_row5" value="remove row" />
+                            </div>
+                        </div>
+                        <div class='table-row row1'>
+                            <div class="table-cell">
+                                <input type="text" class="course" id="course1" />
+                            </div>
+                            <div class="table-cell">
+                                <input type="text" class="units" id="units1" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <p class=note>NOTE: must include a minimum of 8 units of COEN courses with course numbers greater than 300. No exception.</p>
+                <input type="button" id="analysis5" value="analysis"></input>
+                <div id=messageBox5></div>
+            </div>
+            <br>
+            <br>
 </body>
 
 </html>
