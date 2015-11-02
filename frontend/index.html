@@ -64,12 +64,12 @@
     <script type="text/javascript">
         /* JQUERY FUNCTIONS */
         $(document).ready(function () {
+            var safe = true;
             /* 
              *  ##1  APPROVED TRANSFER CREDITS 
              */
-            var c = 1;
-            var tally1 = 0;
-            var safe = true;
+            var c = 1; // row count
+            var arr1 = [];
 
             $('#add_row').click(function () {
                 var table = document.getElementById("transferTable");
@@ -80,7 +80,7 @@
                 $("<div class='table-cell'>").append(input).appendTo(tableRow);
                 var input = $("<input type='text' name='grade' id=grade" + (c + 1) + " />");
                 $("<div class='table-cell'>").append(input).appendTo(tableRow);
-                var input = $("<input type='text' name='qunit' id=qunit" + (c + 1) + " />");
+                var input = $("<input type='text' name='qunit' id=qunit" + (c + 1) + " value=0.0 />");
                 $("<div class='table-cell'>").append(input).appendTo(tableRow);
                 tableRow.appendTo(table);
                 c++;
@@ -95,49 +95,46 @@
             });
 
             $('#analysis1').click(function () {
-                var atc = [];
+                var arrtmp = [];
                 for (i = 0; i < c; i++) {
-                    atc.push({
+                    arrtmp.push({
                         course: $("#course" + (i + 1)).val(),
                         inst: $("#inst" + (i + 1)).val(),
                         grade: $("#grade" + (i + 1)).val(),
-                        qunit: $("#qunit" + (i + 1)).val(),
+                        qunit: Number($("#qunit" + (i + 1)).val())
                     });
                 }
 
-                jQuery.each(atc, function () {
+                jQuery.each(arrtmp, function () {
                     console.log("course: " + this.course);
                     console.log("inst: " + this.inst);
                     console.log("grade: " + this.grade);
                     console.log("qunit: " + this.qunit);
                     console.log(" ");
                 });
-
-                /*   for (i = 0; i < c; i++) {
-                  course = $("#course" + (c+1)).val();
-                  inst = $("#inst" + (c+1)).val();
-                  grade = $("#grade" + (c+1)).val()
-                  qunit = $("#qunit" + (c+1)).val();
-                  
-                  if (course !== "") {
-                  val.push(course);*/
+                arr1 = arrtmp;
             });
 
             $('#tally1').click(function () {
-                for (i = 0; i < c; i++) {
-                    tally1 += Number($("#qunit" + (i + 1)).val());
-                }
+                var tally1 = 0;
+                jQuery.each(arr1, function () {
+                    tally1 += this.qunit;
+                });
                 document.getElementById('messageBox1-2').innerHTML = "TOTAL UNITS = " + tally1;
                 if (tally1 > 9) {
                     safe = false;
                     document.getElementById('messageBox1-3').innerHTML =
-                        "WARNING: You have exceeded the total amount of quarter units. Make sure it's not more than 9 units."
+                        "WARNING: Your total amount of quarter units. Make sure it's not more than 9 units."
+                } else {
+                    safe = true;
+                    document.getElementById('messageBox1-3').innerHTML = "";
                 }
             });
 
 
+
             /* 
-             *      ##2. FOUNDATIONAL COURSES 
+             *  ##2. FOUNDATIONAL COURSES 
              */
             // "select all" button 
             $('#select_all2').click(function () {
@@ -163,16 +160,16 @@
                         "WARNING: You have not checked all the checkboxes. <br> Make sure to do so to move onto the next section.";
                 } else {
                     safe = true;
-                    document.getElementById("messageBox2-3").innerHTML =""
+                    document.getElementById("messageBox2-3").innerHTML = ""
                 }
-                    
+
             });
 
 
             /* 
              *  ##3. CS AND ENGR CORE COURSES## 
              */
-            var arr3;
+            var arr3 = [];
             //var tally;
 
             // "select all" button 
@@ -194,7 +191,7 @@
                         course: $(this).val(),
                         inst: "Santa Clara University",
                         qunit: 4.0
-                    })
+                    });
                 });
                 console.log(val);
                 console.log(arrtmp);
@@ -213,36 +210,76 @@
                 jQuery.each(arr3, function () {
                     tally3 += this.qunit;
                 });
-                document.getElementById("messageBox3-1").innerHTML = "TOTAL UNITS = " + tally3;
+                document.getElementById("messageBox3-2").innerHTML = "TOTAL UNITS = " + tally3;
             });
 
 
 
 
-            /* ##4. SCU Graduate Core Requirements*/
-            $('#check_valid4').click(function () {
-                var val = [];
-                req_emrg = $('#req_emrg option:selected').val();
-                req_bsns = $('#req_bsns option:selected').val();
-                req_soc = $('#req_soc option:selected').val();
-
-                if (req_emrg !== "") val.push(req_emrg);
-                if (req_bsns !== "") val.push(req_bsns);
-                if (req_soc !== "") val.push(req_soc);
-
-                console.log(val);
-                if (val.length == 0) {
-                    document.getElementById("messageBox4").innerHTML = "none";
-                } else {
-                    document.getElementById("messageBox4").innerHTML = val.join(", ");
-                }
-            });
+            /* 
+             *  ##4. SCU Graduate Core Requirements
+             */
+            var arr4 = [];
 
             $('#reset').click(function () {
                 $('#req_emrg>option:eq(0)').attr('selected', true);
                 $('#req_bsns>option:eq(0)').attr('selected', true);
                 $('#req_soc>option:eq(0)').attr('selected', true);
             });
+
+            $('#check_valid4').click(function () {
+                var arrtmp = [];
+                var valtmp = [];
+                var valflt = [];
+                req_emrg = $('#req_emrg option:selected').val();
+                req_bsns = $('#req_bsns option:selected').val();
+                req_soc = $('#req_soc option:selected').val();
+
+                if (req_emrg !== "") valtmp.push(req_emrg);
+                if (req_bsns !== "") valtmp.push(req_bsns);
+                if (req_soc !== "") valtmp.push(req_soc);
+
+                // remove duplicate & 
+                $.each(valtmp, function (i, el) {
+                    if ($.inArray(el, valflt) === -1) {
+                        valflt.push(el);
+                        arrtmp.push({
+                            course: el,
+                            inst: "Santa Clara University",
+                            qunit: 4.0
+                        });
+                    }
+                });
+
+                console.log(valflt);
+                arr4 = arrtmp;
+                console.log(arr4);
+
+                if (valflt.length == 0) {
+                    document.getElementById("messageBox4-1").innerHTML = "none";
+                } else {
+                    document.getElementById("messageBox4-1").innerHTML = valflt.join(", ");
+                }
+            });
+
+            $('#tally4').click(function () {
+                var tally4 = 0;
+                jQuery.each(arr4, function () {
+                    tally4 += this.qunit;
+                });
+                document.getElementById("messageBox4-2").innerHTML = "TOTAL UNITS = " + tally4;
+                if (tally4 < 6) {
+                    safe = false;
+                    document.getElementById('messageBox4-3').innerHTML =
+                        "WARNING: the total amount of quarter units is less than 6. <br> Make sure the sum is more than 6 units.";
+                } else {
+                    safe = true;
+                    document.getElementById('messageBox4-3').innerHTML = "";
+                }
+            });
+
+
+
 
             /* 5. TRACK */
             var ct = 1; //count track courses
@@ -371,48 +408,48 @@
             <br>
 
             <div class="tier1">
-                <div class="tier2-1">
-                    <h2>1. Approved Transfer Credit: </h2>
-                    <p>(maximu 9 quarter units)</P>
-                </div>
-                <div class="tier2-2">
-                    <div class="table" id="transferTable">
-                        <div class='table-heading'>
-                            <div class="table-cell">Course</div>
-                            <div class="table-cell">Institution</div>
-                            <div class="table-cell">Grade</div>
-                            <div class="table-cell">Quarter Units</div>
-                            <div class="table-cell">
-                                <input type="button" id="add_row" value="add row" />
-                                <br>
-                                <input type="button" id="remove_row" value="remove row" />
-                            </div>
-                        </div>
-                        <div class='table-row row1'>
-                            <div class="table-cell">
-                                <input type="text" class='coursename' name="course" id="course1" />
-                            </div>
-                            <div class="table-cell">
-                                <input type="text" name="inst" id="inst1" />
-                            </div>
-                            <div class="table-cell">
-                                <input type="text" name="grade" id="grade1" />
-                            </div>
-                            <div class="table-cell">
-                                <input type="text" name="qunit" id="qunit1" value=0.0 />
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <p class=note>NOTE: 3 semester units = 4.5 quarer units</p>
-                <input type="button" id="analysis1" value="analysis"></input>
-                <input type="button" id="tally1" value="tally"></input>
-                <div id="messageBox1-1"></div>
-                <div id="messageBox1-2"></div>
-                <div id="messageBox1-3" class="warning"></div>
-            </div>
-            <br>
-            <br>
+  <div class="tier2-1">
+    <h2>1. Approved Transfer Credit: </h2>
+    <p>(max. 9 quarter units)</P>
+  </div>
+  <div class="tier2-2">
+    <div class="table" id="transferTable">
+      <div class='table-heading'>
+        <div class="table-cell">Course</div>
+        <div class="table-cell">Institution</div>
+        <div class="table-cell">Grade</div>
+        <div class="table-cell">Quarter Units</div>
+        <div class="table-cell">
+          <input type="button" id="add_row" value="add row" />
+          <br>
+          <input type="button" id="remove_row" value="remove row" />
+        </div>
+      </div>
+      <div class='table-row row1'>
+        <div class="table-cell">
+          <input type="text" class='coursename' name="course" id="course1" />
+        </div>
+        <div class="table-cell">
+          <input type="text" name="inst" id="inst1" />
+        </div>
+        <div class="table-cell">
+          <input type="text" name="grade" id="grade1" />
+        </div>
+        <div class="table-cell">
+          <input type="text" name="qunit" id="qunit1" value=0.0 />
+        </div>
+      </div>
+    </div>
+  </div>
+  <p class=note>NOTE: 3 semester units = 4.5 quarter units</p>
+  <input type="button" id="analysis1" value="analysis"></input>
+  <input type="button" id="tally1" value="tally"></input>
+  <div id="messageBox1-1"></div>
+  <div id="messageBox1-2"></div>
+  <div id="messageBox1-3" class="warning"></div>
+</div>
+<br>
+<br>
 
 
             <div class="tier1">
@@ -536,7 +573,7 @@
 
             <div class="tier1">
                 <div class="tier2-1">
-                    <h2>4. **SCU Graduate Core Requirements </h2>
+                    <h2>4. **SCU Graduate Core Requirements: </h2>
                     <p>(min. 6 units), 1 course from each area:</p>
                 </div>
                 <div class="tier2-2">
@@ -618,12 +655,15 @@
                             </div>
                         </div>
                     </div>
-                    <p><em><b>NOTE: Although certain courses (such as ENGR 302, ENGR 304, ENGR 336, and AMTH 367 for example) may appear in multiple categories, they cannot be used to satisfy more than one Core requirement.</b></em></p>
+                    <p class="note">NOTE: Although certain courses (such as ENGR 302, ENGR 304, ENGR 336, and AMTH 367 for example) may appear in multiple categories, they cannot be used to satisfy more than one Core requirement.</p>
 
                 </div>
                 <input type=button id="check_valid4" value="check valid" />
+                <input type=button id="tally4" value="tally" />
                 <input type=button id="reset" value="reset" />
-                <div id=messageBox4></div>
+                <div id=messageBox4-1></div>
+                <div id=messageBox4-2></div>
+                <div id=messageBox4-3 class="warning"></div>
             </div>
             <br>
             <br>
