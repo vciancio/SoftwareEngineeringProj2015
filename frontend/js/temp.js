@@ -1,4 +1,4 @@
-/* JQUERY FUNCTIONS */
+ JQUERY FUNCTIONS */
 var c = 0;
 var ct = 0;
 
@@ -34,7 +34,7 @@ function addRow_TrackUnits(course, units) {
 }
 
 function removeRow_TransferCredit() {
-    if (c > 1) {
+    if (c > 0) {
         $(".row" + c).remove();
         c--;
         transferCreditAnalysis();
@@ -42,15 +42,17 @@ function removeRow_TransferCredit() {
 }
 
 function removeRow_TrackUnits() {
-    if (ct > 1) {
+    if (ct > 0) {
         $(".row" + ct).remove();
         ct--;
         trackUnitAnalysis();
     }
 }
 
+
+
 function transferCreditAnalysis() {
-         /*
+        /*
          * tally    
          */
         var tallytmp = 0;
@@ -59,10 +61,36 @@ function transferCreditAnalysis() {
             tallytmp += Number(objtmp[i].credits);
         }
         $('#messageBox1-2').html("TOTAL UNITS = " + tallytmp);
+        return tallytmp;
 }
 
-function trackUnitAnalysis() {
+function coenFoundationalAnalysis() {
     /*
+     *  tally
+     */ 
+     $('#messageBox2-2').html("TOTAL UNITS = " + coenFoundationalUnitCount());
+     return coenFoundationalUnitCount();
+}
+
+function  coenCoreAnalysis() {
+    /*
+     *  tally
+     */
+     $('#messageBox3-2').html("TOTAL UNITS = " + coenCoreUnitCount());
+     return coenCoreUnitCount();
+}
+
+function gradCoreAnalysis() {
+    /*
+     *  tally
+     */
+     $('#messageBox4-2').html("TOTAL UNITS = " + gradCoreUnitCount());
+     return gradCoreUnitCount();
+}
+
+
+function trackUnitAnalysis() {
+    /* 
      *  tally
      */
      var tallytmp = 0;
@@ -71,6 +99,59 @@ function trackUnitAnalysis() {
         tallytmp += Number(objtmp[i].credits);
      }
      $('#messageBox5-2').html("TOTAL UNITS = " + tallytmp);
+     return tallytmp;
+}
+
+
+
+function coenFoundationalUnitCount() {
+    var total = 0;
+    var foundational = buildFoundationalCourses();
+    total += foundational.coen20?4:0;
+    total += foundational.coen21?4:0;
+    total += foundational.coen12?4:0;
+    total += foundational.coen19?4:0;
+    total += foundational.amth210?4:0;
+    return total;
+}
+
+
+function coenCoreUnitCount(){
+    var total = 0;
+    var core = buildCoenCoreReqs();
+    total += core.coen210?4:0;
+    total += core.coen279?4:0;
+    total += core.coen283?4:0;
+    return total;
+}
+
+function  gradCoreUnitCount() {
+    var total = 0;
+    var core = buildGradReqs();
+    total += core.req_emerg != "none" ?4:0;
+    total += core.req_business != "none" ?4:0;
+    total += core.req_society != "none" ?4:0;
+    return total;
+}
+
+function TrackValidation() {
+    var status;
+    var grad = buildGradReqs();
+    var track = buildTrackUnits();
+    jQuery.each(function() {
+
+    });
+
+}
+
+function totalUnitCount() {
+    var total = 0; 
+    total += transferCreditAnalysis();
+    total += coenFoundationalUnitCount();
+    total += coenCoreUnitCount();
+    total += gradCoreUnitCount();
+    total += trackUnitAnalysis();
+    return total;
 }
 
 $(document).ready(function () {
@@ -80,6 +161,8 @@ $(document).ready(function () {
 
     addRow_TransferCredit("", "", "", 0.0);
     addRow_TrackUnits("", 0.0);
+
+    
 
     /* 
      *  ##1  APPROVED TRANSFER CREDITS 
@@ -98,6 +181,20 @@ $(document).ready(function () {
     $('input[type=text]').on('input', function(){
         transferCreditAnalysis();
         trackUnitAnalysis();
+    });
+    $('input[type="checkbox"]').on('change', function() {
+        coenCoreAnalysis();
+        coenFoundationalAnalysis();
+    });
+    
+    $("select[name='req_society']").change(function (){
+        gradCoreAnalysis();
+    });
+    $("select[name='req_business']").change(function (){
+        gradCoreAnalysis();
+    });
+    $("select[name='req_emerg']").change(function (){
+        gradCoreAnalysis();
     });
 
 
@@ -130,36 +227,13 @@ $(document).ready(function () {
 
     // "deselect all" button
     $('#deselect_all2').click(function () {
-        $(".classlist2").prop('checked', false);
-    });
-
-    // "check valid" button
-    $('#check_valid2').click(function () { // on click check valid button
-        var val = [];
-        $('.classlist2:checked').each(function (i) { // loop through classlist 
-            val[i] = $(this).val();
-        });
-        //console.log(val);
-
-        if (jQuery.inArray("coen20", val) == -1 || jQuery.inArray("coen21", val) == -1 || jQuery.inArray("coen12", val) == -1 || jQuery.inArray("coen19", val) == -1 || jQuery.inArray("amth210", val) == -1) { //check if all the courses are selected
-            safe = false;
-            document.getElementById("messageBox2-3").innerHTML =
-                "WARNING: You have not checked all the checkboxes. <br> Make sure to do so to move onto the next section.";
-        } else {
-            safe = true;
-            document.getElementById("messageBox2-3").innerHTML = ""
-        }
-
+        x
     });
 
 
     /* 
      *  ##3. CS AND ENGR CORE COURSES## 
      */
-    var arr3 = [];
-    var tally3tmp = 0;
-    //var tally;
-
     // "select all" button 
     $('#select_all3').click(function () { // on click select all button
         $(".classlist3").prop('checked', true);
@@ -325,35 +399,11 @@ $(document).ready(function () {
     /* 
      *  ## 6. UNIT
      */
-    $('#analysis6').click(function () {
-        jQuery.merge(arr, arr1);
-        jQuery.merge(arr, arr3);
-        jQuery.merge(arr, arr4);
-        jQuery.merge(arr, arr5);
-        console.log(arr);
-
-        jQuery.each(arr, function () {
-            console.log("course: " + this.course);
-            console.log("inst: " + this.inst);
-            console.log("qunit: " + this.qunit);
-            console.log(" ");
-        });
-    });
-
-
+    
     $('#tally6').click(function () {
-        tally = tally1tmp + tally3tmp + tally4tmp + tally5tmp;
-        document.getElementById('messageBox6-2').innerHTML = "TOTAL UNITS = " + tally;
-        if (tally < 45) {
-            safe = false;
-            document.getElementById('messageBox6-3').innerHTML =
-                "WARNING: Your total amount of quarter units. Make sure it's not more than 45 units."
-        } else {
-            safe = true;
-            document.getElementById('messageBox6-3').innerHTML = "";
-        }
+        document.getElementById('messageBox6-2').innerHTML = "TOTAL UNITS = " + totalUnitCount();
     });
 
 
 
-}); /* END OF JQUERY FUNCTION */
+}); /* END OF JQUERY FUNCTION 
