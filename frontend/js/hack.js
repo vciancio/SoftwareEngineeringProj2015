@@ -3,10 +3,6 @@ function get(name){
       return decodeURIComponent(name[1]);
 }
 
-function addRow_TransferCredit(course, institution, grade, credits){
-	
-}
-
 function processLoadResponse(result){
   var json = JSON.parse(result);
   if(json.error == "true"){
@@ -22,12 +18,15 @@ function processLoadResponse(result){
   $('input[name="stdid"]').val(obj.stdid);
   $('input[name="email"]').val(obj.email);
 
+  removeRow_TransferCredit();
+
   //Populate the Approved Transfer Credits
   for(var i=0; i<obj.transferCredits.length; i++){
     var mClass = obj.transferCredits[i];
     addRow_TransferCredit(mClass.course, mClass.institution, mClass.grade, mClass.credits);
   }
 
+  removeRow_TrackUnits();
   //Populate the Track Unit Corses
   for(var i=0; i<obj.trackUnits.length; i++){
     var mClass = obj.trackUnits[i];
@@ -58,7 +57,11 @@ function processLoadResponse(result){
     setSelctionValueByName(requirement, value);
   }
 
-  totalUnitCount();
+  totalUnitAnalysis();
+var millisecondsToWait = 1000;
+setTimeout(function() {
+    window.print();
+}, millisecondsToWait);
 }
 
 
@@ -67,21 +70,6 @@ $(document).ready(function () {
 	var stdid= get('stdid');
 	var email= get('email');
 
-	  var url = "http://dark-fusion.servegame.com/Software2015/api/form.php?name=" + name + "&userid=" + stdid + "&student_email=" + email; 
-    $.ajax({
-      url: url,
-      type: "GET",
-      dataType: "text",
-      success: function (result) {
-          switch (result) {
-              default:
-                  processLoadResponse(result);
-                  console.log(result);
-          }
-      },
-      error: function (xhr, ajaxOptions, thrownError) {
-      console.log("Error: xhr.status = " + xhr.status);
-      console.log("Thrown Error: " + thrownError);
-      }
-  });
+  callServer(name, stdid, email, processLoadResponse);
+
 });

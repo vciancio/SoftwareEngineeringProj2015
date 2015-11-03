@@ -1,7 +1,6 @@
 .center {
     margin: auto;
     width: 70%;
-    padding: 10px;
 }
 
 .lowercase {
@@ -43,6 +42,9 @@ p.note {
         
 .table-cell {
     display: table-cell;
+    height: 30px !important
+    padding-top: -10px;
+    padding-bottom: -10px;
     padding-left: 5px;
     padding-right: 5px;
 }
@@ -58,4 +60,21 @@ input[type=checkbox] {
     -o-transform: scale(1.5);
     /* Opera */
     padding: 10px;
+}
+/*div { margin: 50px; }
+*/
+/* signature & title part */
+.completed-by, .signature, .title  { float: left; }
+.signature, .title { 
+  margin: 20px 10px;
+  border-top: 1px solid #000;
+  width: 250px; 
+  text-align: center;
+}
+
+/* phone & date part */
+ .date > .line, .phone > .line {
+  display: inline-block;
+  border-bottom: 1px solid #000;
+  width: 100px; 
 }

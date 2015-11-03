@@ -10,7 +10,8 @@
 
 <body>
     <h1>Program of Studies - Computer Science and Engineering MS</h1>
-    <h3>(this is for students admitted beginning in fall 2008 and after)</h3>
+    <h3>(this is for students admitted beginning in fall 2008 and after) </h3>
+    <p>You may either Enter your information and load your previous form, or just start a new one and hit save at the bottom of the page </p>
     <div class="tier1">
         <div class="tier2-1">
             <h2>0. Student Information:</h2>
@@ -38,7 +39,7 @@
                         <input type="text" name="email" placeholder="i.e. jdoe@scu.edu">
                     </div>
                     <div class="table-cell">
-                        <input type="submit" onclick="loadData()">
+                        <button type="submit" onclick="loadData()">Load Form</button>
                     </div>
                 </div>
             </div>
@@ -66,8 +67,6 @@
                     </div>
                 </div>
                 <p class=note>NOTE: 3 semester units = 4.5 quarter units</p>
-                <input type="button" id="analysis1" value="analysis"></input>
-                <input type="button" id="tally1" value="tally"></input>
                 <div id="messageBox1-1"></div>
                 <div id="messageBox1-2"></div>
                 <div id="messageBox1-3" class="warning"></div>
@@ -183,8 +182,6 @@
                         </div>
                     </div>
                 </div>
-                <input type=button id="check_valid3" value="check valid" />
-                <input type=button id="tally3" value="tally" />
                 <input type=button id="select_all3" value="select all" />
                 <input type=button id="deselect_all3" value="deselect all" />
                 <div id="messageBox3-1"></div>
@@ -281,7 +278,7 @@
                     <p class="note">NOTE: Although certain courses (such as ENGR 302, ENGR 304, ENGR 336, and AMTH 367 for example) may appear in multiple categories, they cannot be used to satisfy more than one Core requirement.</p>
 
                 </div>
-                <input type=button id="reset" value="reset" />
+                <!-- <input type=button id="reset" value="reset" /> -->
                 <div id="messageBox4-1"></div>
                 <div id="messageBox4-2"></div>
                 <div id="messageBox4-3" class="warning"></div>
@@ -309,13 +306,10 @@
                     </div>
                 </div>
                 <p class=note>NOTE: must include a minimum of 8 units of COEN courses with course numbers greater than 300. No exception.</p>
-                <input type="button" id="analysis5" value="analysis" />
-                <input type="button" id="tally5" value="tally" />
                 <div id='messageBox5-1'></div>
                 <div id='messageBox5-2'></div>
                 <div id='messageBox5-3' class='warning'></div>
             </div>
-            <br>
             <br>
 
             <div class="tier1">
@@ -323,31 +317,24 @@
                     <h2>6. Units</h2>
                     <p>Total units counted</P>
                     <div id="messageBox6-2"></div>
-                    <input type="button" id="tally6" value="tally"></input>
                 </div>
-                <div class="tier2-2">
-                    <div class="table" id="transferTable2">
-                        <div class='table-heading'>
-                            <div class="table-cell">Course</div>
-                            <div class="table-cell">Units</div>
-                            <div class="table-cell"></div>
-                        </div>
-                        <div class='table-row row1'>
-                            <div class="table-cell">
-                            </div>
-                            <div class="table-cell">
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <input type="button" id="analysis6" value="analysis"></input>
                 <div id="messageBox6-1"></div>
                 <div id="messageBox6-3" class="warning"></div>
             </div>
             <br>
+
+            <div class="tier1">
+                <div class="tier2-1">
+                    <div class="table">
+                        <div class="table-cell">
+                            <button type="submit" onclick="saveData()">Save</button>
+                        </div>
+                        <div class="table_cell">
+                            <button type="submit" onclick="printData()">Print</button>
+                        </div>
+                    </divv>
+                </div>
+            </div>
             <br>
-
-            <input type="submit" onclick="saveData()">
 </body>
-
 </html>

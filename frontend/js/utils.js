@@ -1,3 +1,5 @@
+var BASE_URL = "http://dark-fusion.servegame.com/Software2015"
+
 /* JSON REQUEST / SERVER HANDLING */
 function isArray(obj){
   return obj.constructor === Array;
@@ -124,11 +126,15 @@ function processLoadResponse(result){
   var obj = json.content.mForm;
   console.log(obj);
 
+  removeRow_TransferCredit();
+
   //Populate the Approved Transfer Credits
   for(var i=0; i<obj.transferCredits.length; i++){
     var mClass = obj.transferCredits[i];
     addRow_TransferCredit(mClass.course, mClass.institution, mClass.grade, mClass.credits);
   }
+
+  removeRow_TrackUnits();
 
   //Populate the Track Unit Corses
   for(var i=0; i<obj.trackUnits.length; i++){
@@ -160,7 +166,7 @@ function processLoadResponse(result){
     setSelctionValueByName(requirement, value);
   }
 
-  totalUnitCount();
+  totalUnitAnalysis();
 }
 
 /**
@@ -169,7 +175,7 @@ function processLoadResponse(result){
  */
 function saveData(){
   var obj = buildDataObj();
-  var url = "http://dark-fusion.servegame.com/Software2015/api/form.php?name=" + obj.mForm.mName + "&userid=" + obj.mForm.stdid + "&student_email=" + obj.mForm.email; 
+  var url = BASE_URL + "api/form.php?name=" + obj.mForm.mName + "&userid=" + obj.mForm.stdid + "&student_email=" + obj.mForm.email; 
   console.log(url);
   $.ajax({
       url: url,
@@ -192,12 +198,17 @@ function saveData(){
   });
 }
 
+function loadData(){
+    var obj = buildDataObj();
+    callServer(obj.mForm.mName, obj.mForm.stdid, obj.mForm.email, processLoadResponse);;
+}
+
 /**
  * Load the Data from the server for the username and the email
  */
-function loadData(){
+function callServer(name, stdid, email, callback){
   var obj = buildDataObj();
-  var url = "http://dark-fusion.servegame.com/Software2015/api/form.php?name=" + obj.mForm.mName + "&userid=" + obj.mForm.stdid + "&student_email=" + obj.mForm.email; 
+  var url = BASE_URL + "/api/form.php?name=" + name + "&userid=" + stdid + "&student_email=" + email; 
     $.ajax({
       url: url,
       type: "GET",
@@ -205,7 +216,7 @@ function loadData(){
       success: function (result) {
           switch (result) {
               default:
-                  processLoadResponse(result);
+                  callback(result);
                   console.log(result);
           }
       },
@@ -214,4 +225,10 @@ function loadData(){
       console.log("Thrown Error: " + thrownError);
       }
   });
+}
+
+function printData(){
+  var obj = buildDataObj();
+  var win = window.open(BASE_URL + "/frontend/form.html?name=" + obj.mForm.mName + "&userid=" + obj.mForm.stdid + "&student_email=" + obj.mForm.email, '_blank');
+  win.focus();
 }
