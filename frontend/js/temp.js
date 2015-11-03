@@ -1,4 +1,4 @@
-JQUERY FUNCTIONS
+/*JQUERY FUNCTIONS*/
 var c = 0;
 var ct = 0;
 
@@ -406,4 +406,4 @@ $(document).ready(function () {
 
 
 
-}); /* END OF JQUERY FUNCTION 
+}); /* END OF JQUERY FUNCTION */
