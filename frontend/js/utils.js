@@ -1,5 +1,5 @@
 /* JSON REQUEST / SERVER HANDLING */
-function getSelectionValue(name) {
+function getSelectionValueByName(name) {
     return $('select[name="' + name + '"]').val();
 }
 
@@ -10,9 +10,9 @@ function getSelectionValue(name) {
   */
 function buildJSON_reqs() {
     var json = '"reqs":"{'
-    var req_emerg = getSelectionValue("req_emerg");
-    var req_business = getSelectionValue("req_business");
-    var req_society = getSelectionValue("req_society");
+    var req_emerg = getSelectionValueByName("req_emerg");
+    var req_business = getSelectionValueByName("req_business");
+    var req_society = getSelectionValueByName("req_society");
 
     json = json + "\"req_emerg\":\"" + req_emerg + "\"";
     json = json + ", \"req_business\":\"" + req_business + "\"";
