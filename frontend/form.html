@@ -2,25 +2,21 @@
 <html>
 
 <head>
-    <link rel="stylesheet" type="text/css" href="css/index.css">
+    <link rel="stylesheet" type="text/css" href="css/form.css">
     <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
     <script type="text/javascript" src="js/utils.js"></script>
     <script type="text/javascript" src="js/temp.js"></script>
-<<<<<<< HEAD
-    <script type="text/javascript" src="//e.issuu.com/embed.js" async="true"></script>
-
-=======
->>>>>>> 3dd95efab8a4a7b4a38379426e7e3fd8ce128911
+    <script type="text/javascript" src="js/hack.js"></script>
 </head>
 
 <body>
-    <h1>Program of Studies - Computer Science and Engineering MS</h1>
-    <h3>(this is for students admitted beginning in fall 2008 and after) </h3>
-    <p>You may either Enter your information and load your previous form, or just start a new one and hit save at the bottom of the page </p>
-    <div class="tier1">
+    <div class="center">
+        <h1>Program of Studies - Computer Science and Engineering MS</h1>
+        <h3>(for students admitted beginning in fall 2008 and after)</h3>
+    </div>
+    <div class="tier1 center">
         <div class="tier2-1">
-            <h2>0. Student Information:</h2>
-            <h4>Fill up SCU student info</h4>
+            <h2>Basic Student Information:</h2>
         </div>
         <div class="tier2-2">
             <div class="table">
@@ -43,18 +39,12 @@
                     <div class="table-cell">
                         <input type="text" name="email" placeholder="i.e. jdoe@scu.edu">
                     </div>
-                    <div class="table-cell">
-                        <button type="submit" onclick="loadData()">Load Form</button>
-                    </div>
                 </div>
             </div>
-            <br>
-            <br>
-
             <div class="tier1">
                 <div class="tier2-1">
                     <h2>1. Approved Transfer Credit: </h2>
-                    <p>(max. 9 quarter units)</P>
+                    <p>(max. 9 quarter units)</p>
                 </div>
                 <div class="tier2-2">
                     <div class="table" id="transferTable">
@@ -63,22 +53,11 @@
                             <div class="table-cell">Institution</div>
                             <div class="table-cell">Grade</div>
                             <div class="table-cell">Quarter Units</div>
-                            <div class="table-cell">
-                                <input type="button" id="add_row" value="add row" />
-                                <br>
-                                <input type="button" id="remove_row" value="remove row" />
-                            </div>
                         </div>
                     </div>
                 </div>
                 <p class=note>NOTE: 3 semester units = 4.5 quarter units</p>
-                <div id="messageBox1-1"></div>
-                <div id="messageBox1-2"></div>
-                <div id="messageBox1-3" class="warning"></div>
             </div>
-            <br>
-            <br>
-
 
             <div class="tier1">
                 <div class="tier2-1">
@@ -139,21 +118,15 @@
                     </div>
                 </div>
                 <p class=note>NOTE: Labs are not required.</p>
-                <input type=button id="select_all2" value="select all" />
-                <input type=button id="deselect_all2" value="deselect all" />
                 <div id="messageBox2-1"></div>
                 <div id="messageBox2-2"></div>
                 <div id="messageBox2-3" class="warning"></div>
             </div>
-            <br>
-            <br>
-
 
             <div class="tier1">
                 <div class="tier2-1">
                     <h2>3. Computer Science and Engineering Core Courses:</h2>
-                    <p>Mark the courses the student is required to take.</p>
-                    <br>
+                    <p>Mark the courses the student is required to take.</p>    
                 </div>
                 <div class="table">
                     <div class="table-heading">
@@ -187,14 +160,10 @@
                         </div>
                     </div>
                 </div>
-                <input type=button id="select_all3" value="select all" />
-                <input type=button id="deselect_all3" value="deselect all" />
                 <div id="messageBox3-1"></div>
                 <div id="messageBox3-2"></div>
                 <div id="messageBox3-3"></div>
             </div>
-            <br>
-            <br>
 
             <div class="tier1">
                 <div class="tier2-1">
@@ -210,7 +179,7 @@
                             <div class="table-cell">
                                 <label>
                                     <select id="req_emrg" name="req_emerg">
-                                        <option value="none1" selected>------------------ Emerging Topics in Engineering ------------------</option>
+                                        <option value="none" selected>------------------ Emerging Topics in Engineering ------------------</option>
                                         <option value="amth308">AMTH 308 Theory of Wavelets</option>
                                         <option value="amth351">AMTH 351 Quantum Computing</option>
                                         <option value="amth367">AMTH 367 Mathematical Finance</option>
@@ -229,7 +198,6 @@
                                         <option value="mech234">MECH 234 Combustion Technology</option>
                                         <option value="mech268">MECH 268 Computational Fluid Dynamics I</option>
                                         <option value="mech295">MECH 295 Fire Dynamics - Spec Top</option>
-
                                     </select> 4 units</label>
                             </div>
                         </div>
@@ -239,7 +207,7 @@
                             <div class="table-cell">
                                 <label>
                                     <select id="req_bsns" name="req_business">
-                                        <option value="none2" selected>------------ Engineering and Business/Entrepreneurship ------------</option>
+                                        <option value="none" selected>------------ Engineering and Business/Entrepreneurship ------------</option>
                                         <option value="amth367">AMTH 367 Mathematical Finance</option>
                                         <option value="ceng208">CENG 208 Engineering Economics and Project Finance</option>
                                         <option value="coen287">COEN 287 Software Development Process Management</option>
@@ -257,7 +225,7 @@
                             <div class="table-cell">
                                 <label>
                                     <select id="req_soc" name="req_society">
-                                        <option value="none3" selected>------------------ Emerging Topics in Engineering ------------------</option>
+                                        <option value="none" selected>------------------ Emerging Topics in Engineering ------------------</option>
                                         <option value="amth308">AMTH 308 Theory of Wavelets</option>
                                         <option value="amth351">AMTH 351 Quantum Computing</option>
                                         <option value="amth367">AMTH 367 Mathematical Finance</option>
@@ -283,15 +251,10 @@
                     <p class="note">NOTE: Although certain courses (such as ENGR 302, ENGR 304, ENGR 336, and AMTH 367 for example) may appear in multiple categories, they cannot be used to satisfy more than one Core requirement.</p>
 
                 </div>
-                <!-- <input type=button id="reset" value="reset" /> -->
                 <div id="messageBox4-1"></div>
                 <div id="messageBox4-2"></div>
                 <div id="messageBox4-3" class="warning"></div>
             </div>
-            <br>
-            <br>
-
-
             <div class="tier1">
                 <div class="tier2-1">
                     <h2>5. Track</h2>
@@ -302,20 +265,11 @@
                         <div class='table-heading'>
                             <div class="table-cell">Course #</div>
                             <div class="table-cell">Units</div>
-                            <div class="table-cell">
-                                <input type="button" id="add_row5" value="add row" />
-                                <br>
-                                <input type="button" id="remove_row5" value="remove row" />
-                            </div>
                         </div>
                     </div>
                 </div>
                 <p class=note>NOTE: must include a minimum of 8 units of COEN courses with course numbers greater than 300. No exception.</p>
-                <div id='messageBox5-1'></div>
-                <div id='messageBox5-2'></div>
-                <div id='messageBox5-3' class='warning'></div>
             </div>
-            <br>
 
             <div class="tier1">
                 <div class="tier2-1">
@@ -327,19 +281,12 @@
                 <div id="messageBox6-3" class="warning"></div>
             </div>
             <br>
-
-            <div class="tier1">
-                <div class="tier2-1">
-                    <div class="table">
-                        <div class="table-cell">
-                            <button type="submit" onclick="saveData()">Save</button>
-                        </div>
-                        <div class="table_cell">
-                            <button type="submit" onclick="printData()">Print</button>
-                        </div>
-                    </divv>
-                </div>
-            </div>
             <br>
-</body>
+            <div> 
+                <span class = "completed-by">Adviser:</span>
+                <span class ="signature">Signiture</span>    
+                <span class ="date">Date: <span class = "line"></span></span> 
+            </div>
+        </div>
+    </body>
 </html>

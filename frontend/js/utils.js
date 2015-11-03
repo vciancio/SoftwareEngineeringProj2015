@@ -1,3 +1,5 @@
+var BASE_URL = "http://linux.students.engr.scu.edu/~vciancio/Software2015"
+
 /* JSON REQUEST / SERVER HANDLING */
 function isArray(obj){
   return obj.constructor === Array;
@@ -124,19 +126,21 @@ function processLoadResponse(result){
   var obj = json.content.mForm;
   console.log(obj);
 
+  // removeRow_TransferCredit();
+
   //Populate the Approved Transfer Credits
   for(var i=0; i<obj.transferCredits.length; i++){
     var mClass = obj.transferCredits[i];
     addRow_TransferCredit(mClass.course, mClass.institution, mClass.grade, mClass.credits);
   }
-  transferCreditAnalysis();
+
+  removeRow_TrackUnits();
 
   //Populate the Track Unit Corses
   for(var i=0; i<obj.trackUnits.length; i++){
     var mClass = obj.trackUnits[i];
     addRow_TrackUnits(mClass.course, mClass.credits);
   }
-  trackUnitAnalysis();
 
   //Populate the Foundational Courses
   var foundationKeys = Object.keys(obj.foundationCourses);
@@ -162,6 +166,7 @@ function processLoadResponse(result){
     setSelctionValueByName(requirement, value);
   }
 
+  totalUnitAnalysis();
 }
 
 /**
@@ -170,7 +175,7 @@ function processLoadResponse(result){
  */
 function saveData(){
   var obj = buildDataObj();
-  var url = "http://dark-fusion.servegame.com/Software2015/api/form.php?name=" + obj.mForm.mName + "&userid=" + obj.mForm.stdid + "&student_email=" + obj.mForm.email; 
+  var url = BASE_URL + "/api/form.php?name=" + obj.mForm.mName + "&userid=" + obj.mForm.stdid + "&student_email=" + obj.mForm.email; 
   console.log(url);
   $.ajax({
       url: url,
@@ -193,12 +198,17 @@ function saveData(){
   });
 }
 
+function loadData(){
+    var obj = buildDataObj();
+    callLoadServer(obj.mForm.mName, obj.mForm.stdid, obj.mForm.email, processLoadResponse);;
+}
+
 /**
  * Load the Data from the server for the username and the email
  */
-function loadData(){
+function callLoadServer(name, stdid, email, callback){
   var obj = buildDataObj();
-  var url = "http://dark-fusion.servegame.com/Software2015/api/form.php?name=" + obj.mForm.mName + "&userid=" + obj.mForm.stdid + "&student_email=" + obj.mForm.email; 
+  var url = BASE_URL + "/api/form.php?name=" + name + "&userid=" + stdid + "&student_email=" + email; 
     $.ajax({
       url: url,
       type: "GET",
@@ -206,7 +216,7 @@ function loadData(){
       success: function (result) {
           switch (result) {
               default:
-                  processLoadResponse(result);
+                  callback(result);
                   console.log(result);
           }
       },
@@ -215,4 +225,12 @@ function loadData(){
       console.log("Thrown Error: " + thrownError);
       }
   });
+}
+
+function printData(){
+  saveData();
+  var obj = buildDataObj();
+  var url = BASE_URL + "/frontend/form.html?name=" + obj.mForm.mName + "&stdid=" + obj.mForm.stdid + "&email=" + obj.mForm.email;
+  var win = window.open(url, '_blank');
+  win.focus();
 }
