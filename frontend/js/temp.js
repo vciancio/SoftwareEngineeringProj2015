@@ -23,10 +23,9 @@ function addRow_TransferCredit(course, institution, grade, unit) {
 function addRow_TrackUnits(course, units) {
     var table = document.getElementById("transferTable2");
     var tableRow = $("<div id='unitTrack_row' class='table-row row" + (ct + 1) + "'>");
-    var input = $("<input type='text' name='course' class='lowercase' id='course" + (ct + 1) + "' value='" + course + "' />").on("keydown", function (e) {return e.which !== 32;})
-    input = input.on('input', function() {
-        trackValidation_Grad();
+    var input = $("<input type='text' name='course' class='lowercase' id='course" + (ct + 1) + "' value='" + course + "' />").on("keydown", function (e) {return e.which !== 32;}).on('input', function() {
         trackValidation_Core();
+        trackValidation_Grad();
     });
     $("<div class='table-cell'>").append(input).appendTo(tableRow);
     var input = $("<input type='text' name='units' id='units" + (ct + 1) + "' value=" + units + " />");
@@ -191,9 +190,11 @@ function trackValidation_Grad() {
             (track[i].course == grad.req_business) ||
             (track[i].course == grad.req_society)) {
             fail = true;
+            
+        } 
+        if (fail) {
             $("#messageBox5-3").html("WARNING: You included the same GRAD CORE course twice");
         } else {
-            fail = false;
             $("#messageBox5-3").html("");
         }
     }
