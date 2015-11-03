@@ -7,7 +7,7 @@ function generateError($reason){
 }
 
 function generateSuccess($content, $message){
- return "{\"error\":\"false\", \"message\":\"".$message."\", \"content\":\"".$content."\"}";
+ return "{\"error\":\"false\", \"message\":\"".$message."\", \"content\":".$content."}";
 }
 
 function generatePath($userid, $name){

@@ -69,7 +69,7 @@ function buildGradReqs() {
   * Will Build the JSON String that will be stored in the server
   * @return a JSON String
   */
-function buildJSON() {
+function buildDataObj() {
   var obj = new Object();
   var json = new Object();
   json.mName = $('input[name="fname"]').val() + " " + $('input[name="lname"]').val();
@@ -82,5 +82,70 @@ function buildJSON() {
 
   obj.mForm = json;
 
-  return JSON.stringify(obj);
+  return obj;
+}
+
+function processSaveResponse(result){
+  console.log(response);
+}
+
+function processLoadResponse(result){
+  var json = JSON.parse(result);
+  
+  console.log(json);
+}
+
+/**
+ * Save Data To the Server
+ * Will call BuildDataObject and then send to server
+ */
+function saveData(){
+  var obj = buildDataObj();
+  var url = "http://dark-fusion.servegame.com/Software2015/api/form.php?name=" + obj.mForm.mName + "&userid=" + obj.mForm.stdid + "&student_email=" + obj.mForm.email; 
+  console.log(url);
+  $.ajax({
+      url: url,
+      type: "POST",
+      data: JSON.stringify(obj),
+      dataType: "json",
+      success: function (result) {
+          switch (result) {
+              case true:
+                  processSaveResponse(result);
+                  break;
+              default:
+                  console.log(result);
+          }
+      },
+      error: function (xhr, ajaxOptions, thrownError) {
+      console.log("Error: xhr.status = " + xhr.status);
+      console.log("Thrown Error: " + thrownError);
+      }
+  });
+}
+
+/**
+ * Load the Data from the server for the username and the email
+ */
+function loadData(){
+  var obj = buildDataObj();
+  var url = "http://dark-fusion.servegame.com/Software2015/api/form.php?name=" + obj.mForm.mName + "&userid=" + obj.mForm.stdid + "&student_email=" + obj.mForm.email; 
+    $.ajax({
+      url: url,
+      type: "GET",
+      dataType: "text",
+      success: function (result) {
+          switch (result) {
+              case true:
+                  processLoadResponse(result);
+                  break;
+              default:
+                  console.log(result);
+          }
+      },
+      error: function (xhr, ajaxOptions, thrownError) {
+      console.log("Error: xhr.status = " + xhr.status);
+      console.log("Thrown Error: " + thrownError);
+      }
+  });
 }
