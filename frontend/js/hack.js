@@ -3,7 +3,7 @@ function get(name){
       return decodeURIComponent(name[1]);
 }
 
-function processLoadResponse(result){
+function processPrintLoadResponse(result){
   var json = JSON.parse(result);
   if(json.error == "true"){
     alert("There was an error: " + json.message);
@@ -18,7 +18,7 @@ function processLoadResponse(result){
   $('input[name="stdid"]').val(obj.stdid);
   $('input[name="email"]').val(obj.email);
 
-  removeRow_TransferCredit();
+  // removeRow_TransferCredit();
 
   //Populate the Approved Transfer Credits
   for(var i=0; i<obj.transferCredits.length; i++){
@@ -70,6 +70,5 @@ $(document).ready(function () {
 	var stdid= get('stdid');
 	var email= get('email');
 
-  callServer(name, stdid, email, processLoadResponse);
-
+  callLoadServer(name, stdid, email, processPrintLoadResponse);
 });

@@ -1,4 +1,4 @@
-var BASE_URL = "http://dark-fusion.servegame.com/Software2015"
+var BASE_URL = "http://linux.students.engr.scu.edu/~vciancio/Software2015"
 
 /* JSON REQUEST / SERVER HANDLING */
 function isArray(obj){
@@ -175,7 +175,7 @@ function processLoadResponse(result){
  */
 function saveData(){
   var obj = buildDataObj();
-  var url = BASE_URL + "api/form.php?name=" + obj.mForm.mName + "&userid=" + obj.mForm.stdid + "&student_email=" + obj.mForm.email; 
+  var url = BASE_URL + "/api/form.php?name=" + obj.mForm.mName + "&userid=" + obj.mForm.stdid + "&student_email=" + obj.mForm.email; 
   console.log(url);
   $.ajax({
       url: url,
@@ -200,13 +200,13 @@ function saveData(){
 
 function loadData(){
     var obj = buildDataObj();
-    callServer(obj.mForm.mName, obj.mForm.stdid, obj.mForm.email, processLoadResponse);;
+    callLoadServer(obj.mForm.mName, obj.mForm.stdid, obj.mForm.email, processLoadResponse);;
 }
 
 /**
  * Load the Data from the server for the username and the email
  */
-function callServer(name, stdid, email, callback){
+function callLoadServer(name, stdid, email, callback){
   var obj = buildDataObj();
   var url = BASE_URL + "/api/form.php?name=" + name + "&userid=" + stdid + "&student_email=" + email; 
     $.ajax({
@@ -229,6 +229,7 @@ function callServer(name, stdid, email, callback){
 
 function printData(){
   var obj = buildDataObj();
-  var win = window.open(BASE_URL + "/frontend/form.html?name=" + obj.mForm.mName + "&userid=" + obj.mForm.stdid + "&student_email=" + obj.mForm.email, '_blank');
+  var url = BASE_URL + "/frontend/form.html?name=" + obj.mForm.mName + "&stdid=" + obj.mForm.stdid + "&email=" + obj.mForm.email;
+  var win = window.open(url, '_blank');
   win.focus();
 }
