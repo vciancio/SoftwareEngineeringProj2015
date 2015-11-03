@@ -2,19 +2,21 @@
 <html>
 
 <head>
-    <link rel="stylesheet" type="text/css" href="css/index.css">
+    <link rel="stylesheet" type="text/css" href="css/form.css">
     <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
     <script type="text/javascript" src="js/utils.js"></script>
     <script type="text/javascript" src="js/temp.js"></script>
+    <script type="text/javascript" src="js/hack.js"></script>
 </head>
 
 <body>
-    <h1>Program of Studies - Computer Science and Engineering MS</h1>
-    <h3>(this is for students admitted beginning in fall 2008 and after)</h3>
-    <div class="tier1">
+    <div class="center">
+        <h1>Program of Studies - Computer Science and Engineering MS</h1>
+        <h3>(for students admitted beginning in fall 2008 and after)</h3>
+    </div>
+    <div class="tier1 center">
         <div class="tier2-1">
-            <h2>0. Student Information:</h2>
-            <h4>Fill up SCU student info</h4>
+            <h2>Basic Student Information:</h2>
         </div>
         <div class="tier2-2">
             <div class="table">
@@ -37,14 +39,9 @@
                     <div class="table-cell">
                         <input type="text" name="email" placeholder="i.e. jdoe@scu.edu">
                     </div>
-                    <div class="table-cell">
-                        <input type="submit" onclick="loadData()">
-                    </div>
                 </div>
             </div>
             <br>
-            <br>
-
             <div class="tier1">
                 <div class="tier2-1">
                     <h2>1. Approved Transfer Credit: </h2>
@@ -57,24 +54,12 @@
                             <div class="table-cell">Institution</div>
                             <div class="table-cell">Grade</div>
                             <div class="table-cell">Quarter Units</div>
-                            <div class="table-cell">
-                                <input type="button" id="add_row" value="add row" />
-                                <br>
-                                <input type="button" id="remove_row" value="remove row" />
-                            </div>
                         </div>
                     </div>
                 </div>
                 <p class=note>NOTE: 3 semester units = 4.5 quarter units</p>
-                <input type="button" id="analysis1" value="analysis"></input>
-                <input type="button" id="tally1" value="tally"></input>
-                <div id="messageBox1-1"></div>
-                <div id="messageBox1-2"></div>
-                <div id="messageBox1-3" class="warning"></div>
             </div>
             <br>
-            <br>
-
 
             <div class="tier1">
                 <div class="tier2-1">
@@ -135,16 +120,11 @@
                     </div>
                 </div>
                 <p class=note>NOTE: Labs are not required.</p>
-                <input type=button id="check_valid2" value="check valid" />
-                <input type=button id="select_all2" value="select all" />
-                <input type=button id="deselect_all2" value="deselect all" />
                 <div id="messageBox2-1"></div>
                 <div id="messageBox2-2"></div>
                 <div id="messageBox2-3" class="warning"></div>
             </div>
             <br>
-            <br>
-
 
             <div class="tier1">
                 <div class="tier2-1">
@@ -184,15 +164,10 @@
                         </div>
                     </div>
                 </div>
-                <input type=button id="check_valid3" value="check valid" />
-                <input type=button id="tally3" value="tally" />
-                <input type=button id="select_all3" value="select all" />
-                <input type=button id="deselect_all3" value="deselect all" />
                 <div id="messageBox3-1"></div>
                 <div id="messageBox3-2"></div>
                 <div id="messageBox3-3"></div>
             </div>
-            <br>
             <br>
 
             <div class="tier1">
@@ -228,7 +203,6 @@
                                         <option value="mech234">MECH 234 Combustion Technology</option>
                                         <option value="mech268">MECH 268 Computational Fluid Dynamics I</option>
                                         <option value="mech295">MECH 295 Fire Dynamics - Spec Top</option>
-
                                     </select> 4 units</label>
                             </div>
                         </div>
@@ -282,14 +256,11 @@
                     <p class="note">NOTE: Although certain courses (such as ENGR 302, ENGR 304, ENGR 336, and AMTH 367 for example) may appear in multiple categories, they cannot be used to satisfy more than one Core requirement.</p>
 
                 </div>
-                <input type=button id="reset" value="reset" />
                 <div id="messageBox4-1"></div>
                 <div id="messageBox4-2"></div>
                 <div id="messageBox4-3" class="warning"></div>
             </div>
             <br>
-            <br>
-
 
             <div class="tier1">
                 <div class="tier2-1">
@@ -301,22 +272,11 @@
                         <div class='table-heading'>
                             <div class="table-cell">Course #</div>
                             <div class="table-cell">Units</div>
-                            <div class="table-cell">
-                                <input type="button" id="add_row5" value="add row" />
-                                <br>
-                                <input type="button" id="remove_row5" value="remove row" />
-                            </div>
                         </div>
                     </div>
                 </div>
                 <p class=note>NOTE: must include a minimum of 8 units of COEN courses with course numbers greater than 300. No exception.</p>
-                <input type="button" id="analysis5" value="analysis" />
-                <input type="button" id="tally5" value="tally" />
-                <div id='messageBox5-1'></div>
-                <div id='messageBox5-2'></div>
-                <div id='messageBox5-3'></div>
             </div>
-            <br>
             <br>
 
             <div class="tier1">
@@ -324,7 +284,6 @@
                     <h2>6. Units</h2>
                     <p>Total units counted</P>
                     <div id="messageBox6-2"></div>
-                    <input type="button" id="tally6" value="tally"></input>
                 </div>
                 <div class="tier2-2">
                     <div class="table" id="transferTable2">
@@ -341,14 +300,10 @@
                         </div>
                     </div>
                 </div>
-                <input type="button" id="analysis6" value="analysis"></input>
                 <div id="messageBox6-1"></div>
                 <div id="messageBox6-3" class="warning"></div>
             </div>
             <br>
-            <br>
-
-            <input type="submit" onclick="saveData()">
 </body>
 
 </html>

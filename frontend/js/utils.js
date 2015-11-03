@@ -129,14 +129,12 @@ function processLoadResponse(result){
     var mClass = obj.transferCredits[i];
     addRow_TransferCredit(mClass.course, mClass.institution, mClass.grade, mClass.credits);
   }
-  transferCreditAnalysis();
 
   //Populate the Track Unit Corses
   for(var i=0; i<obj.trackUnits.length; i++){
     var mClass = obj.trackUnits[i];
     addRow_TrackUnits(mClass.course, mClass.credits);
   }
-  trackUnitAnalysis();
 
   //Populate the Foundational Courses
   var foundationKeys = Object.keys(obj.foundationCourses);
@@ -162,6 +160,7 @@ function processLoadResponse(result){
     setSelctionValueByName(requirement, value);
   }
 
+  totalUnitCount();
 }
 
 /**
