@@ -38,4 +38,5 @@ function buildJSON() {
 
     json = json + "}";
     alert(json);
+    return json;
 }
