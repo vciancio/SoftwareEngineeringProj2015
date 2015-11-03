@@ -11,6 +11,26 @@ function getCheckboxValueById(id) {
   return $("#"+id).prop('checked');
 }
 
+function buildTransferCredits(){
+  var classes = [];
+  var courses = $("#transferTable #tCredit_row input[name='course']");
+  var institutions = $("#transferTable #tCredit_row input[name='inst']");
+  var grades = $("#transferTable #tCredit_row input[name='grade']");
+  var credits = $("#transferTable #tCredit_row input[name='qunit']");
+
+  for(var i=0; i<courses.length; i++){
+    var mClass = new Object();
+    mClass.course = courses[i];
+    mClass.institution = institutions[i].value;
+    mClass.grade = grades[i].value;
+    mClass.credits = credits[i].value;
+    classes.push(mClass);
+  }
+  return classes;
+}
+
+function build
+
 function buildCoenCoreReqs(){  
   var reqs_core = new Object();
   reqs_core.coen210 = getCheckboxValueById("coen210");
@@ -25,7 +45,6 @@ function buildCoenCoreReqs(){
   * @return a String that is formatted as: ' "key":{...}'
   */
 function buildGradReqs() {
-  var json = '"reqs_grad":"{'
   var req_emerg = getSelectionValueByName("req_emerg");
   var req_business = getSelectionValueByName("req_business");
   var req_society = getSelectionValueByName("req_society");
@@ -50,6 +69,7 @@ function buildJSON() {
   json.email = $('input[name="email"]').val();
   json.gradReqs = buildGradReqs();
   json.coenReqs = buildCoenCoreReqs();
+  json.transferCredits = buildTransferCredits();
 
   obj.mForm = json;
 

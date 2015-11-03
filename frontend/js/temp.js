@@ -12,7 +12,7 @@
 
             $('#add_row').click(function () {
                 var table = document.getElementById("transferTable");
-                var tableRow = $("<div class='table-row row" + (c + 1) + "'>");
+                var tableRow = $("<div id='tCredit_row' class='table-row row" + (c + 1) + "'>");
                 var input = $("<input type='text' class='coursename' name='course' id=course" + (c + 1) + " />");
                 $("<div class='table-cell'>").append(input).appendTo(tableRow);
                 var input = $("<input type='text' name='inst' id=inst" + (c + 1) + " />");
