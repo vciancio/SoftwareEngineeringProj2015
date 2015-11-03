@@ -126,7 +126,7 @@ function processLoadResponse(result){
   var obj = json.content.mForm;
   console.log(obj);
 
-  removeRow_TransferCredit();
+  // removeRow_TransferCredit();
 
   //Populate the Approved Transfer Credits
   for(var i=0; i<obj.transferCredits.length; i++){
@@ -228,6 +228,7 @@ function callLoadServer(name, stdid, email, callback){
 }
 
 function printData(){
+  saveData();
   var obj = buildDataObj();
   var url = BASE_URL + "/frontend/form.html?name=" + obj.mForm.mName + "&stdid=" + obj.mForm.stdid + "&email=" + obj.mForm.email;
   var win = window.open(url, '_blank');
