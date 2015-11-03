@@ -158,9 +158,8 @@ function gradCoreValidation() {
         $("#messageBox4-3").html("");
 }
 
-function trackValidation() {
+function trackValidation_Grad() {
     var fail = false;
-    var core = buildCoenCoreReqs();
     var grad = buildGradReqs();
     var track = buildTrackUnits();
     
@@ -171,18 +170,28 @@ function trackValidation() {
 
         fail = true;
         }
-        var coreClasses = Object.keys(core);
-        for(var j=0; j<coreClasses.length; j++){
-            if(track[i].course == coreClasses[j] && core[coreClasses[j]]){
-                fail = true;
-            }
-        }
-
         if (fail) 
             $("#messageBox5-3").html("WARNING: Your included the same course twice");
         else
             $("#messageBox5-3").html("");
     }
+}
+
+function trackValidation_Core() {
+    var fail = false;
+    var track = buildTrackUnits();
+    var core = buildCoenCoreReqs();
+    var coreClasses = Object.keys(core);
+    for(var i=0; i<track.length; i++) {
+        for(var j=0; j<coreClasses.length; j++){
+            if(track[i].course == coreClasses[j]))
+                fail = true;
+        }
+    }
+    if (fail) 
+            $("#messageBox5-3").html("WARNING: Your included the same course twice");
+        else
+            $("#messageBox5-3").html("");
 }
 
 function totalUnitCount() {
@@ -223,30 +232,32 @@ $(document).ready(function () {
         transferCreditAnalysis();
         trackUnitAnalysis();
         totalUnitAnalysis();
-        trackValidation();
+        trackValidation_Grad();
+        trackValidation_Core();
     });
     $('input[type="checkbox"]').change(function() {
         coenCoreAnalysis();
         coenFoundationalAnalysis();
         totalUnitAnalysis();
+        trackValidation_Core();
     });
     
     $("select[name='req_society']").change(function (){
         gradCoreAnalysis();
         totalUnitAnalysis();
-        trackValidation();
+        trackValidation_Grad();
         gradCoreValidation();
     });
     $("select[name='req_business']").change(function (){
         gradCoreAnalysis();
         totalUnitAnalysis();
-        trackValidation();
+        trackValidation_Grad();
         gradCoreValidation();
     });
     $("select[name='req_emerg']").change(function (){
         gradCoreAnalysis();
         totalUnitAnalysis();
-        trackValidation();
+        trackValidation_Grad();
         gradCoreValidation();
     });
 
