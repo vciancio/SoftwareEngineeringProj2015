@@ -7,17 +7,25 @@ function getSelectionValueByName(name) {
   return $('select[name="' + name + '"]').val();
 }
 
+function setSelctionValueByName(name, value){
+  return $('select[name="' + name + '"]').val(value);
+}
+
 function getCheckboxValueById(id) {
   return $("#"+id).prop('checked');
 }
 
+function setCheckboxValueById(id, value){
+  return $("#"+id).prop('checked', value);
+}
+
 function buildFoundationalCourses(){
-  var obj = new Object();
-  obj.coen20 = getCheckboxValueById("coen20");
-  obj.coen21 = getCheckboxValueById("coen21");
-  obj.coen12 = getCheckboxValueById("coen12");
-  obj.coen19 = getCheckboxValueById("coen19");
-  obj.amth210= getCheckboxValueById("amth210");
+  var obj = {};
+  obj['coen20'] = getCheckboxValueById("coen20");
+  obj['coen21'] = getCheckboxValueById("coen21");
+  obj['coen12'] = getCheckboxValueById("coen12");
+  obj['coen19'] = getCheckboxValueById("coen19");
+  obj['amth210']= getCheckboxValueById("amth210");
   return obj;
 }
 
@@ -54,10 +62,10 @@ function buildTrackUnits() {
 }
 
 function buildCoenCoreReqs(){  
-  var reqs_core = new Object();
-  reqs_core.coen210 = getCheckboxValueById("coen210");
-  reqs_core.coen279 = getCheckboxValueById("coen279");
-  reqs_core.coen283 = getCheckboxValueById("coen283");
+  var reqs_core = {};
+  reqs_core['coen210'] = getCheckboxValueById("coen210");
+  reqs_core['coen279'] = getCheckboxValueById("coen279");
+  reqs_core['coen283'] = getCheckboxValueById("coen283");
   return reqs_core;
 }
 
@@ -67,14 +75,10 @@ function buildCoenCoreReqs(){
   * @return a String that is formatted as: ' "key":{...}'
   */
 function buildGradReqs() {
-  var req_emerg = getSelectionValueByName("req_emerg");
-  var req_business = getSelectionValueByName("req_business");
-  var req_society = getSelectionValueByName("req_society");
-  
-  var reqs_grad = new Object();
-  reqs_grad.req_emerg = getSelectionValueByName("req_emerg");
-  reqs_grad.req_business = getSelectionValueByName("req_business");
-  reqs_grad.req_society = getSelectionValueByName("req_society");
+  var reqs_grad = {};
+  reqs_grad['req_emerg'] = getSelectionValueByName("req_emerg");
+  reqs_grad['req_business'] = getSelectionValueByName("req_business");
+  reqs_grad['req_society'] = getSelectionValueByName("req_society");
 
   return reqs_grad;
 }
@@ -93,20 +97,71 @@ function buildDataObj() {
   json.coenReqs = buildCoenCoreReqs();
   json.transferCredits = buildTransferCredits();
   json.foundationCourses = buildFoundationalCourses();
-
+  json.trackUnits = buildTrackUnits();
   obj.mForm = json;
 
   return obj;
 }
 
 function processSaveResponse(result){
+  var json = JSON.parse(result);
+  if(!json.error){
+    alert("Your Form was saved successfully!");
+  }
+  else{
+    alert("Your Form couldn't be saved. \n" + json.message);
+  }
   console.log(response);
 }
 
 function processLoadResponse(result){
   var json = JSON.parse(result);
+  if(json.error == "true"){
+    alert("There was an error: " + json.message);
+    return;
+  }
 
-  console.log(json);
+  var obj = json.content.mForm;
+  console.log(obj);
+
+  //Populate the Approved Transfer Credits
+  for(var i=0; i<obj.transferCredits.length; i++){
+    var mClass = obj.transferCredits[i];
+    addRow_TransferCredit(mClass.course, mClass.institution, mClass.grade, mClass.credits);
+  }
+  transferCreditAnalysis();
+
+  //Populate the Track Unit Corses
+  for(var i=0; i<obj.trackUnits.length; i++){
+    var mClass = obj.trackUnits[i];
+    addRow_TrackUnits(mClass.course, mClass.credits);
+  }
+  trackUnitAnalysis();
+
+  //Populate the Foundational Courses
+  var foundationKeys = Object.keys(obj.foundationCourses);
+  for(var i=0; i<foundationKeys.length; i++){
+    var courseNumber = foundationKeys[i];
+    var value = obj.foundationCourses[courseNumber];
+    setCheckboxValueById(courseNumber, value);
+  }
+
+  //Populate the COEN Requirements
+  var coenReqsKeys = Object.keys(obj.coenReqs);
+  for(var i=0; i<coenReqsKeys.length; i++){
+    var courseNumber = coenReqsKeys[i];
+    var value = obj.coenReqs[courseNumber];
+    setCheckboxValueById(courseNumber, value);
+  }
+
+  //Populate the Graduate Core Requirements
+  var gradCoreKeys = Object.keys(obj.gradReqs);
+  for(var i=0; i<gradCoreKeys.length; i++){
+    var requirement = gradCoreKeys[i];
+    var value = obj.gradReqs[requirement];
+    setSelctionValueByName(requirement, value);
+  }
+
 }
 
 /**
@@ -121,7 +176,7 @@ function saveData(){
       url: url,
       type: "POST",
       data: JSON.stringify(obj),
-      dataType: "json",
+      dataType: "text",
       success: function (result) {
           switch (result) {
               case true:
@@ -150,10 +205,8 @@ function loadData(){
       dataType: "text",
       success: function (result) {
           switch (result) {
-              case true:
-                  processLoadResponse(result);
-                  break;
               default:
+                  processLoadResponse(result);
                   console.log(result);
           }
       },
