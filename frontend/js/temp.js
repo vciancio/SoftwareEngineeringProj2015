@@ -1,5 +1,6 @@
 var c = 0;
 var ct = 0;
+var maxtrans = 9;
 
 function addRow_TransferCredit(course, institution, grade, unit) {
     var table = document.getElementById("transferTable");
@@ -51,6 +52,21 @@ function removeRow_TrackUnits() {
 }
 
 
+function isSCU() {
+    /* read institution value
+     * verify if its SCU or Santa Clara University
+     * then maximum unit capacity increases to 16
+     * else maximum unit capacity stays to 9. */
+     var read = $("input[name='inst']").val();
+     read = read.toLowerCase();
+     if (read == "scu" || read == "santa clara university") {
+        maxtrans = 16;
+     } else {
+        maxtrans = 9;
+     }
+     return maxtrans;
+}
+
 
 function  transferCreditAnalysis() {
         /*
@@ -62,6 +78,11 @@ function  transferCreditAnalysis() {
             tallytmp += Number(objtmp[i].credits);
         }
         $('#messageBox1-2').html("TOTAL UNITS = " + tallytmp);
+        if(tallytmp > isSCU()) {
+            $("#messageBox1-3").html("WARNING: Your maximum unit has exceeded.");
+        } else {
+            $("#messageBox1-3").html("")
+        }
         return tallytmp;
 }
 
@@ -213,23 +234,9 @@ $(document).ready(function () {
     addRow_TransferCredit("", "", "", 0.0);
     addRow_TrackUnits("", 0.0);
 
-    
-
-    /* 
-     *  ##1  APPROVED TRANSFER CREDITS 
-     */
-    var arr1 = [];
-    var tally1tmp = 0;
-
-    $('#add_row').click(function () {
-        addRow_TransferCredit("", "", "", 0.0);
-    });
-
-    $('#remove_row').click(function () {
-        removeRow_TransferCredit();
-    });
 
     $('input[type=text]').on('input', function(){
+        isSCU();
         transferCreditAnalysis();
         trackUnitAnalysis();
         totalUnitAnalysis();
@@ -260,6 +267,20 @@ $(document).ready(function () {
         totalUnitAnalysis();
         trackValidation_Grad();
         gradCoreValidation();
+    });
+
+    /* 
+     *  ##1  APPROVED TRANSFER CREDITS 
+     */
+    var arr1 = [];
+    var tally1tmp = 0;
+
+    $('#add_row').click(function () {
+        addRow_TransferCredit("", "", "", 0.0);
+    });
+
+    $('#remove_row').click(function () {
+        removeRow_TransferCredit();
     });
 
 
