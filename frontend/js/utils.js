@@ -11,6 +11,16 @@ function getCheckboxValueById(id) {
   return $("#"+id).prop('checked');
 }
 
+function buildFoundationalCourses(){
+  var obj = new Object();
+  obj.coen20 = getCheckboxValueById("coen20");
+  obj.coen21 = getCheckboxValueById("coen21");
+  obj.coen12 = getCheckboxValueById("coen12");
+  obj.coen19 = getCheckboxValueById("coen19");
+  obj.amth210= getCheckboxValueById("amth210");
+  return obj;
+}
+
 function buildTransferCredits(){
   var classes = [];
   var courses = $("#transferTable #tCredit_row input[name='course']");
@@ -20,7 +30,7 @@ function buildTransferCredits(){
 
   for(var i=0; i<courses.length; i++){
     var mClass = new Object();
-    mClass.course = courses[i];
+    mClass.course = courses[i].value;
     mClass.institution = institutions[i].value;
     mClass.grade = grades[i].value;
     mClass.credits = credits[i].value;
@@ -28,8 +38,6 @@ function buildTransferCredits(){
   }
   return classes;
 }
-
-function build
 
 function buildCoenCoreReqs(){  
   var reqs_core = new Object();
@@ -70,6 +78,7 @@ function buildJSON() {
   json.gradReqs = buildGradReqs();
   json.coenReqs = buildCoenCoreReqs();
   json.transferCredits = buildTransferCredits();
+  json.foundationCourses = buildFoundationalCourses();
 
   obj.mForm = json;
 
