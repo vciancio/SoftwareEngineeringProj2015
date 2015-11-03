@@ -1,4 +1,3 @@
-/*JQUERY FUNCTIONS*/
 var c = 0;
 var ct = 0;
 
@@ -153,7 +152,7 @@ function gradCoreValidation() {
             fail = true;    
     }
     if (fail)
-        $("#messageBox4-3").html("WARNING1111: Your included the same course twice");
+        $("#messageBox4-3").html("WARNING: You included the same course twice");
     else
         $("#messageBox4-3").html("");
 }
@@ -171,7 +170,7 @@ function trackValidation_Grad() {
         fail = true;
         }
         if (fail) 
-            $("#messageBox5-3").html("WARNING: Your included the same course twice");
+            $("#messageBox5-3").html("WARNING: You included the same GRAD CORE course twice");
         else
             $("#messageBox5-3").html("");
     }
@@ -184,12 +183,12 @@ function trackValidation_Core() {
     var coreClasses = Object.keys(core);
     for(var i=0; i<track.length; i++) {
         for(var j=0; j<coreClasses.length; j++){
-            if(track[i].course == coreClasses[j]))
+            if(track[i].course == coreClasses[j])
                 fail = true;
         }
     }
     if (fail) 
-            $("#messageBox5-3").html("WARNING: Your included the same course twice");
+            $("#messageBox5-3").html("WARNING: You included the same COEN CORE course twice");
         else
             $("#messageBox5-3").html("");
 }
@@ -204,6 +203,8 @@ function totalUnitCount() {
     return total;
 }
 
+
+/*JQUERY FUNCTIONS*/
 $(document).ready(function () {
     var safe = true;
     var tally = 0;
@@ -282,7 +283,7 @@ $(document).ready(function () {
 
 
     /* 
-     *  ##2. FOUNDATIONAL COURSES 
+     *  ##2. buttons in FOUNDATIONAL COURSES 
      */
     // "select all" button 
     $('#select_all2').click(function () {
@@ -296,7 +297,7 @@ $(document).ready(function () {
 
 
     /* 
-     *  ##3. CS AND ENGR CORE COURSES## 
+     *  ##3. buttons in CS AND ENGR CORE COURSES## 
      */
     // "select all" button 
     $('#select_all3').click(function () { // on click select all button
@@ -308,156 +309,17 @@ $(document).ready(function () {
         $(".classlist3").prop('checked', false);
     });
 
-    $('#check_valid3').click(function () { // on click check valid button
-        var val = [];
-        var arrtmp = [];
-        $('.classlist3:checked').each(function (i) { // loop through classlist 
-            val[i] = $(this).val();
-            arrtmp.push({
-                course: $(this).val(),
-                inst: "Santa Clara University",
-                qunit: 4.0
-            });
-        });
-        console.log(val);
-        console.log(arrtmp);
-
-        if (val.length == 0) {
-            document.getElementById("messageBox3-1").innerHTML = "none";
-        } else {
-            document.getElementById("messageBox3-1").innerHTML = val.join(", ");
-        }
-        arr3 = arrtmp;
-        //console.log(arr);
-    });
-
-    $('#tally3').click(function () {
-        var tally3 = 0;
-        jQuery.each(arr3, function () {
-            tally3 += this.qunit;
-        });
-        document.getElementById("messageBox3-2").innerHTML = "TOTAL UNITS = " + tally3;
-        tally3tmp = tally3;
-    });
-
-
 
 
     /* 
-     *  ##4. SCU Graduate Core Requirements
+     *  ## 5. buttons in TRACK 
      */
-    var arr4 = [];
-    var tally4tmp = 0;
-
-    $('#reset').click(function () {
-        $('#req_emrg>option:eq(0)').attr('selected', true);
-        $('#req_bsns>option:eq(0)').attr('selected', true);
-        $('#req_soc>option:eq(0)').attr('selected', true);
-    });
-
-    $('#check_valid4').click(function () {
-        var arrtmp = [];
-        var valtmp = [];
-        var valflt = [];
-        req_emrg = $('#req_emrg option:selected').val();
-        req_bsns = $('#req_bsns option:selected').val();
-        req_soc = $('#req_soc option:selected').val();
-
-        if (req_emrg !== "") valtmp.push(req_emrg);
-        if (req_bsns !== "") valtmp.push(req_bsns);
-        if (req_soc !== "") valtmp.push(req_soc);
-
-        // remove duplicate & 
-        $.each(valtmp, function (i, el) {
-            if ($.inArray(el, valflt) === -1) {
-                valflt.push(el);
-                arrtmp.push({
-                    course: el,
-                    inst: "Santa Clara University",
-                    qunit: 4.0
-                });
-            }
-        });
-
-        console.log(valflt);
-        arr4 = arrtmp;
-        console.log(arr4);
-
-        if (valflt.length == 0) {
-            document.getElementById("messageBox4-1").innerHTML = "none";
-        } else {
-            document.getElementById("messageBox4-1").innerHTML = valflt.join(", ");
-        }
-    });
-
-    $('#tally4').click(function () {
-        var tally4 = 0;
-        jQuery.each(arr4, function () {
-            tally4 += this.qunit;
-        });
-        document.getElementById("messageBox4-2").innerHTML = "TOTAL UNITS = " + tally4;
-        if (tally4 < 6) {
-            safe = false;
-            document.getElementById('messageBox4-3').innerHTML =
-                "WARNING: the total amount of quarter units is less than 6. <br> Make sure the sum is more than 6 units.";
-        } else {
-            safe = true;
-            document.getElementById('messageBox4-3').innerHTML = "";
-        }
-        tally4tmp = tally4;
-    });
-
-
-
-    /* 
-     *  ## 5. TRACK 
-     */
-    var arr5 = [];
-    var tally5tmp = 0;
-
     $('#add_row5').click(function () {
         addRow_TrackUnits("", 0.0);
     });
 
     $('#remove_row5').click(function () {
         removeRow_TrackUnits();
-    });
-
-    $('#analysis5').click(function () {
-        var arrtmp = [];
-        for (i = 0; i < ct; i++) {
-            arrtmp.push({
-                course: $("#course" + (i + 1)).val(),
-                inst: 'Santa Clara University',
-                qunit: Number($("#units" + (i + 1)).val())
-            });
-        }
-        console.log(arrtmp);
-
-        jQuery.each(arrtmp, function () {
-            console.log("course: " + this.course);
-            console.log("inst: " + this.inst);
-            console.log("qunit: " + this.qunit);
-            console.log(" ");
-        });
-        arr5 = arrtmp;
-    });
-
-    $('#tally5').click(function () {
-        var tally5 = 0;
-        jQuery.each(arr5, function () {
-            tally5 += this.qunit;
-        });
-        document.getElementById('messageBox5-2').innerHTML = "TOTAL UNITS = " + tally5;
-        if (tally5 < 8) {
-            safe = false;
-            document.getElementById('messageBox5-3').innerHTML =
-                "WARNING: Your total amount of quarter units. Make sure it's not more than 9 units."
-        } else {
-            safe = true;
-            document.getElementById('messageBox5-3').innerHTML = "";
-        }
-        tally5tmp = tally5;
     });
 
 }); /* END OF JQUERY FUNCTION */
