@@ -93,7 +93,7 @@ function buildDataObj() {
   json.coenReqs = buildCoenCoreReqs();
   json.transferCredits = buildTransferCredits();
   json.foundationCourses = buildFoundationalCourses();
-
+  json.trackUnits = buildTrackUnits();
   obj.mForm = json;
 
   return obj;
