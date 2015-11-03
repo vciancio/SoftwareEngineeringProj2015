@@ -1,4 +1,48 @@
 /* JQUERY FUNCTIONS */
+        var c = 1;
+        var ct= 1;
+
+        function addRowforTransferCredit(course, institution, grade, unit){
+            var table = document.getElementById("transferTable");
+            var tableRow = $("<div id='tCredit_row' class='table-row row" + (c + 1) + "'>");
+            var input = $("<input type='text' class='coursename' name='course' id='course" + (c + 1) + "' value='" + course + "' />");
+            $("<div class='table-cell'>").append(input).appendTo(tableRow);
+            var input = $("<input type='text' name='inst' id='inst" + (c + 1) + "' value='" + institution + "' />");
+            $("<div class='table-cell'>").append(input).appendTo(tableRow);
+            var input = $("<input type='text' name='grade' id='grade" + (c + 1) + "' value='" + grade + "' />");
+            $("<div class='table-cell'>").append(input).appendTo(tableRow);
+            var input = $("<input type='text' name='qunit' id='qunit" + (c + 1) + "'' value='" + unit + "' />");
+            $("<div class='table-cell'>").append(input).appendTo(tableRow);
+            tableRow.appendTo(table);
+            c++;
+        }
+
+        function addRowforTrackUnits(course, units){
+            var table = document.getElementById("transferTable2");
+            var tableRow = $("<div class='table-row row" + (ct + 1) + "'>");
+
+            var input = $("<input type='text' name='course' class='lowercase' id='course" + (ct + 1) + "' value='" + course + "' />");
+            $("<div class='table-cell'>").append(input).appendTo(tableRow);
+            var input = $("<input type='text' name='units' id='units" + (ct + 1) + "' value='" + units + "' />");
+            $("<div class='table-cell'>").append(input).appendTo(tableRow);
+            tableRow.appendTo(table);
+            ct++;
+        }
+
+        function removeRow_TransferCredit(){
+            if (c > 1) {
+                $(".row" + c).remove();
+                c--;
+            }
+        }
+
+        function removeRow_TrackUnits(){
+            if (ct > 1) {
+                $(".row" + ct).remove();
+                ct--;
+            }
+        }
+
         $(document).ready(function () {
             var safe = true;
             var tally = 0;
@@ -11,26 +55,11 @@
             var tally1tmp = 0;
 
             $('#add_row').click(function () {
-                var table = document.getElementById("transferTable");
-                var tableRow = $("<div id='tCredit_row' class='table-row row" + (c + 1) + "'>");
-                var input = $("<input type='text' class='coursename' name='course' id=course" + (c + 1) + " />");
-                $("<div class='table-cell'>").append(input).appendTo(tableRow);
-                var input = $("<input type='text' name='inst' id=inst" + (c + 1) + " />");
-                $("<div class='table-cell'>").append(input).appendTo(tableRow);
-                var input = $("<input type='text' name='grade' id=grade" + (c + 1) + " />");
-                $("<div class='table-cell'>").append(input).appendTo(tableRow);
-                var input = $("<input type='text' name='qunit' id=qunit" + (c + 1) + " value=0.0 />");
-                $("<div class='table-cell'>").append(input).appendTo(tableRow);
-                tableRow.appendTo(table);
-                c++;
-
+                addRowforTransferCredit("", "", "", "");
             });
 
             $('#remove_row').click(function () {
-                if (c > 1) {
-                    $(".row" + c).remove();
-                    c--;
-                }
+                removeRow_TransferCredit();
             });
 
             $('#analysis1').click(function () {
@@ -232,23 +261,11 @@
             var tally5tmp = 0;
 
             $('#add_row5').click(function () {
-                var table = document.getElementById("transferTable2");
-                var tableRow = $("<div class='table-row row" + (ct + 1) + "'>");
-
-                var input = $("<input type='text' name='course' class='lowercase' id=course" + (ct + 1) + " />");
-                $("<div class='table-cell'>").append(input).appendTo(tableRow);
-                var input = $("<input type='text' name='units' id=units" + (ct + 1) + " />");
-                $("<div class='table-cell'>").append(input).appendTo(tableRow);
-                tableRow.appendTo(table);
-                ct++;
-
+                addRowforTrackUnits("", "");
             });
 
             $('#remove_row5').click(function () {
-                if (ct > 1) {
-                    $(".row" + ct).remove();
-                    ct--;
-                }
+                removeRow_TrackUnits();
             });
 
             $('#analysis5').click(function () {
