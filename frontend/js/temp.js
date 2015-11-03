@@ -1,4 +1,4 @@
- JQUERY FUNCTIONS */
+JQUERY FUNCTIONS
 var c = 0;
 var ct = 0;
 
