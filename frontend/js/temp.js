@@ -292,10 +292,10 @@
              *  ## 6. UNIT
              */
             $('#analysis6').click(function () {
-                arr.concat(arr1);
-                arr.concat(arr3);
-                arr.concat(arr4);
-                arr.concat(arr5);
+                jQuery.merge(arr, arr1);
+                jQuery.merge(arr, arr3);
+                jQuery.merge(arr, arr4);
+                jQuery.merge(arr, arr5);
                 console.log(arr);
 
                 jQuery.each(arr, function () {
