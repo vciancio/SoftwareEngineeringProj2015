@@ -39,6 +39,20 @@ function buildTransferCredits(){
   return classes;
 }
 
+function buildTrackUnits() {
+  var classes = []; 
+  var courses = $("#transferTable2 #unitTrack_row input[name='course']");
+  var credits = $("#transferTable2 #unitTrack_row input[name='units']");
+
+  for(var i=0; i<courses.length; i++) {
+    var tClass = new Object();
+    tClass.course = courses[i].value;
+    tClass.credits = credits[i].value;
+    classes.push(tClass);
+  }
+  return classes;
+}
+
 function buildCoenCoreReqs(){  
   var reqs_core = new Object();
   reqs_core.coen210 = getCheckboxValueById("coen210");
