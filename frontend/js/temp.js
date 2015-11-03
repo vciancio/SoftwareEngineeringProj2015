@@ -211,7 +211,7 @@ function trackValidation_Core() {
         }
     }
     if (fail) {
-        $("#messageBox5-3").html("WARNING: You included the same COEN CORE course twice");
+        $("#messageBox5-3").html("WARNING: You are not allowed to put COEN CORE course here");
     } else {
         $("#messageBox5-3").html("");
     }
@@ -246,6 +246,7 @@ $(document).ready(function () {
         trackUnitAnalysis();
         totalUnitAnalysis();
         trackValidation_Grad();
+        trackValidation_Core();
 
     });
 
@@ -254,6 +255,7 @@ $(document).ready(function () {
         coenFoundationalAnalysis();
         totalUnitAnalysis();
         trackValidation_Grad();
+        trackValidation_Core();
     });
     
     $("select[name='req_society']").change(function (){
