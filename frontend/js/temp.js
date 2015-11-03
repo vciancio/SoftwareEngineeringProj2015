@@ -5,7 +5,8 @@ var ct = 0;
 function addRow_TransferCredit(course, institution, grade, unit) {
     var table = document.getElementById("transferTable");
     var tableRow = $("<div id='tCredit_row' class='table-row row" + (c + 1) + "'>");
-    var input = $("<input type='text' class='coursename' name='course' id='course" + (c + 1) + "' value='" + course + "' />");
+    var input = $("<input type='text' class='coursename' name='course' id='course" + (c + 1) + "' value='" + course + "' />").on("keydown", function (e) {
+    return e.which !== 32;});
     $("<div class='table-cell'>").append(input).appendTo(tableRow);
     var input = $("<input type='text' name='inst' id='inst" + (c + 1) + "' value='" + institution + "' />");
     $("<div class='table-cell'>").append(input).appendTo(tableRow);
@@ -23,7 +24,8 @@ function addRow_TrackUnits(course, units) {
     var table = document.getElementById("transferTable2");
     var tableRow = $("<div id='unitTrack_row' class='table-row row" + (ct + 1) + "'>");
 
-    var input = $("<input type='text' name='course' class='lowercase' id='course" + (ct + 1) + "' value='" + course + "' />");
+    var input = $("<input type='text' name='course' class='lowercase' id='course" + (ct + 1) + "' value='" + course + "' />").on("keydown", function (e) {
+    return e.which !== 32;});
     $("<div class='table-cell'>").append(input).appendTo(tableRow);
     var input = $("<input type='text' name='units' id='units" + (ct + 1) + "' value='" + units + "' />");
     $("<div class='table-cell'>").on('input', function() { 
@@ -51,7 +53,7 @@ function removeRow_TrackUnits() {
 
 
 
-function transferCreditAnalysis() {
+function  transferCreditAnalysis() {
         /*
          * tally    
          */
@@ -64,7 +66,7 @@ function transferCreditAnalysis() {
         return tallytmp;
 }
 
-function coenFoundationalAnalysis() {
+function  coenFoundationalAnalysis() {
     /*
      *  tally
      */ 
@@ -80,7 +82,7 @@ function  coenCoreAnalysis() {
      return coenCoreUnitCount();
 }
 
-function gradCoreAnalysis() {
+function  gradCoreAnalysis() {
     /*
      *  tally
      */
@@ -89,7 +91,7 @@ function gradCoreAnalysis() {
 }
 
 
-function trackUnitAnalysis() {
+function  trackUnitAnalysis() {
     /* 
      *  tally
      */
@@ -100,6 +102,14 @@ function trackUnitAnalysis() {
      }
      $('#messageBox5-2').html("TOTAL UNITS = " + tallytmp);
      return tallytmp;
+}
+
+function totalUnitAnalysis() {
+    /*
+     *
+     */
+     $('#messageBox6-2').html("TOTAL OF TOTAL UNITS = " + totalUnitCount());
+     return totalUnitCount();
 }
 
 
@@ -128,20 +138,51 @@ function coenCoreUnitCount(){
 function  gradCoreUnitCount() {
     var total = 0;
     var core = buildGradReqs();
-    total += core.req_emerg != "none" ?4:0;
-    total += core.req_business != "none" ?4:0;
-    total += core.req_society != "none" ?4:0;
+    total += core.req_emerg != "none1" ?4:0;
+    total += core.req_business != "none2" ?4:0;
+    total += core.req_society != "none3" ?4:0;
     return total;
 }
 
-function TrackValidation() {
-    var status;
+function gradCoreValidation() {
+    var fail = false;
+    var grad = buildGradReqs();
+    if (grad.req_emerg == grad.req_business ||  
+        grad.req_emerg == grad.req_society || 
+        grad.req_business == grad.req_society) {
+            fail = true;    
+    }
+    if (fail)
+        $("#messageBox4-3").html("WARNING1111: Your included the same course twice");
+    else
+        $("#messageBox4-3").html("");
+}
+
+function trackValidation() {
+    var fail = false;
+    var core = buildCoenCoreReqs();
     var grad = buildGradReqs();
     var track = buildTrackUnits();
-    jQuery.each(function() {
+    
+    for(var i=0; i<track.length; i++) {
+        if (track[i].course == grad.req_emerg || 
+            track[i].course == grad.req_business ||
+            track[i].course == grad.req_society) {
 
-    });
+        fail = true;
+        }
+        var coreClasses = Object.keys(core);
+        for(var j=0; j<coreClasses.length; j++){
+            if(track[i].course == coreClasses[j] && core[coreClasses[j]]){
+                fail = true;
+            }
+        }
 
+        if (fail) 
+            $("#messageBox5-3").html("WARNING: Your included the same course twice");
+        else
+            $("#messageBox5-3").html("");
+    }
 }
 
 function totalUnitCount() {
@@ -181,20 +222,32 @@ $(document).ready(function () {
     $('input[type=text]').on('input', function(){
         transferCreditAnalysis();
         trackUnitAnalysis();
+        totalUnitAnalysis();
+        trackValidation();
     });
-    $('input[type="checkbox"]').on('change', function() {
+    $('input[type="checkbox"]').change(function() {
         coenCoreAnalysis();
         coenFoundationalAnalysis();
+        totalUnitAnalysis();
     });
     
     $("select[name='req_society']").change(function (){
         gradCoreAnalysis();
+        totalUnitAnalysis();
+        trackValidation();
+        gradCoreValidation();
     });
     $("select[name='req_business']").change(function (){
         gradCoreAnalysis();
+        totalUnitAnalysis();
+        trackValidation();
+        gradCoreValidation();
     });
     $("select[name='req_emerg']").change(function (){
         gradCoreAnalysis();
+        totalUnitAnalysis();
+        trackValidation();
+        gradCoreValidation();
     });
 
 
@@ -227,7 +280,7 @@ $(document).ready(function () {
 
     // "deselect all" button
     $('#deselect_all2').click(function () {
-        x
+        $(".classlist2").prop('checked', false);
     });
 
 
@@ -395,15 +448,5 @@ $(document).ready(function () {
         }
         tally5tmp = tally5;
     });
-
-    /* 
-     *  ## 6. UNIT
-     */
-    
-    $('#tally6').click(function () {
-        document.getElementById('messageBox6-2').innerHTML = "TOTAL UNITS = " + totalUnitCount();
-    });
-
-
 
 }); /* END OF JQUERY FUNCTION */
