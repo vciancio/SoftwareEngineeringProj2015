@@ -53,3 +53,7 @@ input[type=checkbox] {
     /* Opera */
     padding: 10px;
 }
+
+#intro {
+    background-color: #ECECEC;
+}
