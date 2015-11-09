@@ -3,41 +3,43 @@
 
 <head>
     <meta charset="utf-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    
+    <!-- Custom CSS -->
     <link rel='stylesheet' type='text/css' href='css/index.css'>
+    <style>
+    body {
+        padding-top: 70px;
+        /* Required padding for .navbar-fixed-top. Remove if using .navbar-static-top. Change if height of navigation changes. */
+    }
+    </style>
+    <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" integrity="sha512-dTfge/zgoMYpP7QbHy4gWMEGsbsdZeCXz7irItjcC3sPUFtf0kuFbDz/ixG7ArTxmDjLXDmezHubeNikyKGVyQ==" crossorigin="anonymous">
+
+    <!-- JavaScript / jQuery -->
     <script type='text/javascript' src='http://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js'></script>
+    
     <script type='text/javascript' src='js/utils.js'></script>
     <script type='text/javascript' src='js/temp.js'></script>
 </head>
-<title>
-    Santa Clara University - Online Graduate Program of Studies Form
-</title>
-
+<title> Santa Clara University - Online Graduate Program of Studies Form </title>
 <body>
-    <header class="navbar navbar-static-top bs-docs-nav" id="top" role="banner">
-        <div class="tier1 container-fluid" id='intro'>
-            <div class="tier2-1 container-fluid">
-                <div class="table container-fluid">
-                    <div class="table-row">
-                        <div class="table-cell">
-                            <img src='http://law.scu.edu/wp-content/themes/strappress-child/images/scu-seal-red.png'>
-                        </div>
-                        <div class="table-cell">
-                            <h1>Program of Studies - Computer Science and Engineering MS</h1>
-                            <h3>(this is for students admitted beginning in fall 2008 and after) </h3>
-                            <p>You may either Enter your information and load your previous form, or just start a new one and hit save at the bottom of the page </p>
-                            <p> Any Courses can be found on <a href="http://issuu.com/santaclarauniversity/docs/scuengineerbull_2013-2014/39?e=2790581%2F4906551" target "_blank"="">the current SCU Bulletin.</a></p>
-                        </div>
+    <a class="center-block" href="http://www.scu.edu/engineering/cse/grad/degrees.cfm"><img class="img-responsive center-block" src='http://law.scu.edu/wp-content/themes/strappress-child/images/scu-seal-red.png'/></a>
+    <div class='tier1 container'>
+        <div class="tier2-1 row text-center">
+                        <h1>PROGRAM OF STUDIES - CS & ENGINEERING MS</h1>
+                        <h3>(this is for students admitted beginning in fall 2008 and after) </h3>
+                        <p class="lead">You may either Enter your information and load your previous form, <br> or just start a new one and hit save at the bottom of the page </p>
+                        <p> Any Courses can be found on <a href="http://issuu.com/santaclarauniversity/docs/scuengineerbull_2013-2014/39?e=2790581%2F4906551" target "_blank"="">the current SCU Bulletin.</a></p>
                     </div>
                 </div>
             </div>
-            <div class="tier2-2 container-fluid">
-            <p>getting started</p>
-            </div>
         </div>
-    </header>
-
+    </div>
     <br>
     <br>
 
@@ -62,7 +64,7 @@
                         <input type='text' name='lname' class='capitalize' placeholder='Doe'>
                     </div>
                     <div class='table-cell'>
-                        <input type='text' name='stdid' placeholder='i.e. W082391'>
+                        <input type='text' name='stdid' class='capitalize' placeholder='W082391'>
                     </div>
                     <div class='table-cell'>
                         <input type='text' name='email' placeholder='i.e. jdoe@scu.edu'>
@@ -80,8 +82,31 @@
 
     <div class='tier1 container'>
         <div class='tier2-1 container-fluid'>
-            <h2> [1] Approved Transfer Credit: </h2>
-            <p> (max. 9 quarter units for transfer students, 16 for SCU Undergraduates, 20 for Accelerated Masters Students) </p>
+            <h2>[1] Approved Transfer Credit:</h2>
+            <div class='tier3-1'>
+                <div class='table container-fluid'>
+                    <div class='table-heading container-fluid'>
+                        <div class='table-cell'><h3></div>
+                        <div class='table-cell'><h3>Maximum Units Allowed</h3></div>
+                        <div class='table-cell'><h3></div>
+                    </div>
+                    <div class='table-row container-fluid'>
+                        <div class='table-cell'><input type='radio' name='where' value='transfer' checked></div>
+                        <div class='table-cell'><h4>For Transfer Students</h4></div>
+                        <div class='table-cell'><h5>9 quarter units</h5></div>
+                    </div>
+                    <div class='table-row container-fluid'>
+                        <div class='table-cell'><input type='radio' name='where' value='undergraduate'></div>
+                        <div class='table-cell'><h4>For SCU Undergraduates</h4></div>
+                        <div class='table-cell'><h5>16 quarter units</h5></div>
+                    </div>
+                    <div class='table-row container-fluid'>
+                        <div class='table-cell'><input type='radio' name='where' value='accelerated'></div>
+                        <div class='table-cell'><h4>For Accelerated Masters Students</h4></div>
+                        <div class='table-cell'><h5>20 quarter units</h5></div>
+                    </div>
+                </div>
+            </div>
         </div>
         <div class='tier2-2 container-fluid'>
             <div class='tier3 container-fluid'>
@@ -120,14 +145,17 @@
             <div class='tier3 container-fluid'>
                 <div class='table container-fluid'>
                     <div class='table-heading container-fluid'>
-                        <div class='table-cell'>Checkbox</div>
+                        <div class='table-cell'>Selection</div>
                         <div class='table-cell'>Course #</div>
                         <div class='table-cell'>Title</div>
                         <div class='table-cell'>Units</div>
                     </div>
                     <div class='table-row container-fluid'>
                         <div class='table-cell'>
-                            <input type='checkbox' id='coen20' class='classlist2' value='coen20' />
+                            <select name='coen20' class='reqsel' style='width:180px;'/>
+                                <option value="required">Required</option>
+                                <option value="waived">Waived</option>
+                            </select>
                         </div>
                         <div class='table-cell'>COEN20</div>
                         <div class='table-cell'>Assembly Language</div>
@@ -135,7 +163,10 @@
                     </div>
                     <div class='table-row container-fluid'>
                         <div class='table-cell'>
-                            <input type='checkbox' id='coen21' class='classlist2' value='coen21' />
+                           <select name='coen21' class='reqsel' style='width:180px;'/>
+                                <option value="required">Required</option>
+                                <option value="waived">Waived</option>
+                            </select>
                         </div>
                         <div class='table-cell'>COEN21</div>
                         <div class='table-cell'>Logic Design</div>
@@ -143,7 +174,10 @@
                     </div>
                     <div class='table-row container-fluid'>
                         <div class='table-cell'>
-                            <input type='checkbox' id='coen12' class='classlist2' value='coen12' />
+                            <select name='coen12' class='reqsel' style='width:180px;'/>
+                                <option value="required">Required</option>
+                                <option value="waived">Waived</option>
+                            </select>
                         </div>
                         <div class='table-cell'>COEN12</div>
                         <div class='table-cell'>Data Structure</div>
@@ -151,10 +185,24 @@
                     </div>
                     <div class='table-row container-fluid'>
                         <div class='table-cell'>
-                            <input type='checkbox' id='coen19' class='classlist2' value='coen19' />
+                            <select name='coen19' class='reqsel' style='width:180px;'/>
+                                <option value="required">Required</option>
+                                <option value="waived">Waived</option>
+                            </select>
                         </div>
                         <div class='table-cell'>COEN19</div>
                         <div class='table-cell'>Discrete Math</div>
+                        <div class='table-cell'>4</div>
+                    </div>
+                    <div class='table-row container-fluid'>
+                        <div class='table-cell'>
+                            <select name='amth210' class='reqsel' style='width:180px;'/>
+                                <option value="required">Required</option>
+                                <option value="waived">Waived</option>
+                            </select>
+                        </div>
+                        <div class='table-cell'>AMTH210</div>
+                        <div class='table-cell'>Probability</div>
                         <div class='table-cell'>4</div>
                     </div>
                 </div>
@@ -217,6 +265,7 @@
             </div>
         </div>
         <div class='tier2-3 container-fluid'>
+            <p class='note'>NOTE: COEN 233 (Computer Networks) and COEN 256 (Principles of Programming Languages) are no longer part of the MSCSE core starting in 2007–2008.</p>
             <div id='messageBox3-1'></div>
             <div id='messageBox3-2'></div>
             <div id='messageBox3-3'></div>
@@ -237,27 +286,27 @@
                         <h4>Emerging Topics in Engineering</h4>
                     </div>
                     <div class='table-cell'>
-                        <select id='req_emerg' name='req_emerg'>
-                            <option value='none1' selected>------------------ Emerging Topics in Engineering ------------------</option>
-                            <option value='amth308'>AMTH 308 Theory of Wavelets</option>
-                            <option value='amth351'>AMTH 351 Quantum Computing</option>
-                            <option value='amth367'>AMTH 367 Mathematical Finance</option>
-                            <option value='amth387'>AMTH 387 Cryptology</option>
-                            <option value='bioe256'>BIOE 256/ENGR 256 Introduction to Nanobioengineering</option>
-                            <option value='ceng219'>CENG 219 Designing for Sustainable Construction</option>
-                            <option value='coen331'>COEN 331 Wireless and Mobile Networks</option>
-                            <option value='coen389'>COEN 389 Energy Efficient Computing</option>
-                            <option value='elen280'>ELEN 280/MECH 287 Introduction to Alternative Energy Systems</option>
-                            <option value='engr260'>ENGR 260 Nanoscale Science and Technology</option>
-                            <option value='engr262'>ENGR 262 Nanomaterials</option>
-                            <option value='engr273'>ENGR 273 Sustainable Energy and Ethics</option>
-                            <option value='engr337'>ENGR 337 Sustainability and Green Information Technology</option>
-                            <option value='engr371'>ENGR 371 Space Systems Design and Engineering I Technology</option>
-                            <option value='engr372'>ENGR 372 Space Systems Design and Engineering II Technology</option>
-                            <option value='mech234'>MECH 234 Combustion Technology</option>
-                            <option value='mech268'>MECH 268 Computational Fluid Dynamics I</option>
-                            <option value='mech295'>MECH 295 Fire Dynamics - Spec Top</option>
-                        </select>
+                        <input type="text" list='req_emerg' placeholder='Type a class like "amth308", or double-click' style='width:350px;' value=''/> 
+                        <datalist id='req_emerg'>
+                            <option value='amth308'>AMTH 308 Theory of Wavelets</option><!--2-->
+                            <option value='amth351'>AMTH 351 Quantum Computing</option><!--2-->
+                            <option value='amth367'>AMTH 367 Mathematical Finance</option><!--4-->
+                            <option value='amth387'>AMTH 387 Cryptology</option><!--4-->
+                            <option value='bioe256'>BIOE 256/ENGR 256 Introduction to Nanobioengineering</option><!--2-->
+                            <option value='ceng219'>CENG 219 Designing for Sustainable Construction</option><!--4-->
+                            <option value='coen331'>COEN 331 Wireless and Mobile Networks</option><!--4-->
+                            <option value='coen389'>COEN 389 Energy Efficient Computing</option><!--2-->
+                            <option value='elen280'>ELEN 280/MECH 287 Introduction to Alternative Energy Systems</option><!--2-->
+                            <option value='engr260'>ENGR 260 Nanoscale Science and Technology</option><!--2-->
+                            <option value='engr262'>ENGR 262 Nanomaterials</option><!--2-->
+                            <option value='engr273'>ENGR 273 Sustainable Energy and Ethics</option><!--2-->
+                            <option value='engr337'>ENGR 337 Sustainability and Green Information Technology</option><!--2-->
+                            <option value='engr371'>ENGR 371/MECH 371 Space Systems Design and Engineering I Technology</option><!--4-->
+                            <option value='engr372'>ENGR 372/MECH 372 Space Systems Design and Engineering II Technology</option><!--4-->
+                            <option value='mech234'>MECH 234 Combustion Technology</option><!--2-->
+                            <option value='mech268'>MECH 268 Computational Fluid Dynamics I</option><!--2-->
+                            <option value='mech295'>MECH 295 Special Topics in Thermofluid Sciences</option><!--2-->
+                        </datalist>
                     </div>
                 </div>
                 <div class='table-row container-fluid'>
@@ -265,16 +314,16 @@
                         <h4>Engineering and Business/Entrepreneurship</h4>
                     </div>
                     <div class='table-cell'>
-                        <select id='req_bsns' name='req_business'>
-                            <option value='none2' selected>------------ Engineering and Business/Entrepreneurship ------------</option>
-                            <option value='amth367'>AMTH 367 Mathematical Finance</option>
-                            <option value='ceng208'>CENG 208 Engineering Economics and Project Finance</option>
-                            <option value='coen287'>COEN 287 Software Development Process Management</option>
-                            <option value='engr302'>ENGR 302 Managing in the Multicultural Environment</option>
-                            <option value='engr304'>ENGR 304 Building Global Teams</option>
-                            <option value='engr336'>ENGR 336 Engineering for the Developing World</option>
-                            <option value='engr338'>ENGR 338 Mobile Applications for Emerging Markets</option>
-                        </select>
+                        <input type="text" list='req_business' placeholder='Type a class like "amth367", or double-click' style='width:350px;' value=''/> 
+                        <datalist id='req_business'>
+                            <option value='amth367'>AMTH 367 Mathematical Finance</option><!--4-->
+                            <option value='ceng208'>CENG 208 Engineering Economics and Project Finance</option><!--3-->
+                            <option class='x' value='coen287'>COEN 287 Software Development Process Management</option><!--2-->
+                            <option value='engr302'>ENGR 302 Managing in the Multicultural Environment</option><!--2-->
+                            <option value='engr304'>ENGR 304 Building Global Teams</option><!--2-->
+                            <option value='engr336'>ENGR 336 Engineering for the Developing World</option><!--2-->
+                            <option value='engr338'>ENGR 338 Mobile Applications for Emerging Markets</option><!--2-->
+                        </datalist>
                     </div>
                 </div>
                 <div class='table-row container-fluid'>
@@ -282,27 +331,27 @@
                         <h4>Engineering and Society</h4>
                     </div>
                     <div class='table-cell'>
-                        <select id='req_soc' name='req_society'>
-                            <option value='none3' selected>------------------ Emerging Topics in Engineering ------------------</option>
-                            <option value='amth308'>AMTH 308 Theory of Wavelets</option>
-                            <option value='amth351'>AMTH 351 Quantum Computing</option>
-                            <option value='amth367'>AMTH 367 Mathematical Finance</option>
-                            <option value='amth387'>AMTH 387 Cryptology</option>
-                            <option value='bioe256'>BIOE 256/ENGR 256 Introduction to Nanobioengineering</option>
-                            <option value='ceng219'>CENG 219 Designing for Sustainable Construction</option>
-                            <option value='coen331'>COEN 331 Wireless and Mobile Networks</option>
-                            <option value='coen389'>COEN 389 Energy Efficient Computing</option>
-                            <option value='elen280'>ELEN 280/MECH 287 Introduction to Alternative Energy Systems</option>
-                            <option value='engr260'>ENGR 260 Nanoscale Science and Technology</option>
-                            <option value='engr262'>ENGR 262 Nanomaterials</option>
-                            <option value='engr273'>ENGR 273 Sustainable Energy and Ethics</option>
-                            <option value='engr337'>ENGR 337 Sustainability and Green Information Technology</option>
-                            <option value='engr371'>ENGR 371 Space Systems Design and Engineering I Technology</option>
-                            <option value='engr372'>ENGR 372 Space Systems Design and Engineering II Technology</option>
-                            <option value='mech234'>MECH 234 Combustion Technology</option>
-                            <option value='mech268'>MECH 268 Computational Fluid Dynamics I</option>
-                            <option value='mech295'>MECH 295 Fire Dynamics - Spec Top</option>
-                        </select>
+                       <input type="text" list='req_society' placeholder='Type a class like "amth351", or double-click' style='width:350px;' value=''/> 
+                        <datalist id='req_society'>
+                            <option  value='amth308'>AMTH 308 Theory of Wavelets</option><!--2-->
+                            <option value='amth351'>AMTH 351 Quantum Computing</option><!--2-->
+                            <option value='amth367'>AMTH 367 Mathematical Finance</option><!--4-->
+                            <option value='amth387'>AMTH 387 Cryptology</option><!--4-->
+                            <option value='bioe256'>BIOE 256/ENGR 256 Introduction to Nanobioengineering</option><!--2-->
+                            <option value='ceng219'>CENG 219 Designing for Sustainable Construction</option><!--4-->
+                            <option value='coen331'>COEN 331 Wireless and Mobile Networks</option><!--4-->
+                            <option value='coen389'>COEN 389 Energy Efficient Computing</option><!--2-->
+                            <option value='elen280'>ELEN 280/MECH 287 Introduction to Alternative Energy Systems</option><!--2-->
+                            <option value='engr260'>ENGR 260 Nanoscale Science and Technology</option><!--2-->
+                            <option value='engr262'>ENGR 262 Nanomaterials</option><!--2-->
+                            <option value='engr273'>ENGR 273 Sustainable Energy and Ethics</option><!--2-->
+                            <option value='engr337'>ENGR 337 Sustainability and Green Information Technology</option><!--2-->
+                            <option value='engr371'>ENGR 371 Space Systems Design and Engineering I Technology</option><!--4-->
+                            <option value='engr372'>ENGR 372 Space Systems Design and Engineering II Technology</option><!--4-->
+                            <option value='mech234'>MECH 234 Combustion Technology</option><!--2-->
+                            <option value='mech268'>MECH 268 Computational Fluid Dynamics I</option><!--2-->
+                            <option value='mech295'>MECH 295 Special Topics in Thermofluid Sciences</option><!--2-->
+                        </datalist>
                     </div>
                 </div>
             </div>

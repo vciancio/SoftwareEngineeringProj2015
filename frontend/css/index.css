@@ -9,6 +9,9 @@
 .capitalize {
     text-transform: capitalize;
 }
+.highlight {
+    font-weight: bold;
+}
 /*note font style*/
         
 .warning {
@@ -41,19 +44,20 @@ p.note {
     padding-right: 5px;
 }
 
-/*CHECKBOX STYLING*/        
-input[type=checkbox] {
-    -ms-transform: scale(1.5);
-    /*Internet Explorer*/
-    -moz-transform: scale(1.5);
-    /*Mozilla Firefox*/
-    -webkit-transform: scale(1.5);
-    /* Safari and Chrome */
-    -o-transform: scale(1.5);
-    /* Opera */
-    padding: 10px;
+input[type='radio'] {
+      width: 1.5em;
+      height: 1.5em;
+      padding: 10px;
 }
 
-#intro {
-    background-color: #ECECEC;
+.reqsel {
+    width: '350px';
+}
+/*CHECKBOX STYLING*/        
+input[type='checkbox'] {
+    -ms-transform: scale(1.5);      /* Internet Explorer */
+    -moz-transform: scale(1.5);     /* Mozilla Firefox */
+    -webkit-transform: scale(1.5);  /* Safari and Chrome */
+    -o-transform: scale(1.5);       /* Opera */
+    padding: 10px;
 }

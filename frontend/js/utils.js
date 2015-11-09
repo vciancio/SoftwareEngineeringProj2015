@@ -1,4 +1,24 @@
 var BASE_URL = "http://linux.students.engr.scu.edu/~vciancio/Software2015"
+var classes = [ {'course': 'amth308', 'unit': 2}, 
+                {'course': 'amth351', 'unit': 2}, 
+                {'course': 'amth367', 'unit': 4}, 
+                {'course': 'amth387', 'unit': 4},
+                {'course': 'bioe256', 'unit': 2},
+                {'course': 'ceng208', 'unit': 3},
+                {'course': 'ceng219', 'unit': 4},
+                {'course': 'coen331', 'unit': 4},
+                {'course': 'coen389', 'unit': 2},
+                {'course': 'elen280', 'unit': 2},
+                {'course': 'engr260', 'unit': 2},
+                {'course': 'engr262', 'unit': 2},
+                {'course': 'engr273', 'unit': 2},
+                {'course': 'engr337', 'unit': 2},
+                {'course': 'mech371', 'unit': 4},
+                {'course': 'mech372', 'unit': 4},
+                {'course': 'mech234', 'unit': 2},
+                {'course': 'mech268', 'unit': 2},
+                {'course': 'mech295', 'unit': 2}
+                ]
 
 /* JSON REQUEST / SERVER HANDLING */
 function isArray(obj){
@@ -21,17 +41,6 @@ function setCheckboxValueById(id, value){
     return $("#"+id).prop('checked', value);
 }
 
-function buildFoundationalCourses(){
-    var obj = {};
-    obj['coen20'] = getCheckboxValueById("coen20");
-    obj['coen21'] = getCheckboxValueById("coen21");
-    obj['coen12'] = getCheckboxValueById("coen12");
-    obj['coen19'] = getCheckboxValueById("coen19");
-    obj['amth210']= getCheckboxValueById("amth210");
-    
-    return obj;
-}
-
 function buildTransferCredits(){
     var classes = [];
     var courses = $("input[name='course-for-tc']");
@@ -51,6 +60,17 @@ function buildTransferCredits(){
     return classes;
 }
 
+function buildFoundationalCourses(){
+    var obj = {};
+    obj['coen20'] = getCheckboxValueById("coen20");
+    obj['coen21'] = getCheckboxValueById("coen21");
+    obj['coen12'] = getCheckboxValueById("coen12");
+    obj['coen19'] = getCheckboxValueById("coen19");
+    obj['amth210']= getCheckboxValueById("amth210");
+    
+    return obj;
+}
+
 function buildCoenCoreReqs(){  
     var reqs_core = {};
     reqs_core['coen210'] = getCheckboxValueById("coen210");
@@ -67,9 +87,9 @@ function buildCoenCoreReqs(){
   */
 function buildGradReqs() {
     var reqs_grad = {};
-    reqs_grad['req_emerg'] = getSelectionValueByName('req_emerg');
-    reqs_grad['req_business'] = getSelectionValueByName('req_business');
-    reqs_grad['req_society'] = getSelectionValueByName('req_society');
+    reqs_grad['req_emerg'] = $('input[list="req_emerg"]').val();
+    reqs_grad['req_business'] = $('input[list="req_business"]').val();
+    reqs_grad['req_society'] = $('input[list="req_society"]').val();
 
     return reqs_grad;
 }

@@ -1,10 +1,17 @@
 var c = 0;
 var ct = 0;
-var maxtrans = 9;
-
-function getSelectionValueByName(name) {
-    return $('select[name="' + name + '"]').val();
-}
+var maxtransfer = 9;
+var classes = [ {'course': 'amth308', 'unit': 2},    {'course': 'amth351', 'unit': 2}, 
+                {'course': 'amth367', 'unit': 4},    {'course': 'amth387', 'unit': 4},
+                {'course': 'bioe256', 'unit': 2},    {'course': 'ceng208', 'unit': 3},
+                {'course': 'ceng219', 'unit': 4},    {'course': 'coen331', 'unit': 4},
+                {'course': 'coen389', 'unit': 2},    {'course': 'elen280', 'unit': 2},
+                {'course': 'engr260', 'unit': 2},    {'course': 'engr262', 'unit': 2},
+                {'course': 'engr273', 'unit': 2},    {'course': 'engr302', 'unit': 2},
+                {'course': 'engr337', 'unit': 2},    {'course': 'mech371', 'unit': 4},
+                {'course': 'mech372', 'unit': 4},    {'course': 'mech234', 'unit': 2},
+                {'course': 'mech268', 'unit': 2},    {'course': 'mech295', 'unit': 2}
+];
 
 function addRow_TransferCredits(course, institution, grade, unit) {
     var table = document.getElementById("transferTable");
@@ -66,22 +73,6 @@ function removeRow_TrackUnits() {
 }
 
 
-function isSCU() {
-    /* read institution value
-     * verify if its SCU or Santa Clara University
-     * then maximum unit capacity increases to 16
-     * else maximum unit capacity stays to 9. */
-    
-
-    var read = $("input[name='inst-for-tc']").val();
-    read = read.toLowerCase();
-    if (read == "scu" || read == "santa clara university") {
-        maxtrans = 16;
-    } else {
-        maxtrans = 9;
-    }
-    return maxtrans;
-}
 
 
 /* -------------------------------------------------------------------------------- *
@@ -158,9 +149,14 @@ function gradCoreUnitCount() {
      */
     var total = 0;
     var core = buildGradReqs();
-    total += core.req_emerg != "none1" ? 4 : 0;
-    total += core.req_business != "none2" ? 4 : 0;
-    total += core.req_society != "none3" ? 4 : 0;
+    for (var index in classes){
+        if (classes[index].course == core.req_emerg)
+            total += classes[index].unit;
+        if (classes[index].course == core.req_business) 
+            total += classes[index].unit;
+        if (classes[index].course == core.req_society)
+            total += classes[index].unit;
+    }
     return total;
 }
 
@@ -225,18 +221,17 @@ function isSCU() {
      * verify if its SCU or Santa Clara University
      * then maximum unit capacity increases to 16
      * else maximum unit capacity stays to 9. */
-    
-    var transfer = buildTransferCredits();
-    for (var i=0; i<transfer.length; i++){
-        read = transfer[i].institution;
-        read = read.toLowerCase();
-        if (read == "scu" || read == "santa clara university") {
-            maxtrans = 16;
-        } else {
-            maxtrans = 9;
-        }
+
+    var where = $('input[name="where"]:checked').val();
+    if (where == 'undergraduate') {
+        maxtransfer = 16;
+    } else if (where == 'accelerated') {
+        maxtransfer = 20;
+    } else if (where == 'transfer')  {
+        maxtransfer = 9;
     }
-    return maxtrans;
+    
+    return maxtransfer;
 }
 
 function transferCreditsValidation() {
@@ -246,10 +241,21 @@ function transferCreditsValidation() {
      *      [] buildTransferCredits():
      *      [] transferCreditsUnitCount():
      */
+
     $("#messageBox1-3").html("");
     var transfer = buildTransferCredits();
-    if (transferCreditsUnitCount() > isSCU()) {
+    if (transferCreditsUnitCount() > isSCU) {
         $("#messageBox1-3").html("WARNING: Your maximum unit has exceeded.");
+    }
+    for (i=0; i<transfer.length; i++) {
+        if ($('input[name="where"]:checked').val() == "transfer") {
+            $('input[name="inst-for-tc"]').val("");
+        } if ($('input[name="where"]:checked').val() == "undergraduate") {
+            $('input[name="inst-for-tc"]').val("SCU Undergraduate");
+        } if ($('input[name="where"]:checked').val() == "accelerated") {
+            $('input[name="inst-for-tc"]').val("SCU Accelerated Master");
+        }
+
     }
 
 
@@ -281,14 +287,18 @@ function gradCoreValidation() {
      *  + DEPENDENCY:
      *      [] buildGradReqs();
      */
-    $("#messageBox4-3").html("")
+    $("#messageBox4-3").html("");
     var fail = false;
     var grad = buildGradReqs();
-    if (grad.req_emerg == grad.req_business ||
-        grad.req_emerg == grad.req_society ||
-        grad.req_business == grad.req_society) {
-        fail = true;
-    }
+    /* temporary variables set to specify non-input */
+    grad_em = grad.req_emerg !== "" ? grad.req_emerg:"none1";
+    grad_bs = grad.req_business !== "" ? grad.req_business:"none2";
+    grad_sc = grad.req_society !== "" ? grad.req_society:"none3";
+    if (grad_em == grad_bs ||
+        grad_em == grad_sc ||
+        grad_bs == grad_sc) {
+            fail = true;
+    } 
 
     if (fail) {
         $("#messageBox4-3").html("WARNING: You included the same course twice");
@@ -331,15 +341,18 @@ function trackValidation_Grad() {
      *      [] buildGradReqs():
      *      [] buildTrackUnits():
      */
-    console.log('grad checking');
     var fail = false;
     var grad = buildGradReqs();
     var track = buildTrackUnits();
+    /* temporary variables set to specify non-input */
+    grad_em = grad.req_emerg !== "" ? grad.req_emerg:"none1";
+    grad_bs = grad.req_business !== "" ? grad.req_business:"none2";
+    grad_sc = grad.req_society !== "" ? grad.req_society:"none3";
 
     for (var i = 0; i < track.length; i++) {
-        if ((track[i].course == grad.req_emerg) ||
-            (track[i].course == grad.req_business) ||
-            (track[i].course == grad.req_society)) {
+        if ((track[i].course == grad_em) ||
+            (track[i].course == grad_bs) ||
+            (track[i].course == grad_sc)) {
             fail = true;
         }
     }
@@ -379,7 +392,7 @@ function trackValidation_Core() {
 /* -------------------------------------------------------------------------------- *
  *  FUNCTIONS:  OVERVIEW OF 'ANALYSIS'                                               *
  * -------------------------------------------------------------------------------- *
- *  1. transferCreditAnalysis()
+ *  1. transferCreditsAnalysis()
  *      + DISPLAY: number of units for Transfer Credit listed in 1st section.
  *
  *  2. coenFoundationalAnalysis()
@@ -515,22 +528,21 @@ $(document).ready(function () {
         transferCreditsAnalysis();
     });
 
-
     /* 
      *  ##2. buttons in FOUNDATIONAL COURSES ##
      */
 
-    // "select all" button 
-    $('#select_all2').click(function () {
-        $(".classlist2").prop('checked', true);
-        coenFoundationalAnalysis();
-    });
+    // "select all wavied" button 
+    // $('#select_all2').click(function () {
+    //     $(".reqsel").attr("selected");
+    //     coenFoundationalAnalysis();
+    // });
 
-    // "deselect all" button
-    $('#deselect_all2').click(function () {
-        $(".classlist2").prop('checked', false);
-        coenFoundationalAnalysis();
-    });
+    // // "deselect all" button
+    // $('#deselect_all2').click(function () {
+    //     $(".reqsel").select("waived");
+    //     coenFoundationalAnalysis();
+    // });
 
 
     /* 
