@@ -10,7 +10,7 @@ function getSelectionValueByName(name) {
     return $('select[name="' + name + '"]').val();
 }
 
-function setSelectionValueByName(name, value){
+function setSelctionValueByName(name, value){
     return $('select[name="' + name + '"]').val(value);
 }
 
@@ -41,8 +41,7 @@ function buildTransferCredits(){
     }
     
     transferCredits.student_type = student_type;
-    transferCredits.mClasses = mClasses; 
-
+    transferCredits.mClasses = mClasses;
     return transferCredits;
 }
 
@@ -59,9 +58,9 @@ function buildFoundationalCourses(){
 
 function buildCoenCoreReqs(){  
     var reqs_core = {};
-    reqs_core['coen210'] = getSelectionValueByName("coen210");
-    reqs_core['coen279'] = getSelectionValueByName("coen279");
-    reqs_core['coen283'] = getSelectionValueByName("coen283");
+    reqs_core['coen210'] = getCheckboxValueById("coen210");
+    reqs_core['coen279'] = getCheckboxValueById("coen279");
+    reqs_core['coen283'] = getCheckboxValueById("coen283");
     
     return reqs_core;
 }
@@ -118,17 +117,16 @@ function buildDataObj() {
 }
 
 function processSaveResponse(result){
+    console.log(response);
     var json = JSON.parse(result);
     if(!json.error){
         alert("Your Form was saved successfully!");
     } else {
         alert("Your Form couldn't be saved. \n" + json.message);
     }
-    console.log(response);
 }
 
 function processLoadResponse(result){
-    console.log(result);
     var json = JSON.parse(result);
     if(json.error == "true") {
         alert("There was an error: " + json.message);
@@ -137,9 +135,9 @@ function processLoadResponse(result){
 
     var obj = json.content.mForm;
     console.log(obj);
-    removeRow_TransferCredits();
-
-    //Set the Student Type
+    removeRow_TransferCredit();
+    
+    // Set the Student Type
     $('input[value="'+ obj.transferCredits.student_type + '"]').prop('checked', true);
 
     //Populate the Approved Transfer Credits
@@ -161,7 +159,7 @@ function processLoadResponse(result){
     for(var i=0; i < foundationKeys.length; i++){
         var courseNumber = foundationKeys[i];
         var value = obj.foundationCourses[courseNumber];
-        setSelectionValueByName(courseNumber, value);
+        setCheckboxValueById(courseNumber, value);
     }
 
     //Populate the COEN Requirements
@@ -169,7 +167,7 @@ function processLoadResponse(result){
     for(var i=0; i<coenReqsKeys.length; i++){
         var courseNumber = coenReqsKeys[i];
         var value = obj.coenReqs[courseNumber];
-        setSelectionValueByName(courseNumber, value);
+        setCheckboxValueById(courseNumber, value);
     }
 
     //Populate the Graduate Core Requirements
@@ -177,7 +175,7 @@ function processLoadResponse(result){
     for(var i=0; i<gradCoreKeys.length; i++){
         var requirement = gradCoreKeys[i];
         var value = obj.gradReqs[requirement];
-        setSelectionValueByName(requirement, value);
+        setSelctionValueByName(requirement, value);
     }
 
 totalUnitAnalysis();

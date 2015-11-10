@@ -15,7 +15,6 @@ var classes = [ {'course': 'amth308', 'unit': 2},    {'course': 'amth351', 'unit
                 {'course': 'mech372', 'unit': 4},    {'course': 'mech234', 'unit': 2},
                 {'course': 'mech268', 'unit': 2},    {'course': 'mech295', 'unit': 2}
 ];
-var classesTrack = [];
 
 function addRow_TransferCredits(course, institution, grade, unit) {
     var table = document.getElementById("transferTable");
@@ -136,14 +135,12 @@ function coenCoreUnitCount() {
      *  + RETURNS:  number of units for checked item(s), listed in 3rd section.
      *  + DEPENDENCY:
      *      [] buildCoenCoreReqs():
-     *   
-     *   NOTE: 2 --> transfered; 1 --> waived; 0 --> required
      */
     var total = 0;
     var core = buildCoenCoreReqs();
-    total += core.coen210 > 0? 0 : 4;
-    total += core.coen279 > 0? 0 : 4;
-    total += core.coen283 > 0? 0 : 4;
+    total += core.coen210 ? 4 : 0;
+    total += core.coen279 ? 4 : 0;
+    total += core.coen283 ? 4 : 0;
     return total;
 }
 
@@ -544,39 +541,43 @@ $(document).ready(function () {
      *  ##2. buttons in FOUNDATIONAL COURSES ##
      */
 
-    // "select all wavied" button 
-    $('#select_all2').click(function () {
+    // "require all" button 
+    $('#require_all').click(function () {
         $(".reqsel").val("required");
-        coenCoreAnalysis();
+        coenFoundationalAnalysis();
     });
 
-    // "deselect all" button
-    $('#deselect_all2').click(function () {
-        $(".reqsel").val("waived");
-        coenCoreAnalysis();
+    // "transfer all" button 
+    $('#transfer_all').click(function () {
+        $(".reqsel").val("transfered");
+        coenFoundationalAnalysis();
     });
+
+    // "waive all" button
+    $('#waive_all').click(function () {
+        $(".reqsel").val("waived");
+        coenFoundationalAnalysis();
+    });
+
+    
 
 
     /* 
      *  ##3. buttons in CS AND ENGR CORE COURSES ##
      */
 
-    // "select all waived" button 
+    // "select all" button 
     $('#select_all3').click(function () { // on click select all button
-        $(".reqsel2").val("0");
+        $(".classlist3").prop('checked', true);
         coenCoreAnalysis();
     });
 
     // "deselect all" button
     $('#deselect_all3').click(function () { // on click select all button
-        $(".reqsel2").val("1");
+        $(".classlist3").prop('checked', false);
         coenCoreAnalysis();
     });
 
-    $('#transfer_all3').click(function () {
-        $(".reqsel2").val("2");
-        coenCoreAnalysis();
-    })
 
     /*
      *  ##4. buttons in SCU GRAD CORE COURSES ##

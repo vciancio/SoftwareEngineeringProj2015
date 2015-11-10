@@ -45,7 +45,7 @@
 
     <div class='tier1 container'>
         <div class='tier2-1 container-fluid'>
-            <h2>Student Information:</h2>
+            <h2>[0] Student Information:</h2>
             <h4>Fill up SCU student info</h4>
         </div>
         <div class='tier2-2 container-fluid'>
@@ -82,7 +82,7 @@
 
     <div class='tier1 container'>
         <div class='tier2-1 container-fluid'>
-            <h2>Approved Transfer Credit:</h2>
+            <h2>[1] Approved Transfer Credit:</h2>
             <div class='tier3-1'>
                 <div class='table container-fluid'>
                     <div class='table-heading container-fluid'>
@@ -134,13 +134,14 @@
 
     <div class='tier1 container'>
         <div class='tier2-1 container-fluid'>
-            <h2>Foundational Courses:</h2>
+            <h2>[2] Foundational Courses:</h2>
             <p>Mark the courses (or equivalences) the student is required to take.</p>
         </div>
         <div class='tier2-2 container-fluid'>
             <div class='tier3 container-fluid'>
-                <input type='button' id='select_all2' value='require all ' />
-                <input type='button' id='deselect_all2' value='wavie all' />
+                <input type='button' id='require_all' value='require all ' />
+                <input type='button' id='transfer_all' value='transfer all' />
+                <input type='button' id='waive_all' value='waive all' />
             </div>
             <div class='tier3 container-fluid'>
                 <div class='table container-fluid'>
@@ -154,6 +155,7 @@
                         <div class='table-cell'>
                             <select name='coen20' class='reqsel' style='width:180px;'/>
                                 <option value="required">Required</option>
+                                <option value="transfered">Transfered</option>
                                 <option value="waived">Waived</option>
                             </select>
                         </div>
@@ -165,6 +167,7 @@
                         <div class='table-cell'>
                            <select name='coen21' class='reqsel' style='width:180px;'/>
                                 <option value="required">Required</option>
+                                <option value="transfered">Transfered</option>
                                 <option value="waived">Waived</option>
                             </select>
                         </div>
@@ -176,6 +179,7 @@
                         <div class='table-cell'>
                             <select name='coen12' class='reqsel' style='width:180px;'/>
                                 <option value="required">Required</option>
+                                <option value="transfered">Transfered</option>
                                 <option value="waived">Waived</option>
                             </select>
                         </div>
@@ -187,6 +191,7 @@
                         <div class='table-cell'>
                             <select name='coen19' class='reqsel' style='width:180px;'/>
                                 <option value="required">Required</option>
+                                <option value="transfered">Transfered</option>
                                 <option value="waived">Waived</option>
                             </select>
                         </div>
@@ -198,6 +203,7 @@
                         <div class='table-cell'>
                             <select name='amth210' class='reqsel' style='width:180px;'/>
                                 <option value="required">Required</option>
+                                <option value="transfered">Transfered</option>
                                 <option value="waived">Waived</option>
                             </select>
                         </div>
@@ -220,15 +226,14 @@
 
     <div class='tier1 container'>
         <div class='tier2-1 container-fluid'>
-            <h2>Computer Science and Engineering Core Courses:</h2>
+            <h2>[3] Computer Science and Engineering Core Courses:</h2>
             <p>Mark the courses the student is required to take.</p>
             <br>
         </div>
         <div class='tier2-2 container-fluid'>
             <div class='tier3 container-fluid'>
-                <input type='button' id='select_all3' value='require all' />
-                <input type='button' id='deselect_all3' value='wavie all' />
-                <input type='button' id='transfer_all3' value='transfer all' />
+                <input type=button id='select_all3' value='select all' />
+                <input type=button id='deselect_all3' value='deselect all' />
             </div>
             <div class='tier3 container-fluid'>
                 <div class='table container-fluid'>
@@ -240,11 +245,7 @@
                     </div>
                     <div class='table-row container-fluid'>
                         <div class='table-cell'>
-                           <select name='coen210' class='reqsel2' style='width:180px;'/>
-                                <option value="0">Required</option>
-                                <option value="1">Waived</option>
-                                <option value="2">Transfered</option>
-                            </select>
+                            <input type='checkbox' id='coen210' class='classlist3' value='coen210'>
                         </div>
                         <div class='table-cell'>COEN210</div>
                         <div class='table-cell'>Computer Architecture</div>
@@ -252,23 +253,15 @@
                     </div>
                     <div class='table-row container-fluid'>
                         <div class='table-cell'>
-                            <select name='coen279' class='reqsel2' style='width:180px;'/>
-                                <option value="0">Required</option>
-                                <option value="1">Waived</option>
-                                <option value="2">Transfered</option>
-                            </select>
+                            <input type='checkbox' id='coen279' class='classlist3' value='coen279'>
                         </div>
                         <div class='table-cell'>COEN279</div>
                         <div class='table-cell'>Design &amp Analysis: Algorithms </div>
                         <div class='table-cell'>4</div>
                     </div>
                     <div class='table-row container-fluid'>
-                        <div class='table-cell'>    
-                            <select name='coen283' class='reqsel2' style='width:180px;'/>
-                                <option value="0">Required</option>
-                                <option value="1">Waived</option>
-                                <option value="2">Transfered</option>
-                            </select>
+                        <div class='table-cell'>
+                            <input type='checkbox' id='coen283' class='classlist3' value='coen283'>
                         </div>
                         <div class='table-cell'>COEN283</div>
                         <div class='table-cell'>Data Structures </div>
@@ -289,7 +282,7 @@
 
     <div class='tier1 container'>
         <div class='tier2-1 container-fluid'>
-            <h2>SCU Graduate Core Requirements: </h2>
+            <h2>[4] SCU Graduate Core Requirements: </h2>
             <p>(min. 6 units), 1 course from each area:</p>
         </div>
         <div class='tier2-2 container-fluid'>
@@ -383,7 +376,7 @@
 
     <div class='tier1 container'>
         <div class='tier2-1 container-fluid'>
-            <h2>Track</h2>
+            <h2>[5] Track</h2>
             <p>List track courses and additional courses totaling to 45 graduate units</P>
         </div>
         <div class='tier2-2 container-fluid'>
@@ -414,7 +407,7 @@
 
     <div class='tier1 container'>
         <div class='tier2-1 container-fluid'>
-            <h2>Units</h2>
+            <h2>6. Units</h2>
         </div>
         <div class='tier2-2 container-fluid'>
             <p id='messageBox6-1'></p>
