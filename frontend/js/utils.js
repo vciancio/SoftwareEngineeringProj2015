@@ -136,7 +136,7 @@ function processLoadResponse(result){
 
     for(var i=0; i<obj.transferCredits.length; i++){
         var mClass = obj.transferCredits[i];
-        addRow_TransferCredit(mClass.course, mClass.institution, mClass.grade, mClass.credits);
+        addRow_TransferCredits(mClass.course, mClass.institution, mClass.grade, mClass.credits);
     }
 
     removeRow_TrackUnits();

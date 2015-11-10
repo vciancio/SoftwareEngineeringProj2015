@@ -48,7 +48,7 @@ function removeRow_TransferCredits() {
 
 function addRow_TrackUnits(course, units) {
     var table = document.getElementById("transferTable2");
-    var tableRow = $("<div class='table-row container-fluid' id='row-for-track'" + (ct + 1) + ">");
+    var tableRow = $("<div class='table-row container-fluid' id='row-for-track" + (ct + 1) + "''>");
     var input = $("<input type='text' name='course-for-track' class='lowercase' id='course" + (ct + 1) + "' value='" + course + "' />");
     input = input.on("keydown", function (e) {
         return e.which !== 32;
@@ -70,7 +70,7 @@ function addRow_TrackUnits(course, units) {
 
 function removeRow_TrackUnits() {
     if (ct > 0) {
-        $(".table-row" + ct).remove();
+        $("#row-for-track" + ct).remove();
         ct--;
         trackAnalysis();
     }
