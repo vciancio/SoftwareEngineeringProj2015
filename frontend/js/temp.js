@@ -136,12 +136,14 @@ function coenCoreUnitCount() {
      *  + RETURNS:  number of units for checked item(s), listed in 3rd section.
      *  + DEPENDENCY:
      *      [] buildCoenCoreReqs():
+     *   
+     *   NOTE: 2 --> transfered; 1 --> waived; 0 --> required
      */
     var total = 0;
     var core = buildCoenCoreReqs();
-    total += core.coen210 ? 4 : 0;
-    total += core.coen279 ? 4 : 0;
-    total += core.coen283 ? 4 : 0;
+    total += core.coen210 > 0? 0 : 4;
+    total += core.coen279 > 0? 0 : 4;
+    total += core.coen283 > 0? 0 : 4;
     return total;
 }
 
@@ -559,18 +561,22 @@ $(document).ready(function () {
      *  ##3. buttons in CS AND ENGR CORE COURSES ##
      */
 
-    // "select all" button 
+    // "select all waived" button 
     $('#select_all3').click(function () { // on click select all button
-        $(".classlist3").prop('checked', true);
+        $(".reqsel2").val("0");
         coenCoreAnalysis();
     });
 
     // "deselect all" button
     $('#deselect_all3').click(function () { // on click select all button
-        $(".classlist3").prop('checked', false);
+        $(".reqsel2").val("1");
         coenCoreAnalysis();
     });
 
+    $('#transfer_all3').click(function () {
+        $(".reqsel2").val("2");
+        coenCoreAnalysis();
+    })
 
     /*
      *  ##4. buttons in SCU GRAD CORE COURSES ##
