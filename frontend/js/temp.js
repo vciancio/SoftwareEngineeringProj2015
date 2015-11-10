@@ -246,7 +246,7 @@ function transferCreditsValidation() {
      */
 
     $("#messageBox1-3").html("");
-    var transfer = buildTransferCredits().mClasses;
+    var transfer = buildTransferCredits();
     if (transferCreditsUnitCount() > isSCU()) {
         $("#messageBox1-3").html("WARNING: The number has exceeded the maximum unit allowed.");
     }
