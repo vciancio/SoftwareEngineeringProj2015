@@ -131,7 +131,7 @@ function processLoadResponse(result){
 
     var obj = json.content.mForm;
     console.log(obj);
-    // removeRow_TransferCredit();
+    removeRow_TransferCredits();
     //Populate the Approved Transfer Credits
 
     for(var i=0; i<obj.transferCredits.length; i++){
