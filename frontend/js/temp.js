@@ -1,22 +1,26 @@
 var c = 0;
 var ct = 0;
 var maxtransfer = 9;
+var unit
 var classes = [ {'course': 'amth308', 'unit': 2},    {'course': 'amth351', 'unit': 2}, 
                 {'course': 'amth367', 'unit': 4},    {'course': 'amth387', 'unit': 4},
                 {'course': 'bioe256', 'unit': 2},    {'course': 'ceng208', 'unit': 3},
-                {'course': 'ceng219', 'unit': 4},    {'course': 'coen331', 'unit': 4},
-                {'course': 'coen389', 'unit': 2},    {'course': 'elen280', 'unit': 2},
-                {'course': 'engr260', 'unit': 2},    {'course': 'engr262', 'unit': 2},
-                {'course': 'engr273', 'unit': 2},    {'course': 'engr302', 'unit': 2},
-                {'course': 'engr337', 'unit': 2},    {'course': 'mech371', 'unit': 4},
+                {'course': 'ceng219', 'unit': 4},    {'course': 'coen287', 'unit': 2},
+                {'course': 'coen331', 'unit': 4},    {'course': 'coen389', 'unit': 2},
+                {'course': 'elen280', 'unit': 2},    {'course': 'engr260', 'unit': 2},
+                {'course': 'engr262', 'unit': 2},    {'course': 'engr273', 'unit': 2},    
+                {'course': 'engr302', 'unit': 2},    {'course': 'engr304', 'unit': 2},
+                {'course': 'engr336', 'unit': 2},    {'course': 'engr337', 'unit': 2}, 
+                {'course': 'engr338', 'unit': 2},    {'course': 'mech371', 'unit': 4},
                 {'course': 'mech372', 'unit': 4},    {'course': 'mech234', 'unit': 2},
                 {'course': 'mech268', 'unit': 2},    {'course': 'mech295', 'unit': 2}
 ];
+var classesTrack = [];
 
 function addRow_TransferCredits(course, institution, grade, unit) {
     var table = document.getElementById("transferTable");
     var tableRow = $("<div class='table-row container-fluid' id='row-transfer-credit" + (c + 1) + "'>");
-    var input = $("<input type='text' class='coursename' name='course-for-tc' id='course" + (c + 1) + "' value='" + course + "' />");
+    var input = $("<input type='text' class='lowercase' name='course-for-tc' id='course" + (c + 1) + "' value='" + course + "' placeholder='coen12'/>");
     input = input.on("keydown", function (e) {
         return e.which !== 32;
     }); // restriction on typing space 
@@ -111,21 +115,21 @@ function transferCreditsUnitCount() {
     return total;
 }
 
-function coenFoundationalUnitCount() {
-    /*
-     *  + RETURNS:  number of units for checked item(s), listed in 2nd section.
-     *  + DEPENDENCY:
-     *      [] buildFoundationalCourses():
-     */
-    var total = 0;
-    var foundational = buildFoundationalCourses();
-    total += foundational.coen20 ? 4 : 0;
-    total += foundational.coen21 ? 4 : 0;
-    total += foundational.coen12 ? 4 : 0;
-    total += foundational.coen19 ? 4 : 0;
-    total += foundational.amth210 ? 4 : 0;
-    return total;
-}
+// function coenFoundationalUnitCount() {
+//     /*
+//      *  + RETURNS:  number of units for checked item(s), listed in 2nd section.
+//      *  + DEPENDENCY:
+//      *      [] buildFoundationalCourses():
+//      */
+//     var total = 0;
+//     var foundational = buildFoundationalCourses();
+//     total += foundational.coen20 ? 4 : 0;
+//     total += foundational.coen21 ? 4 : 0;
+//     total += foundational.coen12 ? 4 : 0;
+//     total += foundational.coen19 ? 4 : 0;
+//     total += foundational.amth210 ? 4 : 0;
+//     return total;
+// }
 
 function coenCoreUnitCount() {
     /*
@@ -152,7 +156,7 @@ function gradCoreUnitCount() {
     for (var index in classes){
         if (classes[index].course == core.req_emerg)
             total += classes[index].unit;
-        if (classes[index].course == core.req_business) 
+        if (classes[index].course == core.req_business)
             total += classes[index].unit;
         if (classes[index].course == core.req_society)
             total += classes[index].unit;
@@ -186,7 +190,7 @@ function totalUnitCount() {
      */
     var total = 0;
     total += transferCreditsUnitCount();
-    total += coenFoundationalUnitCount();
+    // total += coenFoundationalUnitCount();
     total += coenCoreUnitCount();
     total += gradCoreUnitCount();
     total += trackUnitCount();
@@ -230,7 +234,6 @@ function isSCU() {
     } else if (where == 'transfer')  {
         maxtransfer = 9;
     }
-    
     return maxtransfer;
 }
 
@@ -244,8 +247,8 @@ function transferCreditsValidation() {
 
     $("#messageBox1-3").html("");
     var transfer = buildTransferCredits();
-    if (transferCreditsUnitCount() > isSCU) {
-        $("#messageBox1-3").html("WARNING: Your maximum unit has exceeded.");
+    if (transferCreditsUnitCount() > isSCU()) {
+        $("#messageBox1-3").html("WARNING: The number has exceeded the maximum unit allowed.");
     }
     for (i=0; i<transfer.length; i++) {
         if ($('input[name="where"]:checked').val() == "transfer") {
@@ -255,21 +258,18 @@ function transferCreditsValidation() {
         } if ($('input[name="where"]:checked').val() == "accelerated") {
             $('input[name="inst-for-tc"]').val("SCU Accelerated Master");
         }
-
     }
-
-
 }
 
-function coenFoundationalValidation() {
-    /* 
-     *  + DISPLAY: a warning message of violation for 2nd section.
-     *  + DEPENDENCY:
-     *      [] buildFoundationalCourses():
-     */
-    var fail = false;
-    var foundational = buildFoundationalCourses();
-}
+// function coenFoundationalValidation() {
+     
+//      *  + DISPLAY: a warning message of violation for 2nd section.
+//      *  + DEPENDENCY:
+//      *      [] buildFoundationalCourses():
+     
+//     var fail = false;
+//     var foundational = buildFoundationalCourses();
+// }
 
 function coenCoreValidation() {
     /* 
@@ -281,27 +281,33 @@ function coenCoreValidation() {
     var core = buildCoenCoreReqs();
 }
 
+
 function gradCoreValidation() {
     /* 
      *  + DISPLAY: a warning message of violation for 4th section.
      *  + DEPENDENCY:
      *      [] buildGradReqs();
      */
-    $("#messageBox4-3").html("");
+    $("#messageBox4-3a").html("");
+    $("#messageBox4-3b").html("");
+    if (gradCoreUnitCount() < 6) {
+        $("#messageBox4-3a").html("WARNING: Your minimum unit is not met.");
+    }
     var fail = false;
     var grad = buildGradReqs();
     /* temporary variables set to specify non-input */
     grad_em = grad.req_emerg !== "" ? grad.req_emerg:"none1";
     grad_bs = grad.req_business !== "" ? grad.req_business:"none2";
     grad_sc = grad.req_society !== "" ? grad.req_society:"none3";
-    if (grad_em == grad_bs ||
-        grad_em == grad_sc ||
-        grad_bs == grad_sc) {
-            fail = true;
-    } 
-
+    if (grad_em == grad_bs) {
+        fail = true;
+    } else if (grad_em == grad_sc) {
+        fail = true;
+    } else if (grad_bs == grad_sc) {
+        fail = true;
+    }
     if (fail) {
-        $("#messageBox4-3").html("WARNING: You included the same course twice");
+        $("#messageBox4-3b").html("WARNING: You included the same course twice");
     }
 }
 
@@ -328,8 +334,12 @@ function trackValidation_Unit() {
      *  + DEPENDENCY:
      *      [] trackUnitCount():
      */
+    
     if (trackUnitCount() < 8) {
         $("#messageBox5-3a").html("WARNING: Your minimum unit is not met.");
+    }
+    if (trackUnitCount() > 45) {
+        $("#messageBox5-3a").html("WARNING: The number has exceeded the maximum unit allowed.")
     }
 }
 
@@ -421,16 +431,16 @@ function transferCreditsAnalysis() {
     $('#messageBox1-2').html("TOTAL UNITS FOR TRANSFER CREDIT = " + transferCreditsUnitCount());
 }
 
-function coenFoundationalAnalysis() {
+// function coenFoundationalAnalysis() {
     /*
      *  + DISPLAY: number of units summed for checked item(s), listed in 2nd section.
      *  + DEPENDENCY: 
      *      [] coenFoundationalUnitCount()
      */
 
-    coenFoundationalValidation();
-    $('#messageBox2-2').html("TOTAL UNITS FOR COEN FOUNDATOINAL = " + coenFoundationalUnitCount());
-}
+    // coenFoundationalValidation();
+    // $('#messageBox2-2').html("TOTAL UNITS FOR COEN FOUNDATOINAL = " + coenFoundationalUnitCount());
+// }
 
 function coenCoreAnalysis() {
     /*
@@ -490,7 +500,7 @@ $(document).ready(function () {
 
     //EVENT HANDLER for checkbox change
     $('input[type="checkbox"]').change(function () {
-        coenFoundationalAnalysis(); /* section 2 */
+        // coenFoundationalAnalysis(); /* section 2 */
         coenCoreAnalysis(); /* section 3 */
         totalUnitAnalysis(); /* sectoin 6 */
     });
@@ -533,16 +543,16 @@ $(document).ready(function () {
      */
 
     // "select all wavied" button 
-    // $('#select_all2').click(function () {
-    //     $(".reqsel").attr("selected");
-    //     coenFoundationalAnalysis();
-    // });
+    $('#select_all2').click(function () {
+        $(".reqsel").val("required");
+        coenFoundationalAnalysis();
+    });
 
-    // // "deselect all" button
-    // $('#deselect_all2').click(function () {
-    //     $(".reqsel").select("waived");
-    //     coenFoundationalAnalysis();
-    // });
+    // "deselect all" button
+    $('#deselect_all2').click(function () {
+        $(".reqsel").val("waived");
+        coenFoundationalAnalysis();
+    });
 
 
     /* 
