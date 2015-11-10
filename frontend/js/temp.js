@@ -16,6 +16,7 @@ var classes = [ {'course': 'amth308', 'unit': 2},    {'course': 'amth351', 'unit
                 {'course': 'mech268', 'unit': 2},    {'course': 'mech295', 'unit': 2}
 ];
 
+
 function addRow_TransferCredits(course, institution, grade, unit) {
     var table = document.getElementById("transferTable");
     var tableRow = $("<div class='table-row container-fluid' id='row-transfer-credit" + (c + 1) + "'>");
