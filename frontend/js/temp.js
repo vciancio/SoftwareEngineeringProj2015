@@ -141,9 +141,9 @@ function coenCoreUnitCount() {
      */
     var total = 0;
     var core = buildCoenCoreReqs();
-    total += core.coen210 > 0? 0 : 4;
-    total += core.coen279 > 0? 0 : 4;
-    total += core.coen283 > 0? 0 : 4;
+    total += core.coen210 == 0? 4 : 0;
+    total += core.coen279 == 0? 4 : 0;
+    total += core.coen283 == 0? 4 : 0;
     return total;
 }
 
@@ -506,6 +506,28 @@ $(document).ready(function () {
         coenCoreAnalysis(); /* section 3 */
         totalUnitAnalysis(); /* sectoin 6 */
     });
+
+    $("select[name='coen210']").change(function() {
+        coenCoreAnalysis();
+        gradCoreAnalysis();
+        trackAnalysis();
+        totalUnitAnalysis();
+    });
+
+    $("select[name='coen279']").change(function() {
+        coenCoreAnalysis();
+        gradCoreAnalysis();
+        trackAnalysis();
+        totalUnitAnalysis();
+    });
+
+    $("select[name='coen283']").change(function() {
+        coenCoreAnalysis();
+        gradCoreAnalysis();
+        trackAnalysis();
+        totalUnitAnalysis();
+    });
+
 
     //EVENT HANDLER for selection  change
     $("select[name='req_society']").change(function () {
