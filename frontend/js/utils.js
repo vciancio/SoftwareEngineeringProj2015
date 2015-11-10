@@ -23,9 +23,7 @@ function setCheckboxValueById(id, value){
 }
 
 function buildTransferCredits(){
-    var transferCredits = new Object();
-    var student_type = $('input[name="where"]:checked').val();
-    var mClasses = [];
+    var classes = [];
     var courses = $("input[name='course-for-tc']");
     var institutions = $("input[name='inst-for-tc']");
     var grades = $("input[name='grade-for-tc']");
@@ -37,22 +35,19 @@ function buildTransferCredits(){
         mClass.institution = institutions[i].value;
         mClass.grade = grades[i].value;
         mClass.credits = credits[i].value;
-        mClasses.push(mClass);
+        classes.push(mClass);
     }
     
-    transferCredits.student_type = student_type;
-    transferCredits.mClasses = mClasses; 
-
-    return transferCredits;
+    return classes;
 }
 
 function buildFoundationalCourses(){
     var obj = {};
-    obj['coen20'] = getSelectionValueByName("coen20");
-    obj['coen21'] = getSelectionValueByName("coen21");
-    obj['coen12'] = getSelectionValueByName("coen12");
-    obj['coen19'] = getSelectionValueByName("coen19");
-    obj['amth210']= getSelectionValueByName("amth210");
+    obj['coen20'] = getCheckboxValueById("coen20");
+    obj['coen21'] = getCheckboxValueById("coen21");
+    obj['coen12'] = getCheckboxValueById("coen12");
+    obj['coen19'] = getCheckboxValueById("coen19");
+    obj['amth210']= getCheckboxValueById("amth210");
     
     return obj;
 }
@@ -128,7 +123,6 @@ function processSaveResponse(result){
 }
 
 function processLoadResponse(result){
-    console.log(result);
     var json = JSON.parse(result);
     if(json.error == "true") {
         alert("There was an error: " + json.message);
@@ -138,13 +132,10 @@ function processLoadResponse(result){
     var obj = json.content.mForm;
     console.log(obj);
     removeRow_TransferCredits();
-
-    //Set the Student Type
-    $('input[value="'+ obj.transferCredits.student_type + '"]').prop('checked', true);
-
     //Populate the Approved Transfer Credits
-    for(var i=0; i<obj.transferCredits.mClasses.length; i++){
-        var mClass = obj.transferCredits.mClasses[i];
+
+    for(var i=0; i<obj.transferCredits.length; i++){
+        var mClass = obj.transferCredits[i];
         addRow_TransferCredits(mClass.course, mClass.institution, mClass.grade, mClass.credits);
     }
 

@@ -108,7 +108,7 @@ function transferCreditsUnitCount() {
      *      [] buildTransferCredits():
      */
     var total = 0;
-    var transfer = buildTransferCredits().mClasses;
+    var transfer = buildTransferCredits();
     for (i = 0; i < transfer.length; i++) {
         total += Number(transfer[i].credits);
     }
@@ -248,7 +248,7 @@ function transferCreditsValidation() {
      */
 
     $("#messageBox1-3").html("");
-    var transfer = buildTransferCredits().mClasses;
+    var transfer = buildTransferCredits();
     if (transferCreditsUnitCount() > isSCU()) {
         $("#messageBox1-3").html("WARNING: The number has exceeded the maximum unit allowed.");
     }
@@ -547,13 +547,13 @@ $(document).ready(function () {
     // "select all wavied" button 
     $('#select_all2').click(function () {
         $(".reqsel").val("required");
-        coenCoreAnalysis();
+        coenFoundationalAnalysis();
     });
 
     // "deselect all" button
     $('#deselect_all2').click(function () {
         $(".reqsel").val("waived");
-        coenCoreAnalysis();
+        coenFoundationalAnalysis();
     });
 
 
