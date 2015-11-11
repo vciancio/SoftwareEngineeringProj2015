@@ -22,6 +22,10 @@ function setCheckboxValueById(id, value){
     return $("#"+id).prop('checked', value);
 }
 
+function setInputByName(name, value){
+    $('input[name="'+name+'"]').val(value);
+}
+
 function buildTransferCredits(){
     var transferCredits = new Object();
     var student_type = $('input[name="where"]:checked').val();
