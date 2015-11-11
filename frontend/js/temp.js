@@ -2,7 +2,7 @@ var c = 0;
 var ct = 0;
 var maxtransfer = 9;
 var unit
-var classes = [ {'course': 'amth308', 'unit': 2},    {'course': 'amth351', 'unit': 2}, 
+/*var classes = [ {'course': 'amth308', 'unit': 2},    {'course': 'amth351', 'unit': 2}, 
                 {'course': 'amth367', 'unit': 4},    {'course': 'amth387', 'unit': 4},
                 {'course': 'bioe256', 'unit': 2},    {'course': 'ceng208', 'unit': 3},
                 {'course': 'ceng219', 'unit': 4},    {'course': 'coen287', 'unit': 2},
@@ -14,7 +14,7 @@ var classes = [ {'course': 'amth308', 'unit': 2},    {'course': 'amth351', 'unit
                 {'course': 'engr338', 'unit': 2},    {'course': 'mech371', 'unit': 4},
                 {'course': 'mech372', 'unit': 4},    {'course': 'mech234', 'unit': 2},
                 {'course': 'mech268', 'unit': 2},    {'course': 'mech295', 'unit': 2}
-];
+];*/
 var classesTrack = [];
 
 function addRow_TransferCredits(course, institution, grade, unit) {
