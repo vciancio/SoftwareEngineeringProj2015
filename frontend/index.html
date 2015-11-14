@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang='en'>
-
 <head>
     <meta charset="utf-8">
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -12,31 +11,43 @@
     <!-- Custom CSS -->
     <link rel='stylesheet' type='text/css' href='css/index.css'>
     <style>
-    body {
-        padding-top: 70px;
-        /* Required padding for .navbar-fixed-top. Remove if using .navbar-static-top. Change if height of navigation changes. */
-    }
+        body {
+            padding-top: 60px;
+            padding-bottom: 40px;
+        }
+        
+        .sidebar-nav {
+            padding: 9px 0;
+        }
+
+        @media (max-width: 980px) {
+        /* Enable use of floated navbar text */
+            .navbar-text.pull-right {
+                float: none;
+                padding-left: 5px;
+                padding-right: 5px;
+            }
+        }
     </style>
     <!-- Bootstrap Core CSS -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" integrity="sha512-dTfge/zgoMYpP7QbHy4gWMEGsbsdZeCXz7irItjcC3sPUFtf0kuFbDz/ixG7ArTxmDjLXDmezHubeNikyKGVyQ==" crossorigin="anonymous">
+    <link href="css/bootstrap.css" rel="stylesheet">
 
     <!-- JavaScript / jQuery -->
     <script type='text/javascript' src='http://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js'></script>
-    
     <script type='text/javascript' src='js/utils.js'></script>
     <script type='text/javascript' src='js/temp.js'></script>
 </head>
 <title> Santa Clara University - Online Graduate Program of Studies Form </title>
 <body>
-    <a class="center-block" href="http://www.scu.edu/engineering/cse/grad/degrees.cfm"><img class="img-responsive center-block" src='http://law.scu.edu/wp-content/themes/strappress-child/images/scu-seal-red.png'/></a>
     <div class='tier1 container'>
-        <div class="tier2-1 row text-center">
-                        <h1>PROGRAM OF STUDIES - CS & ENGINEERING MS</h1>
-                        <h3>(this is for students admitted beginning in fall 2008 and after) </h3>
-                        <p class="lead">You may either Enter your information and load your previous form, <br> or just start a new one and hit save at the bottom of the page </p>
-                        <p> Any Courses can be found on <a href="http://issuu.com/santaclarauniversity/docs/scuengineerbull_2013-2014/39?e=2790581%2F4906551" target "_blank"="">the current SCU Bulletin.</a></p>
-                    </div>
-                </div>
+        <div class="row text-center">
+            <a class="center-block" href="http://www.scu.edu/engineering/cse/grad/degrees.cfm"><img class="img-responsive center-block" src='http://law.scu.edu/wp-content/themes/strappress-child/images/scu-seal-red.png'/></a>
+            <h1>PROGRAM OF STUDIES - CS &amp ENGINEERING MS</h1>
+            <h3>(this is for students admitted beginning in fall 2008 and after) </h3>
+            <p class="lead">You may either Enter your information and load your previous form, <br> or just start a new one and hit save at the bottom of the page </p>
+            <p> Any Courses can be found on <a href="http://issuu.com/santaclarauniversity/docs/scuengineerbull_2013-2014/39?e=2790581%2F4906551" target "_blank"="">the current SCU Bulletin.</a></p>
+        </div>
+    </div>
             </div>
         </div>
     </div>
@@ -69,13 +80,12 @@
                     <div class='table-cell'>
                         <input type='text' name='email' placeholder='i.e. jdoe@scu.edu'>
                     </div>
-                    <div class='table-cell'>
-                        <button type='submit' onclick='loadData()'>Load Form</button>
-                    </div>
                 </div>
             </div>
+            <button type='submit' onclick='loadData()' class="btn btn-primary btn-block">Load Form</button>
         </div>
     </div>
+    <br>
     <br>
     <br>
 
@@ -96,7 +106,7 @@
                         <div class='table-cell'><h5>9 quarter units</h5></div>
                     </div>
                     <div class='table-row container-fluid'>
-                        <div class='table-cell'><input type='radio' name='where' value='undergraduate'></div>
+                        <div class='table-cell'></div>
                         <div class='table-cell'><h4>For SCU Undergraduates</h4></div>
                         <div class='table-cell'><h5>16 quarter units</h5></div>
                     </div>
@@ -110,8 +120,8 @@
         </div>
         <div class='tier2-2 container-fluid'>
             <div class='tier3 container-fluid'>
-                <input type='button' id='add_row' value='add row' />
-                <input type='button' id='remove_row' value='remove row' />
+                <input type='button' class="btn btn-primary btn-block" id='add_row' value='add row' />
+                <input type='button' class="btn btn-default btn-block" id='remove_row' value='remove row' />
             </div>
             <div class='table container' id='transferTable'>
                 <div class='table-heading container-fluid'>
@@ -139,10 +149,6 @@
         </div>
         <div class='tier2-2 container-fluid'>
             <div class='tier3 container-fluid'>
-                <input type='button' id='select_all2' value='require all ' />
-                <input type='button' id='deselect_all2' value='wavie all' />
-            </div>
-            <div class='tier3 container-fluid'>
                 <div class='table container-fluid'>
                     <div class='table-heading container-fluid'>
                         <div class='table-cell'>Selection</div>
@@ -153,8 +159,8 @@
                     <div class='table-row container-fluid'>
                         <div class='table-cell'>
                             <select name='coen20' class='reqsel' style='width:180px;'/>
-                                <option value="required">Required</option>
-                                <option value="waived">Waived</option>
+                            <option value="required">Required</option>
+                            <option value="waived">Waived</option>
                             </select>
                         </div>
                         <div class='table-cell'>COEN20</div>
@@ -163,9 +169,9 @@
                     </div>
                     <div class='table-row container-fluid'>
                         <div class='table-cell'>
-                           <select name='coen21' class='reqsel' style='width:180px;'/>
-                                <option value="required">Required</option>
-                                <option value="waived">Waived</option>
+                            <select name='coen21' class='reqsel' style='width:180px;'/>
+                            <option value="required">Required</option>
+                            <option value="waived">Waived</option>
                             </select>
                         </div>
                         <div class='table-cell'>COEN21</div>
@@ -175,45 +181,49 @@
                     <div class='table-row container-fluid'>
                         <div class='table-cell'>
                             <select name='coen12' class='reqsel' style='width:180px;'/>
-                                <option value="required">Required</option>
-                                <option value="waived">Waived</option>
+                            <option value="required">Required</option>
+                            <option value="waived">Waived</option>
                             </select>
                         </div>
                         <div class='table-cell'>COEN12</div>
                         <div class='table-cell'>Data Structure</div>
                         <div class='table-cell'>4</div>
                     </div>
-                    <div class='table-row container-fluid'>
-                        <div class='table-cell'>
-                            <select name='coen19' class='reqsel' style='width:180px;'/>
-                                <option value="required">Required</option>
-                                <option value="waived">Waived</option>
-                            </select>
-                        </div>
-                        <div class='table-cell'>COEN19</div>
-                        <div class='table-cell'>Discrete Math</div>
-                        <div class='table-cell'>4</div>
-                    </div>
-                    <div class='table-row container-fluid'>
-                        <div class='table-cell'>
-                            <select name='amth210' class='reqsel' style='width:180px;'/>
-                                <option value="required">Required</option>
-                                <option value="waived">Waived</option>
-                            </select>
-                        </div>
-                        <div class='table-cell'>AMTH210</div>
-                        <div class='table-cell'>Probability</div>
-                        <div class='table-cell'>4</div>
-                    </div>
-                </div>
-            </div>
-            <div class='tier3 container-fluid'>
-                <p class='note'>NOTE: Labs are not required.</p>
-                <p id='messageBox2-1'>
-                    <p id='messageBox2-2'></p>
-                    <p id='messageBox2-3' class='warning'></p>
-            </div>
-        </div>
+    <div class='table-row container-fluid'>
+        <div class='table-cell'>
+            <select name='coen19' class='reqsel' style='width:180px;'/>
+            <option value="required">Required</option>
+            <option value="waived">Waived</option>
+        </select>
+    </div>
+    <div class='table-cell'>COEN19</div>
+    <div class='table-cell'>Discrete Math</div>
+    <div class='table-cell'>4</div>
+</div>
+<div class='table-row container-fluid'>
+    <div class='table-cell'>
+        <select name='amth210' class='reqsel' style='width:180px;'/>
+        <option value="required">Required</option>
+        <option value="waived">Waived</option>
+    </select>
+</div>
+<div class='table-cell'>AMTH210</div>
+<div class='table-cell'>Probability</div>
+<div class='table-cell'>4</div>
+</div>
+</div>
+<div class='tier3 container-fluid'>
+    <input type='button' id='select_all2' class="btn btn-primary btn-block" value='require all ' />
+    <input type='button' id='deselect_all2' class="btn btn-default btn-block" value='wavie all' />
+</div>
+</div>
+<div class='tier3 container-fluid'>
+    <p class='note'>NOTE: Labs are not required.</p>
+    <p id='messageBox2-1'>
+        <p id='messageBox2-2'></p>
+        <p id='messageBox2-3' class='warning'></p>
+    </div>
+</div>
     </div>
     <br>
     <br>

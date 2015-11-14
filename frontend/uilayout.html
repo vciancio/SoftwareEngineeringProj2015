@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<title>Bootstrap Example</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel='stylesheet' type='text/css' href='css/index.css'>
+	
+	<!-- Bootstrap Core CSS -->
+	<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+	<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+
+	<!-- JavaScript / jQuery -->
+	<script type='text/javascript' src='http://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js'></script>
+	<script type='text/javascript' src='js/temp.js'></script>
+	<script type='text/javascript' src='js/utils.js'></script>
+
+
+	<style>
+	body {
+		position: relative;	
+	}
+	.panel > .panel-heading {
+		background-color: #93191B;
+		color: #E2DFC6;
+	}
+	.nav-pills > li > a {
+		font-size: 18px;
+		color: #333333;
+	}
+
+	/* This changes the color of the active */
+	.nav-pills > li.active > a {
+		background-color: #93191B;
+		color: #E2DFC6;
+		font-size: 18px;
+	}
+
+	/* This changes the color of the hovered pill */
+	.nav-pills > li.active > a:hover {
+		background-color: #93191B;
+		color: #E2DFC6;
+		font-size: 18px;
+	}
+
+	.affix {
+		top: 10px;
+
+	}
+
+	@media screen and (max-width: 100px) {
+		#section1, #section2, #section3, #section4, #section5 {
+			margin-left: 100px;
+		}
+	}
+	</style>
+</head>
+<body data-spy="scroll" data-target="#myScrollspy" data-offset="15">
+	<div class="container-fluid" style="background-color:#333333;color:white;height:300px; padding-top:30px">
+		<div class="text-center">
+			<a class="center-block" href="http://www.scu.edu/engineering/cse/grad/degrees.cfm"><img class="img-responsive center-block" src='http://law.scu.edu/wp-content/themes/strappress-child/images/scu-seal-red.png'/></a>
+			<h1>SCU Program of Studies<br><small style="color:#D2C599">Computer Science and Engineering MS</small></h1>
+		</div>
+	</div>
+	<br>
+
+	<div class="container">
+		<div class="row">
+			<nav class="col-sm-3 hidden-xs hidden-sm" id="myScrollspy" >
+				<ul class="nav nav-pills nav-stacked" data-spy="affix" data-offset-top="300">
+					<li class='nav'>
+						<a href="#section1">Approved Transfer Credits</a>
+						<ul class="nav">
+							<li><a href='#'><p id='messageBox1-1'></p></a></li>
+						</ul>
+					</li>
+					<li class='nav'>
+						<a href="#section2">Foundational Courses </a>
+						<ul class="nav">
+							<li><a href='#'><p id='messageBox2-1'></p></a></li>
+						</ul>
+					</li>
+					<li class='nav'>
+						<a href="#section3">CoenCore Courses</a>
+						<ul class="nav">
+							<li><a href='#'><p id='messageBox3-1'></p></a></li>
+						</ul>
+					</li>
+					<li class='nav'>
+						<a href="#section4">GradCore Courses</a>
+						<ul class="nav">
+							<li><a href='#'><p id='messageBox4-1'></p></a></li>
+						</ul>
+					</li>
+					<li class='nav'>
+						<a href="#section5">Track Courses</a>
+						<ul class="nav">
+							<li><a href='#'><p id='messageBox5-1'></p></a></li>
+						</ul>
+					</li>
+					<!-- <li class="dropdown">
+						<a class="dropdown" data-toggle="dropdown" href="#">Section 6 <span class="caret"></span></a>
+					</li> -->
+				</ul>
+			</nav>
+			<div class="col-sm-9">
+				<div class="jumbotron">
+					<div class="row">
+						<div class="col-sm-3 hidden-md hidden-sm hidden-xs">
+							<img class="transSeal" src="http://www.scu.edu/give/dowdart/images/transparent-seal.png" width="160%" alt="SCU Seal">
+						</div>
+
+						<div class="col-sm-9">
+							<h3>This is for students admitted beginning in fall 2008 and after</h3>
+							<p>You may either enter your information and load your previous form, or just start a new one and hit save at the bottom of the page </p>
+							<div class="btn-group btn-group-justified" role="group">
+								<div class="btn-group" role="group">
+									<a href="http://issuu.com/santaclarauniversity/docs/scuengineerbull_14-15" target ="_blank"><button type='button' class='btn btn-info btn-lg' id='select_all4'>Click here to see the current SCU Bulletin online.</button></a>
+								</div> <!--btn-group-->
+							</div> <!--btn-group-justified-->
+						</div> <!-- /col-sm-9 -->
+					</div> <!-- /row -->
+				</div> <!-- /jumbotron -->
+				
+				<div id="section1" class="panel panel-default">
+					<div class="panel-heading text-center">
+						<h2>Approved Transfer Credits</h2>
+					</div> <!-- /panel-heading -->
+					<div class="panel-body">
+						<div class="table container-fluid text-center">
+							<div class="table-heading">
+								<div class="table-cell"><h4>Selection</h4></div>
+								<div class="table-cell"><h4>Student Status</h4></div>
+								<div class="table-cell"><h4>Maximum Units Allowed</h4></div>
+							</div> <!-- /table-heading -->
+
+							<div class="table-row">
+								<div class="table-cell">
+									<input type='radio' name='where' value='transfer' checked>
+								</div>
+								<div class="table-cell">Transfer Students</div>
+								<div class="table-cell">9 quarter units</div>
+							</div> <!-- /table-row -->
+
+							<div class="table-row">
+								<div class="table-cell">
+									<input type='radio' name='where' value='undergraduate'>
+								</div>
+								<div class="table-cell">SCU Undergraduates</div>
+								<div class="table-cell">16 quarter units</div>
+							</div> <!-- /table-row -->
+
+							<div class="table-row">
+								<div class="table-cell">
+									<input type='radio' name='where' value='accelerated'>
+								</div>
+								<div class="table-cell">SCU Accelerated Masters</div>
+								<div class="table-cell">20 quarter units</div>
+							</div> <!-- /table-row -->
+
+						</div> <!-- /table -->
+						<div class="container-fluid">
+							<div class="btn-group btn-group-justified" role="group">
+								<div class="btn-group" role="group">
+									<button type='button' class='btn btn-success btn-lg' id='add_row'>add row</button>
+								</div> <!--btn-group-->
+								<div class="btn-group" role="group">
+									<button type="button" class="btn btn-lg" id='remove_row'>remove row</button>
+								</div> <!--btn-group-->
+							</div>  <!--btn-group-justified -->
+							<br>
+						</div> <!-- container-fluid -->
+				
+						<div class='table container-fluid text-center' id='transferTable'>
+							<div class='table-heading container-fluid'>
+								<div class='table-cell container-fluid'><h4>Course Number</h4></div>
+								<div class='table-cell container-fluid'><h4>Institution</h4></div>
+								<div class='table-cell container-fluid'><h4>Grade</h4></div>
+								<div class='table-cell container-fluid'><h4>Quarter Units</h4></div>
+							</div> <!-- table-heading -->
+
+
+						</div> <!-- table -->
+					</div> <!-- /panel-body -->
+					
+					<div class="panel-footer">
+						<div class="alert alert-info" role="alert">
+							<p><b>NOTE:</b> 3 semester units = 4.5 quarter units</p>
+						</div>
+						<div class="alert alert-danger" role="alert" id="messageBox1-3"></div>
+					</div> <!-- /panel-footer -->
+				</div> <!-- /panel -->
+
+				<div id="section2" class="panel panel-default">
+					<div class="panel-heading text-center">
+						<h2>Foundational Courses</h2>
+					</div> <!-- /panel-heading -->
+					<div class="panel-body">
+						<h4>Mark the courses (or equivalences) the student is required to take.</h4>
+						<div class="table container-fluid text-center">
+							<div class="table-heading">
+								<div class="table-cell"><h4>Selection</h4></div>
+								<div class="table-cell"><h4>Course Number</h4></div>
+								<div class="table-cell"><h4>Title</h4></div>
+								<div class="table-cell"><h4>Units</h4></div>
+							</div> <!-- /table-heading -->
+
+							<div class="table-row">
+								<div class="table-cell">
+									<select name='coen20' class='reqsel' style='height:40px;'/>
+									<option value="0">Required</option>
+									<option value="1">Waived</option>
+									</select>
+								</div>
+								<div class="table-cell">COEN20</div>
+								<div class="table-cell">Assembly Language</div>
+								<div class="table-cell">4</div>
+							</div> <!-- /table-row -->
+
+							<div class="table-row">
+								<div class="table-cell">
+									<select name='coen21' class='reqsel' style='height:40px;'/>
+									<option value="0">Required</option>
+									<option value="1">Waived</option>
+									</select>
+								</div>
+								<div class="table-cell">COEN21</div>
+								<div class="table-cell">Logic Design</div>
+								<div class="table-cell">4</div>
+							</div> <!-- /table-row -->
+
+							<div class="table-row">
+								<div class="table-cell">
+									<select name='coen12' class='reqsel' style='height:40px;'/>
+									<option value="0">Required</option>
+									<option value="1">Waived</option>
+									</select>
+								</div>
+								<div class="table-cell">COEN12</div>
+								<div class="table-cell">Data Structure</div>
+								<div class="table-cell">4</div>
+							</div> <!-- /table-row -->
+
+							<div class="table-row">
+								<div class="table-cell">
+									<select name='coen19' class='reqsel' style='height:40px;'/>
+									<option value="0">Required</option>
+									<option value="1">Waived</option>
+									</select>
+								</div>
+								<div class="table-cell">COEN19</div>
+								<div class="table-cell">Discrete Math</div>
+								<div class="table-cell">4</div>
+							</div> <!-- /table-row -->
+
+							<div class="table-row">
+								<div class="table-cell">
+									<select name='amth210' class='reqsel' style='height:40px;'/>
+									<option value="0">Required</option>
+									<option value="1">Waived</option>
+									</select>
+								</div>
+								<div class="table-cell">AMTH210</div>
+								<div class="table-cell">Probability</div>
+								<div class="table-cell">4</div>
+							</div> <!-- /table-row -->
+						</div> <!-- /table -->
+
+						<div class="container-fluid">
+							<div class="btn-group btn-group-justified" role="group">
+								<div class="btn-group" role="group">
+									<button type='button' class='btn btn-success btn-lg' id='select_all2'>require all</button>
+								</div> <!--btn-group-->
+								<div class="btn-group" role="group">
+									<button type="button" class="btn btn-lg" id='deselect_all2'>waive all</button>
+								</div> <!--btn-group-->
+							</div>
+							<br>
+						</div>
+					</div> <!-- /panel-body -->
+					
+					<div class="panel-footer">
+						<div class="alert alert-info" role="alert">
+							<p><b>NOTE:</b> Labs are not required.</p>
+						</div>
+						<div class='alert alert-danger' role='alert'>
+							<p id='messageBox2-3'></p>
+						</div> 
+					</div> <!-- /panel-footer -->
+				</div> <!-- /panel -->
+
+				<div id="section3" class="panel panel-default">
+					<div class="panel-heading text-center">
+						<h2>Computer Science and Engineering Core Courses</h2>
+					</div> <!-- /panel-heading -->
+					<div class="panel-body">
+						<h4>Mark the courses the student is required to take.</h4>
+						<div class="table container-fluid text-center">
+							<div class="table-heading">
+								<div class="table-cell"><h4>Selection</h4></div>
+								<div class="table-cell"><h4>Course Number</h4></div>
+								<div class="table-cell"><h4>Title</h4></div>
+								<div class="table-cell"><h4>Units</h4></div>
+							</div> <!-- /table-heading -->
+
+							<div class="table-row">
+								<div class="table-cell">
+									<select name='coen210' class='reqsel2' style='width:140px;'/>
+									<option value="0">Required</option>
+									<option value="1">Waived</option>
+									<option value="2">Transfered</option>
+									</select>
+								</div>
+								<div class="table-cell">COEN210</div>
+								<div class="table-cell">Computer Architecture</div>
+								<div class="table-cell">4</div>
+							</div> <!-- /table-row -->
+
+							<div class="table-row">
+								<div class="table-cell">
+									<select name='coen279' class='reqsel2' style='width:140px;'/>
+									<option value="0">Required</option>
+									<option value="1">Waived</option>
+									<option value="2">Transfered</option>
+									</select>
+								</div>
+								<div class="table-cell">COEN279</div>
+								<div class="table-cell">Design &amp Analysis: Algorithms</div>
+								<div class="table-cell">4</div>
+							</div> <!-- /table-row -->
+
+							<div class="table-row">
+								<div class="table-cell">
+									<select name='coen283' class='reqsel2' style='width:140px;'/>
+									<option value="0">Required</option>
+									<option value="1">Waived</option>
+									<option value="2">Transfered</option>
+									</select>
+								</div>
+								<div class="table-cell">COEN283</div>
+								<div class="table-cell">Data Structures	</div>
+								<div class="table-cell">4</div>
+							</div> <!-- /table-row -->
+
+						</div> <!-- /table -->
+
+						<div class="container-fluid">
+							<div class="btn-group btn-group-justified" role="group">
+								<div class="btn-group" role="group">
+									<button type='button' class='btn btn-primary btn-lg' id='select_all3'>require all</button>
+								</div> <!--btn-group-->
+								
+								<div class="btn-group" role="group">
+									<button type="button" class="btn btn-success btn-lg" id='transfer_all3'>transfer all</button>
+								</div> <!--btn-group-->
+
+								<div class="btn-group" role="group">
+									<button type="button" class="btn btn-lg" id='deselect_all3'>waive all</button>
+								</div> <!--btn-group-->
+							</div>
+							<br>
+						</div>
+					</div> <!-- /panel-body -->
+					
+					<div class="panel-footer">
+						<div class="alert alert-info" role="alert">
+							<p><b>NOTE:</b> <br>COEN 233 (Computer Networks) and COEN 256 (Principles of Programming Languages) are no longer part of the MSCSE core starting in 2007–2008.</p>
+						</div>
+						<div class='alert alert-danger' role='alert' id='messagebox3-3'>
+						</div> 
+					</div> <!-- /panel-footer -->
+				</div> <!-- /panel -->
+
+				<div id="section4" class="panel panel-default">
+					<div class="panel-heading text-center">
+						<h2>SCU Graduate Core Requirements</h2>
+					</div> <!-- /panel-heading -->
+					<div class="panel-body">
+						<h4>(min. 6 units), 1 course from each area</h4>
+						<div class="table container-fluid text-center">
+							<div class="table-heading">
+								<div class="table-cell"><h4>Areas of the Core</h4></div>
+								<div class="table-cell"><h4>Course Number</h4></div>
+								<div class="table-cell"><h4>Units</h4></div>
+							</div> <!-- /table-heading -->
+
+							<div class="table-row">
+								<div class="table-cell">Emerging Topics in Engineering</div>
+								<div class="table-cell">
+									<input type="text" list='req_emerg' style='width:100px' value=''>
+								</div>
+								<div class="table-cell">
+									<input type="text" list='req_emerg' style='width:100px' value=''>
+								</div>
+							</div> <!-- /table-row -->
+
+							<div class="table-row">
+								<div class="table-cell">Engineering and Business/Entrepreneurship</div>
+								<div class="table-cell">
+									<input type="text" list='req_business' style='width:100px' value=''>
+								</div>
+								<div>
+									<input type="text" list='req_business' style='width:100px' value=''>
+								</div>
+							</div> <!-- /table-row -->
+
+							<div class="table-row">
+								<div class="table-cell">Engineering and Society</div>
+								<div class="table-cell">
+									<input type="text" list='req_society' style='width:100px' value=''>
+								</div>
+								<div>
+									<input type="text" list='req_society' style='width:100px' value=''>
+								</div>
+							</div> <!-- /table-row -->
+
+						</div> <!-- /table -->
+
+						<div class="container-fluid">
+							<div class="btn-group btn-group-justified" role="group">
+								<div class="btn-group" role="group">
+									<a href="http://www.scu.edu/engineering/graduate/current-2013/graduate-core.cfm" target ="_blank"><button type='button' class='btn btn-info btn-lg' id='select_all4'>Click here to see the current info. of Grad Core</button></a>
+								</div> <!--btn-group-->
+							</div>
+							<br>
+						</div>
+					</div> <!-- /panel-body -->
+					
+					<div class="panel-footer">
+						<div class="alert alert-info" role="alert">
+							<p><b>NOTE:</b> <br>Although certain courses (such as ENGR 302, ENGR 304, ENGR 336, and AMTH 367 for example) may appear in multiple categories, they cannot be used to satisfy more than one Core requirement.</p>
+						</div>
+						<div class='alert alert-danger' role='alert'>
+							<p id='messageBox4-3'></p>
+						</div> 
+					</div> <!-- /panel-footer -->
+				</div> <!-- /panel -->
+
+				<div id="section5" class="panel panel-default">
+					<div class="panel-heading text-center">
+						<h2>Track Courses</h2>
+					</div> <!-- /panel-heading -->
+					<div class="panel-body">
+						<h4>List track courses and additional courses totaling to 45 graduate units</h4>
+						
+						<div class="container-fluid">
+							<div class="btn-group btn-group-justified" role="group">
+								<div class="btn-group" role="group">
+									<button type='button' class='btn btn-success btn-lg' id='add_row5'>add row</button>
+								</div> <!--btn-group-->
+								<div class="btn-group" role="group">
+									<button type="button" class="btn btn-lg" id='remove_row5'>remove row</button>
+								</div> <!--btn-group-->
+							</div>
+							<br>
+						</div>
+						<div class="table container-fluid text-center" id='transferTable2'>
+							<div class="table-heading container-fluid">
+								<div class="table-cell"><h4>Course Number</h4></div>
+								<div class="table-cell"><h4>Units</h4></div>
+							</div> <!-- /table-heading -->
+	
+						</div> <!-- /table -->
+
+						<div class="container-fluid">
+							<div class="btn-group btn-group-justified" role="group">
+								<div class="btn-group" role="group">
+									<a href="http://www.scu.edu/engineering/graduate/current-2013/graduate-core.cfm" target ="_blank"><button type='button' class='btn btn-info btn-lg' id='select_all4'>Click here to see the current info. of Grad Core</button></a>
+								</div> <!--btn-group-->
+							</div>
+							<br>
+						</div>
+					</div> <!-- /panel-body -->
+					
+					<div class="panel-footer">
+						<div class="alert alert-info" role="alert">
+							<p><b>NOTE:</b> <br>NOTE: must include a minimum of 8 units of COEN courses with course numbers greater than 300. No exception.</p>
+						</div>
+						<div class='alert alert-danger' role='alert'>
+							<p id='messageBox5-3a'></p>
+							<p id='messageBox5-3b'></p>
+							<p id='messageBox5-3c'></p>
+						</div> 
+					</div> <!-- /panel-footer -->
+				</div> <!-- /panel -->
+			</div> <!-- /col-sm-9 -->
+		</div> <!-- /row -->
+	</div> <!-- /container -->
+</body>
+</html>                                		

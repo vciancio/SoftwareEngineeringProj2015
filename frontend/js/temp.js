@@ -19,22 +19,22 @@ var classesTrack = [];
 
 function addRow_TransferCredits(course, institution, grade, unit) {
     var table = document.getElementById("transferTable");
-    var tableRow = $("<div class='table-row container-fluid' id='row-transfer-credit" + (c + 1) + "'>");
-    var input = $("<input type='text' class='lowercase' name='course-for-tc' id='course" + (c + 1) + "' value='" + course + "' placeholder='coen12'/>");
+    c++;
+    var tableRow = $("<div class='table-row container-fluid' id='row-transfer-credit" + c + "'>");
+    var input = $("<input type='text' class='lowercase' name='course-for-tc' id='course" + c + "' value='" + course + "' placeholder='coen12'/>");
     input = input.on("keydown", function (e) {
         return e.which !== 32;
     }); // restriction on typing space 
     $("<div class='table-cell'>").append(input).appendTo(tableRow);
-    var input = $("<input type='text' name='inst-for-tc' id='inst" + (c + 1) + "' value='" + institution + "' />");
+    var input = $("<input type='text' name='inst-for-tc' id='inst" + c + "' value='" + institution + "' />");
     $("<div class='table-cell'>").append(input).appendTo(tableRow);
-    var input = $("<input type='text' name='grade-for-tc' id='grade" + (c + 1) + "' value='" + grade + "' />");
+    var input = $("<input type='text' name='grade-for-tc' id='grade" + c + "' value='" + grade + "' />");
     $("<div class='table-cell'>").append(input).appendTo(tableRow);
-    var input = $("<input type='text' name='units-for-tc' id='qunit" + (c + 1) + "' value='" + unit + "' />");
+    var input = $("<input type='text' name='units-for-tc' id='qunit" + c + "' value='" + unit + "' />");
     $("<div class='table-cell'>").on('input', function () {
         transferCreditsAnalysis();
     }).append(input).appendTo(tableRow);
     tableRow.appendTo(table);
-    c++;
 }
 
 function removeRow_TransferCredits() {
@@ -48,8 +48,9 @@ function removeRow_TransferCredits() {
 
 function addRow_TrackUnits(course, units) {
     var table = document.getElementById("transferTable2");
-    var tableRow = $("<div class='table-row container-fluid' id='row-for-track" + (ct + 1) + "''>");
-    var input = $("<input type='text' name='course-for-track' class='lowercase' id='course" + (ct + 1) + "' value='" + course + "' />");
+    ct++;
+    var tableRow = $("<div class='table-row container-fluid' id='row-for-track" + ct + "''>");
+    var input = $("<input type='text' name='course-for-track' class='lowercase' id='course" + ct + "' value='" + course + "' />");
     input = input.on("keydown", function (e) {
         return e.which !== 32;
     });
@@ -57,16 +58,14 @@ function addRow_TrackUnits(course, units) {
         trackAnalysis();
         totalUnitAnalysis();
     }).append(input).appendTo(tableRow);
-    var input = $("<input type='text' name='units-for-track' id='units" + (ct + 1) + "' value=" + units + " />");
+    var input = $("<input type='text' name='units-for-track' id='units" + ct + "' value=" + units + " />");
     $("<div class='table-cell'>").on('input', function () {
         trackAnalysis();
         totalUnitAnalysis();
     }).append(input).appendTo(tableRow);
     tableRow.appendTo(table);
-    trackAnalysis()
-    ct++;
+    trackAnalysis();
 }
-
 
 function removeRow_TrackUnits() {
     if (ct > 0) {
@@ -75,7 +74,6 @@ function removeRow_TrackUnits() {
         trackAnalysis();
     }
 }
-
 
 
 
@@ -250,7 +248,7 @@ function transferCreditsValidation() {
     $("#messageBox1-3").html("");
     var transfer = buildTransferCredits().mClasses;
     if (transferCreditsUnitCount() > isSCU()) {
-        $("#messageBox1-3").html("WARNING: The number has exceeded the maximum unit allowed.");
+        $("#messageBox1-3").html("<b>WARNING</b>: The number has exceeded the maximum unit allowed.");
     }
     for (i=0; i<transfer.length; i++) {
         if ($('input[name="where"]:checked').val() == "transfer") {
@@ -263,15 +261,25 @@ function transferCreditsValidation() {
     }
 }
 
-// function coenFoundationalValidation() {
+function coenFoundationalValidation() {
      
-//      *  + DISPLAY: a warning message of violation for 2nd section.
-//      *  + DEPENDENCY:
-//      *      [] buildFoundationalCourses():
-     
-//     var fail = false;
-//     var foundational = buildFoundationalCourses();
-// }
+    /*  + DISPLAY: a warning message of violation for 2nd section.
+     *  + DEPENDENCY:
+     *      [] buildFoundationalCourses():
+     */
+
+    $('#messageBox2-1').html('');
+    var output = '';
+    var foundational = buildFoundationalCourses();
+    for (index in foundational) {
+        if (foundational[index] == 0) {
+            output += '<p>' + index + ': required </p>'; 
+        } else {
+            output += '<p>' + index + ': waived </p>';
+        }
+    }
+    $('#messageBox2-1').html(output);
+}
 
 function coenCoreValidation() {
     /* 
@@ -430,19 +438,20 @@ function transferCreditsAnalysis() {
      *      [] buildTransferCredits(): 
      */
     transferCreditsValidation();
+    $('#messageBox1-1').html("TOTAL UNITS = " + transferCreditsUnitCount());
     $('#messageBox1-2').html("TOTAL UNITS FOR TRANSFER CREDIT = " + transferCreditsUnitCount());
 }
 
-// function coenFoundationalAnalysis() {
+function coenFoundationalAnalysis() {
     /*
      *  + DISPLAY: number of units summed for checked item(s), listed in 2nd section.
      *  + DEPENDENCY: 
      *      [] coenFoundationalUnitCount()
      */
 
-    // coenFoundationalValidation();
-    // $('#messageBox2-2').html("TOTAL UNITS FOR COEN FOUNDATOINAL = " + coenFoundationalUnitCount());
-// }
+    coenFoundationalValidation();
+    $('#messageBox2-2').html("TOTAL UNITS FOR COEN FOUNDATOINAL = " + coenFoundationalUnitCount());
+}
 
 function coenCoreAnalysis() {
     /*
@@ -450,7 +459,7 @@ function coenCoreAnalysis() {
      *  + DEPENDENCY:
      *      []  coenCoreUnitCount():
      */
-
+    $('#messageBox3-1').html("TOTAL UNITS = " + coenCoreUnitCount());
     $('#messageBox3-2').html("TOTAL UNITS FOR COEN CORE = " + coenCoreUnitCount());
 }
 
@@ -461,6 +470,7 @@ function gradCoreAnalysis() {
      *      []  gradCoreUnitCount():
      */
     gradCoreValidation();
+    $('#messageBox4-1').html("TOTAL UNITS = " + gradCoreUnitCount());
     $('#messageBox4-2').html("TOTAL UNITS FOR GRAD CORE = " + gradCoreUnitCount());
 }
 
@@ -481,7 +491,7 @@ function totalUnitAnalysis() {
      *  + DEPENDENCY:
      *      []  totalUnitCount():
      */
-    $('#messageBox6-2').html("TOTAL OF TOTAL UNITS = " + totalUnitCount());
+    $('#messageBox6-1').html("TOTAL OF TOTAL UNITS = " + totalUnitCount());
 }
 
 
@@ -507,26 +517,35 @@ $(document).ready(function () {
         totalUnitAnalysis(); /* sectoin 6 */
     });
 
-    $("select[name='coen210']").change(function() {
+    $('select').change(function() {
+        coenFoundationalAnalysis();
         coenCoreAnalysis();
+        totalUnitAnalysis();
         gradCoreAnalysis();
         trackAnalysis();
-        totalUnitAnalysis();
     });
 
-    $("select[name='coen279']").change(function() {
-        coenCoreAnalysis();
-        gradCoreAnalysis();
-        trackAnalysis();
-        totalUnitAnalysis();
-    });
 
-    $("select[name='coen283']").change(function() {
-        coenCoreAnalysis();
-        gradCoreAnalysis();
-        trackAnalysis();
-        totalUnitAnalysis();
-    });
+    // $("select[name='coen210']").change(function() {
+    //     coenCoreAnalysis();
+    //     totalUnitAnalysis();
+    //     gradCoreAnalysis();
+    //     trackAnalysis();
+    // });
+
+    // $("select[name='coen279']").change(function() {
+    //     coenCoreAnalysis();
+    //     totalUnitAnalysis();
+    //     gradCoreAnalysis();
+    //     trackAnalysis();
+    // });
+
+    // $("select[name='coen283']").change(function() {
+    //     coenCoreAnalysis();
+    //     totalUnitAnalysis();
+    //     gradCoreAnalysis();
+    //     trackAnalysis();
+    // });
 
 
     //EVENT HANDLER for selection  change
@@ -555,11 +574,13 @@ $(document).ready(function () {
     $('#add_row').click(function () {
         addRow_TransferCredits("", "", "", 0.0);
         transferCreditsAnalysis();
+        totalUnitAnalysis();
     });
 
     $('#remove_row').click(function () {
         removeRow_TransferCredits();
         transferCreditsAnalysis();
+        totalUnitAnalysis();
     });
 
     /* 
@@ -568,14 +589,18 @@ $(document).ready(function () {
 
     // "select all wavied" button 
     $('#select_all2').click(function () {
-        $(".reqsel").val("required");
+        $(".reqsel").val("0");
+        coenFoundationalAnalysis();
         coenCoreAnalysis();
+        totalUnitAnalysis();
     });
 
     // "deselect all" button
     $('#deselect_all2').click(function () {
-        $(".reqsel").val("waived");
+        $(".reqsel").val("1");
+        coenFoundationalAnalysis();
         coenCoreAnalysis();
+        totalUnitAnalysis();
     });
 
 
@@ -587,17 +612,20 @@ $(document).ready(function () {
     $('#select_all3').click(function () { // on click select all button
         $(".reqsel2").val("0");
         coenCoreAnalysis();
+        totalUnitAnalysis();
     });
 
     // "deselect all" button
     $('#deselect_all3').click(function () { // on click select all button
         $(".reqsel2").val("1");
         coenCoreAnalysis();
+        totalUnitAnalysis();
     });
 
     $('#transfer_all3').click(function () {
         $(".reqsel2").val("2");
         coenCoreAnalysis();
+        totalUnitAnalysis();
     })
 
     /*
