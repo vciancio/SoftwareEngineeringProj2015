@@ -57,6 +57,8 @@ function buildFoundationalCourses(){
     obj['coen12'] = getSelectionValueByName("coen12");
     obj['coen19'] = getSelectionValueByName("coen19");
     obj['amth210']= getSelectionValueByName("amth210");
+    obj['oneofthree'] = getSelectionValueByName("oneofthree");
+    obj['advprgm'] = getSelectionValueByName("advprgm");
     
     return obj;
 }

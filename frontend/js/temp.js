@@ -26,8 +26,10 @@ function addRow_TransferCredits(course, institution, grade, unit) {
         return e.which !== 32;
     }); // restriction on typing space 
     $("<div class='table-cell'>").append(input).appendTo(tableRow);
-    var input = $("<input type='text' name='inst-for-tc' id='inst" + c + "' value='" + institution + "' />");
-    $("<div class='table-cell'>").append(input).appendTo(tableRow);
+    var input = $("<input type='text' name='inst-for-tc' id='inst" + c + "' value='" + institution + "' ></p>");
+    $("<div class='table-cell'>").on('input', function() {
+        appendInstitutionName();
+    }).append(input).appendTo(tableRow);
     var input = $("<input type='text' name='grade-for-tc' id='grade" + c + "' value='" + grade + "' />");
     $("<div class='table-cell'>").append(input).appendTo(tableRow);
     var input = $("<input type='text' name='units-for-tc' id='qunit" + c + "' value='" + unit + "' />");
@@ -184,7 +186,8 @@ function trackUnitCount_Coen() {
     var total = 0;
     var track = buildTrackUnits();
     for (i = 0; i < track.length; i++) {
-        if (track[i].course.substr(0,4) == "coen") {
+        string = track[i].course;
+        if ((string.substr(0,4) == "coen") && Number(string.substr(4,3)) > 300) {
             total += Number(track[i].credits);
         }
     }
@@ -238,19 +241,29 @@ function isSCU() {
      * verify if its SCU or Santa Clara University
      * then maximum unit capacity increases to 16
      * else maximum unit capacity stays to 9. */
-
     var where = $('input[name="where"]:checked').val();
-    if (where == 'undergraduate') {
-        $('input[name="inst-for-tc"]').val("")
+    if (where == 'undergradaute') {
+        $('input[name="inst-for-tc"]').val("SCU Undergraduate")
         maxtransfer = 16;
     } else if (where == 'accelerated') {
-        $('input[name="inst-for-tc"]').val("SCU Undergraduate")
+        $('input[name="inst-for-tc"]').val("SCU Accelerated Masters")
         maxtransfer = 20;
     } else if (where == 'transfer')  {
-        $('input[name="inst-for-tc"]').val("SCU Accelerated Master");
         maxtransfer = 9;
     }
     return maxtransfer;
+}
+
+function appendInstitutionName() {
+    var where = $('input[name="where"]:checked').val();
+    var transfer = buildTransferCredits().mClasses;
+    
+    if (where == 'transfer') {
+        for (i in transfer) {
+            transfer[i].institution = $('input[name="inst-for-tc-p"]').val();
+        }
+    }
+    
 }
 
 function transferCreditsValidation() {
@@ -270,16 +283,6 @@ function transferCreditsValidation() {
     }
 
     var coen = buildCoenCoreReqs();
-
-    for (i=0; i<transfer.length; i++) {
-        if ($('input[name="where"]:checked').val() == "transfer") {
-            $('input[name="inst-for-tc"]').val("");
-        } if ($('input[name="where"]:checked').val() == "undergraduate") {
-            $('input[name="inst-for-tc"]').val("SCU Undergraduate");
-        } if ($('input[name="where"]:checked').val() == "accelerated") {
-            $('input[name="inst-for-tc"]').val("SCU Accelerated Master");
-        }
-    }
 }
 
 function coenFoundationalValidation() {
@@ -446,12 +449,12 @@ function trackValidation_Transfer() {
      *      [] buildTrackUnits():
      */
      var fail = false;
-     var transfer = buildTransferCredits();
+     var transfer = buildTransferCredits().mClasses;
      var track = buildTrackUnits();
 
      for (var i in track) {
-        for (var j=0; j<transfer["mClasses"].length; j++) {
-            if ((track[i].course !== "") & ((transfer["mClasses"][j].course !== "")) & (track[i].course == transfer["mClasses"][j].course)) {
+        for (var j=0; j<transfer.length; j++) {
+            if ((track[i].course !== "") & ((transfer[j].course !== "")) & (track[i].course == transfer[j].course)) {
                 $("#messageBox5-3d").html("WARNING: You are not allowed to put TRANSFER CREDIT course here.");
             }
         }
@@ -494,7 +497,8 @@ function transferCreditsAnalysis() {
      *      [] buildTransferCredits(): 
      */
     transferCreditsValidation();
-    $('#messageBox1-1').html("TOTAL UNITS = " + transferCreditsUnitCount());
+    appendInstitutionName();
+    // $('#messageBox1-1').html("TOTAL UNITS = " + transferCreditsUnitCount());
     $('#messageBox1-2').html("TOTAL UNITS FOR TRANSFER CREDIT = " + transferCreditsUnitCount());
 }
 
@@ -515,7 +519,7 @@ function coenCoreAnalysis() {
      *  + DEPENDENCY:
      *      []  coenCoreUnitCount():
      */
-    $('#messageBox3-1').html("TOTAL UNITS = " + coenCoreUnitCount());
+    // $('#messageBox3-1').html("TOTAL UNITS = " + coenCoreUnitCount());
     $('#messageBox3-2').html("TOTAL UNITS FOR COEN CORE = " + coenCoreUnitCount());
 }
 
@@ -526,7 +530,7 @@ function gradCoreAnalysis() {
      *      []  gradCoreUnitCount():
      */
     gradCoreValidation();
-    $('#messageBox4-1').html("TOTAL UNITS = " + gradCoreUnitCount());
+    // $('#messageBox4-1').html("TOTAL UNITS = " + gradCoreUnitCount());
     $('#messageBox4-2').html("TOTAL UNITS FOR GRAD CORE = " + gradCoreUnitCount());
 }
 
@@ -538,7 +542,7 @@ function trackAnalysis() {
      *      []  trackValidation():
      */
     trackValidation();
-    $('#messageBox5-1').html("TOTAL UNITS = " + trackUnitCount());
+    // $('#messageBox5-1').html("TOTAL UNITS = " + trackUnitCount());
     $('#messageBox5-2a').html("TOTAL UNITS FOR COEN IN TRACK = " + trackUnitCount_Coen());
     $('#messageBox5-2b').html("TOTAL UNITS FOR TRACK = " + trackUnitCount());
 }
@@ -561,11 +565,15 @@ $(document).ready(function () {
     addRow_TransferCredits("", "", "", 0.0);
     addRow_TrackUnits("", 0.0);
 
+    // Tally Initialization
     transferCreditsAnalysis();
     coenFoundationalAnalysis();
     coenCoreAnalysis();
     totalUnitAnalysis();
 
+    $('input[name="inst-for-tc-p"]').change(function () {
+        
+    });
 
     //EVENT HANDLER for text change
     $('input[type="text"]').on('input', function () {

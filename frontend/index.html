@@ -88,23 +88,29 @@
             <div class='tier3-1'>
                 <div class='table container-fluid'>
                     <div class='table-heading container-fluid'>
-                        <div class='table-cell'><h3></div>
-                        <div class='table-cell'><h3>Maximum Units Allowed</h3></div>
-                        <div class='table-cell'><h3></div>
+                        <div class='table-cell'><h4>Selection</h4></div>
+                        <div class='table-cell'><h4>Student Status</h4></div>
+                        <div class="table-cell"><h4>Institution Name</h4></div>
+                        <div class='table-cell'><h4>Maximum Units Allowed</h4></div>
                     </div>
                     <div class='table-row container-fluid'>
                         <div class='table-cell'><input type='radio' name='where' value='transfer' checked></div>
-                        <div class='table-cell'><h4>For Transfer Students</h4></div>
+                        <div class='table-cell'><h4>Transfer Students</h4></div>
+                        <div class="table-cel">
+                            <input type='text' name='inst-for-tc-p'/>
+                        </div>
                         <div class='table-cell'><h5>9 quarter units</h5></div>
                     </div>
                     <div class='table-row container-fluid'>
                         <div class='table-cell'><input type='radio' name='where' value='undergraduate'></div>
-                        <div class='table-cell'><h4>For SCU Undergraduates</h4></div>
+                        <div class='table-cell'><h4>SCU Undergraduates</h4></div>
+                        <div class="table-cell"></div>
                         <div class='table-cell'><h5>16 quarter units</h5></div>
                     </div>
                     <div class='table-row container-fluid'>
                         <div class='table-cell'><input type='radio' name='where' value='accelerated'></div>
-                        <div class='table-cell'><h4>For Accelerated Masters Students</h4></div>
+                        <div class='table-cell'><h4>SCU Accelerated Master Students</h4></div>
+                        <div class="table-cell"></div>
                         <div class='table-cell'><h5>20 quarter units</h5></div>
                     </div>
                 </div>
@@ -144,7 +150,7 @@
         <div class='tier2-1 container-fluid'>
             <h2>Foundational Courses:</h2>
             <p>Mark the courses (or equivalences) the student is required to take.</p>
-        </div>
+        </div> <!-- /tier2-1 -->
         <div class='tier2-2 container-fluid'>
             <div class='tier3 container-fluid'>
                 <div class='table container-fluid'>
@@ -153,84 +159,114 @@
                         <div class='table-cell'>Course #</div>
                         <div class='table-cell'>Title</div>
                         <div class='table-cell'>Units</div>
-                    </div>
+                    </div> <!-- /table-heading -->
+
                     <div class='table-row container-fluid'>
                         <div class='table-cell'>
                             <select name='coen20' class='reqsel' style='width:180px;'/>
                             <option value="0">Required</option>
                             <option value="1">Waived</option>
                             </select>
-                        </div>
+                        </div> <!-- /table-cell -->
                         <div class='table-cell'>COEN20</div>
                         <div class='table-cell'>Assembly Language</div>
                         <div class='table-cell'>4</div>
-                    </div>
+                    </div> <!-- /table-row -->
+
                     <div class='table-row container-fluid'>
                         <div class='table-cell'>
                             <select name='coen21' class='reqsel' style='width:180px;'/>
                             <option value="0">Required</option>
                             <option value="1">Waived</option>
                             </select>
-                        </div>
+                        </div> <!-- /table-cell -->
                         <div class='table-cell'>COEN21</div>
                         <div class='table-cell'>Logic Design</div>
                         <div class='table-cell'>4</div>
-                    </div>
+                    </div> <!-- /table-row -->
+
                     <div class='table-row container-fluid'>
                         <div class='table-cell'>
                             <select name='coen12' class='reqsel' style='width:180px;'/>
                             <option value="0">Required</option>
                             <option value="1">Waived</option>
                             </select>
-                        </div>
+                        </div> <!-- /table-cell -->
                         <div class='table-cell'>COEN12</div>
                         <div class='table-cell'>Data Structure</div>
                         <div class='table-cell'>4</div>
-                    </div>
-    <div class='table-row container-fluid'>
-        <div class='table-cell'>
-            <select name='coen19' class='reqsel' style='width:180px;'/>
-            <option value="0">Required</option>
-            <option value="1">Waived</option>
-        </select>
-    </div>
-    <div class='table-cell'>COEN19 / AMTH240</div>
-    <div class='table-cell'>Discrete Math</div>
-    <div class='table-cell'>4</div>
-</div>
-<div class='table-row container-fluid'>
-    <div class='table-cell'>
-        <select name='amth210' class='reqsel' style='width:180px;'/>
-        <option value="0">Required</option>
-        <option value="1">Waived</option>
-    </select>
-</div>
-<div class='table-cell'>AMTH210</div>
-<div class='table-cell'>Probability</div>
-<div class='table-cell'>4</div>
-</div>
-</div>
-<div class='tier3 container-fluid'>
-    <div class="btn-group btn-group-justified" role="group">
-        <div class="btn-group" role="group">
-            <button type='button' class='btn btn-success btn-lg' id='select_all2'>require all</button>
-        </div> <!--btn-group-->
-        <div class="btn-group" role="group">
-            <button type="button" class="btn btn-lg" id='deselect_all2'>waive all</button>
-        </div> <!--btn-group-->
-    </div>
-</div>
-</div>
-<div class='tier3 container-fluid'>
-    <p class='note'>NOTE: Labs are not required.</p>
-    <p id='messageBox2-1'>
+                    </div> <!-- /table-row -->
+
+                    <div class='table-row container-fluid'>
+                        <div class='table-cell'>
+                            <select name='coen19' class='reqsel' style='width:180px;'/>
+                            <option value="0">Required</option>
+                            <option value="1">Waived</option>
+                            </select>
+                        </div> <!-- /table-cell -->
+                        <div class='table-cell'>COEN19 / AMTH240</div>
+                        <div class='table-cell'>Discrete Math</div>
+                        <div class='table-cell'>4</div>
+                    </div> <!-- /table-row -->
+
+                    <div class='table-row container-fluid'>
+                        <div class='table-cell'>
+                            <select name='amth210' class='reqsel' style='width:180px;'/>
+                            <option value="0">Required</option>
+                            <option value="1">Waived</option>
+                            </select>
+                        </div> <!-- /table-cell -->
+                        <div class='table-cell'>AMTH210</div>
+                        <div class='table-cell'>Probability</div>
+                        <div class='table-cell'>4</div>
+                    </div> <!-- /table-row -->
+
+                    <div class='table-row container-fluid'>
+                        <div class='table-cell'>
+                            <select name='oneofthree' class='reqsel' style='width:180px;'/>
+                            <option value="0">Required</option>
+                            <option value="1">Waived</option>
+                            </select>
+                        </div> <!-- /table-cell -->
+                        <div class='table-cell'><b>One of the following</b>: <br>AMTH106 or <br>AMTH220 &amp 221 or <br>AMTH245 &amp 246</div>
+                        <div class='table-cell'><br>Differential Equations<br>Numerical Analysis I &amp II<br>Linear Algebra I &amp II</div>
+                        <div class='table-cell'>4</div>
+                    </div> <!-- /table-row -->
+
+                    <div class='table-row container-fluid'>
+                        <div class='table-cell'>
+                            <select name='advprgm' class='reqsel' style='width:180px;'/>
+                            <option value="0">Required</option>
+                            <option value="1">Waived</option>
+                            </select>
+                        </div> <!-- /table-cell -->
+                        <div class='table-cell'><b>One of the following</b>: </div>
+                        <div class='table-cell'>Advanced Programming Course or <br>one year of programming experience in industry</div>
+                        <div class='table-cell'>4</div>
+                    </div> <!-- /table-row -->
+
+                </div> <!-- /table -->
+            </div> <!-- /tier3 -->
+            <div class='tier3 container-fluid'>
+                <div class="btn-group btn-group-justified" role="group">
+                    <div class="btn-group" role="group">
+                        <button type='button' class='btn btn-success btn-lg' id='select_all2'>require all</button>
+                    </div> <!--btn-group-->
+                    <div class="btn-group" role="group">
+                        <button type="button" class="btn btn-lg" id='deselect_all2'>waive all</button>
+                    </div> <!--btn-group-->
+                </div> <!--btn-group-justified -->
+            </div> <!-- /tier3 -->
+        </div> <!-- /tier2-2 -->
+    <div class='tier2-3 container-fluid'>
+        <p class='note'>NOTE: Labs are not required.</p>
+        <p id='messageBox2-1'>
         <p id='messageBox2-2'></p>
         <p id='messageBox2-3' class='warning'></p>
-    </div>
-</div>
-    </div>
-    <br>
-    <br>
+    </div> <!-- /tier2-3 -->
+</div> <!-- /tier1 -->
+<br>
+<br>
 
     <div class='tier1 container'>
         <div class='tier2-1 container-fluid'>
@@ -367,7 +403,7 @@
         <div class="tier2-3 container-fluid">
             <div class="btn-group btn-group-justified" role="group">
                 <div class="btn-group" role="group">
-                    <a href="http://www.scu.edu/engineering/graduate/current-2013/graduate-core.cfm" target ="_blank"><button type='button' class='btn btn-info btn-lg' id='select_all4'>Click here to see the current info. of Grad Core</button></a>
+                    <a href="http://www.scu.edu/engineering/graduate/current-2013/graduate-core.cfm" target ="_blank"><button type='button' class='btn btn-info btn-lg' id='select_all4'>Click here to see the list of approved courses for Grad Core</button></a>
                 </div> <!--btn-group-->
             </div>
         </div>
