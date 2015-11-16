@@ -20,7 +20,7 @@ function addRow_TransferCredits(course, institution, grade, unit) {
     var table = document.getElementById("transferTable");
     c++;
     var tableRow = $("<div class='table-row container-fluid' id='row-transfer-credit" + c + "'>");
-    var input = $("<input type='text' class='lowercase' name='course-for-tc' id='course" + c + "' value='" + course + "' placeholder='coen12'/>");
+    var input = $("<input type='text' class='lowercase no-white-space' name='course-for-tc' id='course" + c + "' value='" + course + "' placeholder='coen12'/>");
     input = input.on("keydown", function (e) {
         return e.which !== 32;
     }); // restriction on typing space 
@@ -54,7 +54,7 @@ function addRow_TrackUnits(course, units) {
     var table = document.getElementById("transferTable2");
     ct++;
     var tableRow = $("<div class='table-row container-fluid' id='row-for-track" + ct + "''>");
-    var input = $("<input type='text' name='course-for-track' class='lowercase' id='course" + ct + "' value='" + course + "' />");
+    var input = $("<input type='text' name='course-for-track' class='lowercase no-white-space' id='course" + ct + "' value='" + course + "' />");
     input = input.on("keydown", function (e) {
         return e.which !== 32;
     });
@@ -81,54 +81,15 @@ function removeRow_TrackUnits() {
 }
 
 function omitSpaceKey() {
-    $('input[name="course-for-tc"]').on('paste', function(e) {
-        e.preventDefault();
-        // prevent copying action
-        //alert(e.originalEvent.clipboardData.getData('Text'));
-        var withoutSpaces = e.originalEvent.clipboardData.getData('Text');
-        withoutSpaces = withoutSpaces.replace(/\s+/g, '');
-        $(this).val(withoutSpaces);
-        // you need to use val() not text()
-    });
+    /*
+     *  + REMOVES:  Any white spaces that appears on the targeted input texts
+     *              as soon as user pasted a string with white space included.
+     *  + DEPENDABILITY:
+     *      [] .no-white-space: an empty CSS class name in index.css
+     */
 
-    $('input[name="course-for-track"]').on('paste', function(e) {
-        e.preventDefault();
-        // prevent copying action
-        //alert(e.originalEvent.clipboardData.getData('Text'));
-        var withoutSpaces = e.originalEvent.clipboardData.getData('Text');
-        withoutSpaces = withoutSpaces.replace(/\s+/g, '');
-        $(this).val(withoutSpaces);
-        // you need to use val() not text()
-    });
-
-    $('input[name="req_emerg"]').on('paste', function(e) {
-        e.preventDefault();
-        // prevent copying action
-        //alert(e.originalEvent.clipboardData.getData('Text'));
-        var withoutSpaces = e.originalEvent.clipboardData.getData('Text');
-        withoutSpaces = withoutSpaces.replace(/\s+/g, '');
-        $(this).val(withoutSpaces);
-        // you need to use val() not text()
-    });
-
-    $('input[name="req_business"]').on('paste', function(e) {
-        e.preventDefault();
-        // prevent copying action
-        //alert(e.originalEvent.clipboardData.getData('Text'));
-        var withoutSpaces = e.originalEvent.clipboardData.getData('Text');
-        withoutSpaces = withoutSpaces.replace(/\s+/g, '');
-        $(this).val(withoutSpaces);
-        // you need to use val() not text()
-    });
-
-    $('input[name="req_society"]').on('paste', function(e) {
-        e.preventDefault();
-        // prevent copying action
-        //alert(e.originalEvent.clipboardData.getData('Text'));
-        var withoutSpaces = e.originalEvent.clipboardData.getData('Text');
-        withoutSpaces = withoutSpaces.replace(/\s+/g, '');
-        $(this).val(withoutSpaces);
-        // you need to use val() not text()
+    $('.no-white-space').on('input', function() {
+        $(this).val($(this).val().replace(/ /g,""));
     });
 }
 
@@ -316,7 +277,6 @@ function appendInstitutionName() {
             transfer[i].institution = $('input[name="inst-for-tc-p"]').val();
         }
     }
-    
 }
 
 function transferCreditsValidation() {
@@ -329,6 +289,8 @@ function transferCreditsValidation() {
 
     $("#messageBox1-3a").html("");
     $("#messageBox1-3b").html("");
+    $("#messageBox1-3c").html("");
+    $("#messageBox1-3d").html("");
 
     // unit checking
     if (transferCreditsUnitCount() > isSCU()) {
@@ -336,6 +298,8 @@ function transferCreditsValidation() {
     }
 
     transferCreditsValidation_Duplicate();
+    transferCreditsValidation_Coen();
+    transferCreditsValidation_Grad();
 }
 
 function transferCreditsValidation_Duplicate() {
@@ -354,7 +318,54 @@ function transferCreditsValidation_Duplicate() {
     for (var i in transferCourseName) {
         for (var j in transferCourseName) {
              if ((transferCourseName[i] == transferCourseName[j]) && (i !== j)) {
-                $('#messageBox1-3b').html("<b>WARNING</b>: You have duplicate course name in your Transfer Credit section.")
+                $('#messageBox1-3b').html("<b>WARNING</b>: You have duplicate course name in this section.")
+            }
+        }
+    }
+}
+
+function transferCreditsValidation_Coen() {
+    var transfer = buildTransferCredits().mClasses;
+    var transferCourseName = [];
+    //exclude NULL values and rename it to none+i
+    for (var i in transfer) {
+        if (transfer[i].course == "") {
+            var string = "none"+String(i);
+            transferCourseName[i] = string;
+        } else {
+            transferCourseName[i] = transfer[i].course;
+        }
+    }
+
+    var coen = buildCoenCoreReqs();
+    //check duplicate names appearing in GradCore  
+    for (var i in transferCourseName) {
+        for (var index in coen){
+            if ((transferCourseName[i] == index)) {
+                $('#messageBox1-3c').html("<b>WARNING</b>: You have duplicate course name in your Coen Core section.")
+            }
+        }
+    }
+}
+
+function transferCreditsValidation_Grad() {
+    var transfer = buildTransferCredits().mClasses;
+    var transferCourseName = [];
+    //exclude NULL values and rename it to none+i
+    for (var i in transfer) {
+        if (transfer[i].course == "") {
+            var string = "none"+String(i);
+            transferCourseName[i] = string;
+        } else {
+            transferCourseName[i] = transfer[i].course;
+        }
+    }
+    var grad = buildGradReqs();
+    //check duplicate names appearing in GradCore  
+    for (var i in transferCourseName) {
+        for (var j in grad) {
+             if ((transferCourseName[i] == grad[j].course)) {
+                $('#messageBox1-3d').html("<b>WARNING</b>: You have duplicate course name in your Grad Core section.")
             }
         }
     }
@@ -398,10 +409,19 @@ function gradCoreValidation() {
      */
     $("#messageBox4-3a").html("");
     $("#messageBox4-3b").html("");
+    
+    gradCoreValidation_Unit();
+    gradCoreValidation_Duplicate();
+
+}
+
+function gradCoreValidation_Unit() {
     if (gradCoreUnitCount() < 6) {
         $("#messageBox4-3a").html("WARNING: Your minimum unit is not met.");
     }
-    var fail = false;
+}
+
+function gradCoreValidation_Duplicate() {
     var grad = buildGradReqs();
     var gradCourseName = [];
     /* temporary variables set to specify non-input */
@@ -414,16 +434,11 @@ function gradCoreValidation() {
         }
     }
 
-    if (gradCourseName[0] == gradCourseName[1]) {
-        fail = true;
-    } else if (gradCourseName[0] == gradCourseName[2]) {
-        fail = true;
-    } else if (gradCourseName[1] == gradCourseName[2]) {
-        fail = true;
-    }
-
-    if (fail) {
-        $("#messageBox4-3b").html("WARNING: You included the same course twice");
+    for (i in gradCourseName) {
+        for (j in gradCourseName) {
+            if ((gradCourseName[i] == gradCourseName[j]) & (i!==j))
+                $("#messageBox4-3b").html("WARNING: You included the same course twice");
+        }
     }
 }
 
@@ -661,6 +676,9 @@ function totalUnitAnalysis() {
 
 /*JQUERY FUNCTIONS*/
 $(document).ready(function () {
+    // White Space Removal Initialization
+    omitSpaceKey();
+
     //ADD A FIRST ROW for 1st and 5th section.
     addRow_TransferCredits("", "", "", 0.0);
     addRow_TrackUnits("", 0.0);
@@ -671,11 +689,6 @@ $(document).ready(function () {
     coenFoundationalAnalysis();
     coenCoreAnalysis();
     totalUnitAnalysis();
-
-    $('input[name="inst-for-tc-p"]').change(function () {
-        
-    });
-
 
     //EVENT HANDLER for text change
     $('input[type="text"]').on('input', function () {
@@ -739,12 +752,14 @@ $(document).ready(function () {
 
     $('#add_row').click(function () {
         addRow_TransferCredits("", "", "", 0.0);
+        omitSpaceKey();
         transferCreditsAnalysis();
         totalUnitAnalysis();
     });
 
     $('#remove_row').click(function () {
         removeRow_TransferCredits();
+        omitSpaceKey();
         transferCreditsAnalysis();
         totalUnitAnalysis();
     });
@@ -810,12 +825,14 @@ $(document).ready(function () {
      */
     $('#add_row5').click(function () {
         addRow_TrackUnits("", 0.0);
+        omitSpaceKey();
         trackAnalysis();
         totalUnitAnalysis();
     });
 
     $('#remove_row5').click(function () {
         removeRow_TrackUnits();
+        omitSpaceKey();
         trackAnalysis();
         totalUnitAnalysis();
     });

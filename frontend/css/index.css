@@ -12,10 +12,11 @@
 .highlight {
     font-weight: bold;
 }
+
 /*note font style*/
         
 .warning {
-            color: red;
+    color: red;
     font-weight: bolder;
 }
         
@@ -45,9 +46,9 @@ p.note {
 }
 
 input[type='radio'] {
-      width: 1.5em;
-      height: 1.5em;
-      padding: 10px;
+    width: 1.5em;
+    height: 1.5em;
+    padding: 10px;
 }
 
 .reqsel {
