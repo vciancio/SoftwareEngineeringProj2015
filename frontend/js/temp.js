@@ -15,7 +15,6 @@ var classes = [ {'course': 'amth308', 'unit': 2},    {'course': 'amth351', 'unit
                 {'course': 'mech372', 'unit': 4},    {'course': 'mech234', 'unit': 2},
                 {'course': 'mech268', 'unit': 2},    {'course': 'mech295', 'unit': 2}
 ];
-var classesTrack = [];
 
 function addRow_TransferCredits(course, institution, grade, unit) {
     var table = document.getElementById("transferTable");
@@ -295,13 +294,14 @@ function isSCU() {
      * then maximum unit capacity increases to 16
      * else maximum unit capacity stays to 9. */
     var where = $('input[name="where"]:checked').val();
-    if (where == 'undergradaute') {
-        $('input[name="inst-for-tc"]').val("SCU Undergraduate")
+    if (where == 'undergraduate') {
+        $('input[name="inst-for-tc"]').val("SCU Undergraduate");
         maxtransfer = 16;
     } else if (where == 'accelerated') {
-        $('input[name="inst-for-tc"]').val("SCU Accelerated Masters")
+        $('input[name="inst-for-tc"]').val("SCU Accelerated Masters");
         maxtransfer = 20;
     } else if (where == 'transfer')  {
+        $('input[name="inst-for-tc"]').val($('input[name="inst-for-tc-p"]').val());
         maxtransfer = 9;
     }
     return maxtransfer;
@@ -664,6 +664,7 @@ $(document).ready(function () {
     //ADD A FIRST ROW for 1st and 5th section.
     addRow_TransferCredits("", "", "", 0.0);
     addRow_TrackUnits("", 0.0);
+    omitSpaceKey();
 
     // Tally Initialization
     transferCreditsAnalysis();
