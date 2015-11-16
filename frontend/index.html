@@ -10,27 +10,9 @@
     
     <!-- Custom CSS -->
     <link rel='stylesheet' type='text/css' href='css/index.css'>
-    <style>
-        body {
-            padding-top: 60px;
-            padding-bottom: 40px;
-        }
-        
-        .sidebar-nav {
-            padding: 9px 0;
-        }
-
-        @media (max-width: 980px) {
-        /* Enable use of floated navbar text */
-            .navbar-text.pull-right {
-                float: none;
-                padding-left: 5px;
-                padding-right: 5px;
-            }
-        }
-    </style>
+    
     <!-- Bootstrap Core CSS -->
-    <link href="css/bootstrap.css" rel="stylesheet">
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
 
     <!-- JavaScript / jQuery -->
     <script type='text/javascript' src='http://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js'></script>
@@ -45,8 +27,12 @@
             <h1>PROGRAM OF STUDIES - CS &amp ENGINEERING MS</h1>
             <h3>(this is for students admitted beginning in fall 2008 and after) </h3>
             <p class="lead">You may either Enter your information and load your previous form, <br> or just start a new one and hit save at the bottom of the page </p>
-            <p> Any Courses can be found on <a href="http://issuu.com/santaclarauniversity/docs/scuengineerbull_2013-2014/39?e=2790581%2F4906551" target "_blank"="">the current SCU Bulletin.</a></p>
-        </div>
+            <div class="btn-group btn-group-justified" role="group">
+                <div class="btn-group" role="group">
+                    <a href="http://issuu.com/santaclarauniversity/docs/scuengineerbull_15-16_final" target ="_blank"><button type='button' class='btn btn-info btn-lg' id='select_all4'>Click here to see the current SCU Bulletin online.</button></a>
+                </div> <!--btn-group-->
+            </div> <!--btn-group-justified-->
+        </div> <!-- /row -->
     </div>
             </div>
         </div>
@@ -80,11 +66,17 @@
                     <div class='table-cell'>
                         <input type='text' name='email' placeholder='i.e. jdoe@scu.edu'>
                     </div>
-                </div>
-            </div>
-            <button type='submit' onclick='loadData()' class="btn btn-primary btn-block">Load Form</button>
-        </div>
-    </div>
+                </div> <!-- /table-row -->
+            </div><!-- /table -->
+        </div> <!-- /tier-2-2 -->
+        <div class="tier2-3 container-fluid">
+            <div class="btn-group btn-group-justified" role="group">
+                <div class="btn-group" role="group">
+                    <button type='submit' class='btn btn-primary btn-lg' onclick='loadData()'>Load Form</button>
+                </div> <!-- /btn-group -->
+            </div> <!-- btn-group-justified --> 
+        </div> <!-- /tier2-3 -->
+    </div> <!-- /tier1 -->
     <br>
     <br>
     <br>
@@ -106,7 +98,7 @@
                         <div class='table-cell'><h5>9 quarter units</h5></div>
                     </div>
                     <div class='table-row container-fluid'>
-                        <div class='table-cell'></div>
+                        <div class='table-cell'><input type='radio' name='where' value='undergraduate'></div>
                         <div class='table-cell'><h4>For SCU Undergraduates</h4></div>
                         <div class='table-cell'><h5>16 quarter units</h5></div>
                     </div>
@@ -120,9 +112,14 @@
         </div>
         <div class='tier2-2 container-fluid'>
             <div class='tier3 container-fluid'>
-                <input type='button' class="btn btn-primary btn-block" id='add_row' value='add row' />
-                <input type='button' class="btn btn-default btn-block" id='remove_row' value='remove row' />
-            </div>
+                <div class="btn-group btn-group-justified" role="group">
+                    <div class="btn-group" role="group">
+                        <button type='button' class='btn btn-success btn-lg' id='add_row'>add row</button>
+                    </div> <!--btn-group-->
+                    <div class="btn-group" role="group">
+                        <button type="button" class="btn btn-lg" id='remove_row'>remove row</button>
+                    </div>
+                </div>
             <div class='table container' id='transferTable'>
                 <div class='table-heading container-fluid'>
                     <div class='table-cell'>Course</div>
@@ -136,7 +133,8 @@
             <p class='note'>NOTE: 3 semester units = 4.5 quarter units</p>
             <p id='messageBox1-1'></p>
             <p id='messageBox1-2'></p>
-            <p id='messageBox1-3' class='warning'></p>
+            <p id='messageBox1-3a' class='warning'></p>
+            <p id='messageBox1-3b' class='warning'></p>
         </div>
     </div>
     <br>
@@ -159,8 +157,8 @@
                     <div class='table-row container-fluid'>
                         <div class='table-cell'>
                             <select name='coen20' class='reqsel' style='width:180px;'/>
-                            <option value="required">Required</option>
-                            <option value="waived">Waived</option>
+                            <option value="0">Required</option>
+                            <option value="1">Waived</option>
                             </select>
                         </div>
                         <div class='table-cell'>COEN20</div>
@@ -170,8 +168,8 @@
                     <div class='table-row container-fluid'>
                         <div class='table-cell'>
                             <select name='coen21' class='reqsel' style='width:180px;'/>
-                            <option value="required">Required</option>
-                            <option value="waived">Waived</option>
+                            <option value="0">Required</option>
+                            <option value="1">Waived</option>
                             </select>
                         </div>
                         <div class='table-cell'>COEN21</div>
@@ -181,8 +179,8 @@
                     <div class='table-row container-fluid'>
                         <div class='table-cell'>
                             <select name='coen12' class='reqsel' style='width:180px;'/>
-                            <option value="required">Required</option>
-                            <option value="waived">Waived</option>
+                            <option value="0">Required</option>
+                            <option value="1">Waived</option>
                             </select>
                         </div>
                         <div class='table-cell'>COEN12</div>
@@ -192,19 +190,19 @@
     <div class='table-row container-fluid'>
         <div class='table-cell'>
             <select name='coen19' class='reqsel' style='width:180px;'/>
-            <option value="required">Required</option>
-            <option value="waived">Waived</option>
+            <option value="0">Required</option>
+            <option value="1">Waived</option>
         </select>
     </div>
-    <div class='table-cell'>COEN19</div>
+    <div class='table-cell'>COEN19 / AMTH240</div>
     <div class='table-cell'>Discrete Math</div>
     <div class='table-cell'>4</div>
 </div>
 <div class='table-row container-fluid'>
     <div class='table-cell'>
         <select name='amth210' class='reqsel' style='width:180px;'/>
-        <option value="required">Required</option>
-        <option value="waived">Waived</option>
+        <option value="0">Required</option>
+        <option value="1">Waived</option>
     </select>
 </div>
 <div class='table-cell'>AMTH210</div>
@@ -213,8 +211,14 @@
 </div>
 </div>
 <div class='tier3 container-fluid'>
-    <input type='button' id='select_all2' class="btn btn-primary btn-block" value='require all ' />
-    <input type='button' id='deselect_all2' class="btn btn-default btn-block" value='wavie all' />
+    <div class="btn-group btn-group-justified" role="group">
+        <div class="btn-group" role="group">
+            <button type='button' class='btn btn-success btn-lg' id='select_all2'>require all</button>
+        </div> <!--btn-group-->
+        <div class="btn-group" role="group">
+            <button type="button" class="btn btn-lg" id='deselect_all2'>waive all</button>
+        </div> <!--btn-group-->
+    </div>
 </div>
 </div>
 <div class='tier3 container-fluid'>
@@ -236,9 +240,19 @@
         </div>
         <div class='tier2-2 container-fluid'>
             <div class='tier3 container-fluid'>
-                <input type='button' id='select_all3' value='require all' />
-                <input type='button' id='deselect_all3' value='wavie all' />
-                <input type='button' id='transfer_all3' value='transfer all' />
+                <div class="btn-group btn-group-justified" role="group">
+                    <div class="btn-group" role="group">
+                        <button type='button' class='btn btn-primary btn-lg' id='select_all3'>require all</button>
+                    </div> <!--btn-group-->
+
+                    <div class="btn-group" role="group">
+                        <button type="button" class="btn btn-success btn-lg" id='transfer_all3'>transfer all</button>
+                    </div> <!--btn-group-->
+
+                    <div class="btn-group" role="group">
+                        <button type="button" class="btn btn-lg" id='deselect_all3'>waive all</button>
+                    </div> <!--btn-group-->
+                </div>
             </div>
             <div class='tier3 container-fluid'>
                 <div class='table container-fluid'>
@@ -304,82 +318,60 @@
         </div>
         <div class='tier2-2 container-fluid'>
             <div class='table container'>
-                <div class='table-row container-fluid'>
+                <div class="table-row container-fluid">
                     <div class='table-cell'>
-                        <h4>Emerging Topics in Engineering</h4>
+                        <h4>Areas of the Core</h4>
                     </div>
-                    <div class='table-cell'>
-                        <input type="text" list='req_emerg' placeholder='Type a class like "amth308", or double-click' style='width:350px;' value=''/> 
-                        <datalist id='req_emerg'>
-                            <option value='amth308'>AMTH 308 Theory of Wavelets</option><!--2-->
-                            <option value='amth351'>AMTH 351 Quantum Computing</option><!--2-->
-                            <option value='amth367'>AMTH 367 Mathematical Finance</option><!--4-->
-                            <option value='amth387'>AMTH 387 Cryptology</option><!--4-->
-                            <option value='bioe256'>BIOE 256/ENGR 256 Introduction to Nanobioengineering</option><!--2-->
-                            <option value='ceng219'>CENG 219 Designing for Sustainable Construction</option><!--4-->
-                            <option value='coen331'>COEN 331 Wireless and Mobile Networks</option><!--4-->
-                            <option value='coen389'>COEN 389 Energy Efficient Computing</option><!--2-->
-                            <option value='elen280'>ELEN 280/MECH 287 Introduction to Alternative Energy Systems</option><!--2-->
-                            <option value='engr260'>ENGR 260 Nanoscale Science and Technology</option><!--2-->
-                            <option value='engr262'>ENGR 262 Nanomaterials</option><!--2-->
-                            <option value='engr273'>ENGR 273 Sustainable Energy and Ethics</option><!--2-->
-                            <option value='engr337'>ENGR 337 Sustainability and Green Information Technology</option><!--2-->
-                            <option value='engr371'>ENGR 371/MECH 371 Space Systems Design and Engineering I Technology</option><!--4-->
-                            <option value='engr372'>ENGR 372/MECH 372 Space Systems Design and Engineering II Technology</option><!--4-->
-                            <option value='mech234'>MECH 234 Combustion Technology</option><!--2-->
-                            <option value='mech268'>MECH 268 Computational Fluid Dynamics I</option><!--2-->
-                            <option value='mech295'>MECH 295 Special Topics in Thermofluid Sciences</option><!--2-->
-                        </datalist>
+                    <dic class="table-cell">
+                        <h4>Course Number</h4>
+                    </dic>
+                    <div class="table-cell">
+                        <h4>Units</h4>
                     </div>
                 </div>
                 <div class='table-row container-fluid'>
                     <div class='table-cell'>
-                        <h4>Engineering and Business/Entrepreneurship</h4>
+                        Emerging Topics in Engineering
                     </div>
                     <div class='table-cell'>
-                        <input type="text" list='req_business' placeholder='Type a class like "amth367", or double-click' style='width:350px;' value=''/> 
-                        <datalist id='req_business'>
-                            <option value='amth367'>AMTH 367 Mathematical Finance</option><!--4-->
-                            <option value='ceng208'>CENG 208 Engineering Economics and Project Finance</option><!--3-->
-                            <option class='x' value='coen287'>COEN 287 Software Development Process Management</option><!--2-->
-                            <option value='engr302'>ENGR 302 Managing in the Multicultural Environment</option><!--2-->
-                            <option value='engr304'>ENGR 304 Building Global Teams</option><!--2-->
-                            <option value='engr336'>ENGR 336 Engineering for the Developing World</option><!--2-->
-                            <option value='engr338'>ENGR 338 Mobile Applications for Emerging Markets</option><!--2-->
-                        </datalist>
+                        <input type="text" name='req_emerg' class='lowercase' placeholder='Type a class like "amth367", or double-click' style='width:320px;' value=''/> 
+                    </div>
+                    <div class='table-cell'>
+                        <input type="text" name='req_emerg_unit' style='width:100px;' value=''/> 
                     </div>
                 </div>
                 <div class='table-row container-fluid'>
                     <div class='table-cell'>
-                        <h4>Engineering and Society</h4>
+                        Engineering and Business/Entrepreneurship
                     </div>
                     <div class='table-cell'>
-                       <input type="text" list='req_society' placeholder='Type a class like "amth351", or double-click' style='width:350px;' value=''/> 
-                        <datalist id='req_society'>
-                            <option  value='amth308'>AMTH 308 Theory of Wavelets</option><!--2-->
-                            <option value='amth351'>AMTH 351 Quantum Computing</option><!--2-->
-                            <option value='amth367'>AMTH 367 Mathematical Finance</option><!--4-->
-                            <option value='amth387'>AMTH 387 Cryptology</option><!--4-->
-                            <option value='bioe256'>BIOE 256/ENGR 256 Introduction to Nanobioengineering</option><!--2-->
-                            <option value='ceng219'>CENG 219 Designing for Sustainable Construction</option><!--4-->
-                            <option value='coen331'>COEN 331 Wireless and Mobile Networks</option><!--4-->
-                            <option value='coen389'>COEN 389 Energy Efficient Computing</option><!--2-->
-                            <option value='elen280'>ELEN 280/MECH 287 Introduction to Alternative Energy Systems</option><!--2-->
-                            <option value='engr260'>ENGR 260 Nanoscale Science and Technology</option><!--2-->
-                            <option value='engr262'>ENGR 262 Nanomaterials</option><!--2-->
-                            <option value='engr273'>ENGR 273 Sustainable Energy and Ethics</option><!--2-->
-                            <option value='engr337'>ENGR 337 Sustainability and Green Information Technology</option><!--2-->
-                            <option value='mech371'>ENGR 371 Space Systems Design and Engineering I Technology</option><!--4-->
-                            <option value='mech372'>ENGR 372 Space Systems Design and Engineering II Technology</option><!--4-->
-                            <option value='mech234'>MECH 234 Combustion Technology</option><!--2-->
-                            <option value='mech268'>MECH 268 Computational Fluid Dynamics I</option><!--2-->
-                            <option value='mech295'>MECH 295 Special Topics in Thermofluid Sciences</option><!--2-->
-                        </datalist>
+                        <input type="text" name='req_business' class='lowercase' placeholder='Type a class like "amth367", or double-click' style='width:320px;' value=''/> 
+                    </div>
+                    <div class='table-cell'>
+                        <input type="text" name='req_business_unit' style='width:100px;' value=''/> 
+                    </div>
+                </div>
+                <div class='table-row container-fluid'>
+                    <div class='table-cell'>
+                        Engineering and Society
+                    </div>
+                    <div class='table-cell'>
+                       <input type="text" name='req_society' class='lowercase' placeholder='Type a class like "amth351", or double-click' style='width:320px;' value=''/> 
+                    </div>
+                    <div class='table-cell'>
+                        <input type="text" name='req_society_unit' style='width:100px;' value=''/> 
                     </div>
                 </div>
             </div>
         </div>
-        <div class='tier2-3 container-fluid'>
+        <div class="tier2-3 container-fluid">
+            <div class="btn-group btn-group-justified" role="group">
+                <div class="btn-group" role="group">
+                    <a href="http://www.scu.edu/engineering/graduate/current-2013/graduate-core.cfm" target ="_blank"><button type='button' class='btn btn-info btn-lg' id='select_all4'>Click here to see the current info. of Grad Core</button></a>
+                </div> <!--btn-group-->
+            </div>
+        </div>
+        <div class='tier2-4 container-fluid'>
             <p class='note'>NOTE: Although certain courses (such as ENGR 302, ENGR 304, ENGR 336, and AMTH 367 for example) may appear in multiple categories, they cannot be used to satisfy more than one Core requirement.</p>
             <p id='messageBox4-1'></p>
             <p id='messageBox4-2'></p>
@@ -395,28 +387,43 @@
         <div class='tier2-1 container-fluid'>
             <h2>Track</h2>
             <p>List track courses and additional courses totaling to 45 graduate units</P>
-        </div>
-        <div class='tier2-2 container-fluid'>
-            <div class='tier3 container-fluid'>
-                <input type='button' id='add_row5' value='add row' />
-                <input type='button' id='remove_row5' value='remove row' />
             </div>
-            <div class='tier3 container-fluid'>
-                <div class='table container' id='transferTable2'>
-                    <div class='table-heading container-fluid'>
-                        <div class='table-cell'>Course + Course #</div>
-                        <div class='table-cell'>Units</div>
+            <div class='tier2-2 container-fluid'>
+                <div class='tier3 container-fluid'>
+                    <div class="btn-group btn-group-justified" role="group">
+                        <div class="btn-group" role="group">
+                            <button type='button' class='btn btn-success btn-lg' id='add_row5'>add row</button>
+                        </div> <!--btn-group-->
+                        <div class="btn-group" role="group">
+                            <button type="button" class="btn btn-lg" id='remove_row5'>remove row</button>
+                        </div>
+                    </div>
+                </div>
+                <div class='tier3 container-fluid'>
+                    <div class='table container' id='transferTable2'>
+                        <div class='table-heading container-fluid'>
+                            <div class='table-cell'>Course + Course #</div>
+                            <div class='table-cell'>Units</div>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-        <div class='tier2-3 container-fluid'>
+            <div class="tier2-3 container-fluid">
+                <div class="btn-group btn-group-justified" role="group">
+                    <div class="btn-group" role="group">
+                        <a href="http://www.scu.edu/engineering/cse/grad/degrees.cfm#CP_JUMP_2529915" target ="_blank"><button type='button' class='btn btn-info btn-lg' id='select_all4'>Click here to see the current info. of MSCSE Specialization Track</button></a>
+                    </div> <!--btn-group-->
+                </div>
+            </div>
+            <div class='tier2-4 container-fluid'>
             <p class='note'>NOTE: must include a minimum of 8 units of COEN courses with course numbers greater than 300. No exception.</p>
             <p id='messageBox5-1'></p>
-            <p id='messageBox5-2'></p>
+            <p id='messageBox5-2a'></p>
+            <p id='messageBox5-2b'></p>
             <p id='messageBox5-3a' class='warning'></p>
             <p id='messageBox5-3b' class='warning'></p>
             <p id='messageBox5-3c' class='warning'></p>
+            <p id='messageBox5-3d' class='warning'></p>
         </div>
     </div>
     <br>
@@ -432,11 +439,13 @@
             <p id='messageBox6-3' class='warning'></p>
         </div>
         <div class='tier2-3 container-fluid'>
-            <div class='table'>
-                <div class='table-heading container-fluid'>
-                    <div class='table-cell'>
-                        <button type='submit' onclick='saveData()'>Save</button>
-                        <button type='submit' onclick='printData()'>Print</button>
+            <div class='tier3 container-fluid'>
+                <div class="btn-group btn-group-justified" role="group">
+                    <div class="btn-group" role="group">
+                        <button type='submit' class='btn btn-primary btn-lg' onclick='saveData()'>Save</button>
+                    </div> <!--btn-group-->
+                    <div class="btn-group" role="group">
+                        <button type="submit" class="btn btn-danger btn-lg" onclick='printData()'>Print</button>
                     </div>
                 </div>
             </div>
@@ -446,13 +455,6 @@
     <br>
     <br>
 
-    <div class='tier1 container'>
-        <div class='tier2-1 container-fluid'>
-
-        </div>
-    </div>
-    <br>
-    <br>
 </body>
 
 </html>

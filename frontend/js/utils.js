@@ -76,11 +76,23 @@ function buildCoenCoreReqs(){
   * @return a String that is formatted as: ' "key":{...}'
   */
 function buildGradReqs() {
-    var reqs_grad = {};
-    reqs_grad['req_emerg'] = $('input[list="req_emerg"]').val();
-    reqs_grad['req_business'] = $('input[list="req_business"]').val();
-    reqs_grad['req_society'] = $('input[list="req_society"]').val();
-
+    var req_emerg = $('input[name="req_emerg"]').val();
+    var req_business = $('input[name="req_business"]').val();
+    var req_society = $('input[name="req_society"]').val();
+    var req_emerg_unit = $('input[name="req_emerg_unit"]').val();
+    var req_business_unit = $('input[name="req_business_unit"]').val();
+    var req_society_unit = $('input[name="req_society_unit"]').val();
+    var reqs_list = ["req_emerg", "req_business", "req_society"];
+    var reqs_course = [req_emerg, req_business, req_society];
+    var reqs_unit = [req_emerg_unit, req_business_unit, req_society_unit];
+    var reqs_grad = [];
+    for (var i=0; i<3; i++) {
+        var gClass = new Object;
+        gClass.area = reqs_list[i];
+        gClass.course = reqs_course[i];
+        gClass.unit = reqs_unit[i];
+        reqs_grad.push(gClass);
+    }
     return reqs_grad;
 }
 
