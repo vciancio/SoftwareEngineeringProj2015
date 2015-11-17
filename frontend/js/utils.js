@@ -1,4 +1,5 @@
-var BASE_URL = "http://linux.students.engr.scu.edu/~vciancio/Software2015"
+// var BASE_URL = "http://linux.students.engr.scu.edu/~vciancio/Software_Final"
+var BASE_URL = "../"
 
 
 /* JSON REQUEST / SERVER HANDLING */
@@ -24,6 +25,10 @@ function setCheckboxValueById(id, value){
 
 function setInputByName(name, value){
     $('input[name="'+name+'"]').val(value);
+}
+
+function getPass(){
+    return $('input[name="password"]').val();
 }
 
 function buildTransferCredits(){
@@ -123,7 +128,6 @@ function buildDataObj() {
 
     json.mName = $('input[name="fname"]').val() + " " + $('input[name="lname"]').val();
     json.stdid = $('input[name="stdid"]').val();
-    json.email = $('input[name="email"]').val();
     
     json.transferCredits = buildTransferCredits();
     json.foundationCourses = buildFoundationalCourses();
@@ -131,7 +135,7 @@ function buildDataObj() {
     json.gradReqs = buildGradReqs();
     json.trackUnits = buildTrackUnits();
     obj.mForm = json;
-
+    obj.pass = getPass();
     return obj;
 }
 
@@ -252,7 +256,7 @@ function processLoadResponse(result){
  */
 function saveData(){
     var obj = buildDataObj();
-    var url = BASE_URL + "/api/form.php?name=" + obj.mForm.mName + "&userid=" + obj.mForm.stdid + "&student_email=" + obj.mForm.email; 
+    var url = BASE_URL + "api/form.php?name=" + obj.mForm.mName + "&userid=" + obj.mForm.stdid; 
     console.log(url);
 
     $.ajax({
@@ -286,7 +290,7 @@ function loadData(){
  */
 function callLoadServer(name, stdid, email, callback){
     var obj = buildDataObj();
-    var url = BASE_URL + "/api/form.php?name=" + name + "&userid=" + stdid + "&student_email=" + email; 
+    var url = BASE_URL + "api/form.php?name=" + name + "&userid=" + stdid + "&student_email=" + email; 
     $.ajax({
         url: url,
         type: "GET",
