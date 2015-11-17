@@ -1,0 +1,80 @@
+.center {
+    margin: auto;
+    width: 70%;
+}
+
+.lowercase {
+    text-transform: lowercase;
+}
+        
+.uppercase {
+    text-transform: uppercase;
+}
+        
+.capitalize {
+    text-transform: capitalize;
+}
+/*note font style*/
+        
+.warning {
+            color: red;
+    font-weight: bolder;
+}
+        
+p.note {
+    font-weight: bold;
+    font-style: italic;
+}
+/*TABLE STYLING*/
+        
+.table {
+    display: table;
+}
+        
+.table-heading {
+    display: table-row;
+    font-weight: bold;
+}
+        
+.table-row {
+    display: table-row;
+}
+        
+.table-cell {
+    display: table-cell;
+    height: 30px !important
+    padding-top: -10px;
+    padding-bottom: -10px;
+    padding-left: 5px;
+    padding-right: 5px;
+}
+
+/*CHECKBOX STYLING*/        
+input[type=checkbox] {
+    -ms-transform: scale(1.5);
+    /*Internet Explorer*/
+    -moz-transform: scale(1.5);
+    /*Mozilla Firefox*/
+    -webkit-transform: scale(1.5);
+    /* Safari and Chrome */
+    -o-transform: scale(1.5);
+    /* Opera */
+    padding: 10px;
+}
+/*div { margin: 50px; }
+*/
+/* signature & title part */
+.completed-by, .signature, .title  { float: left; }
+.signature, .title { 
+  margin: 20px 10px;
+  border-top: 1px solid #000;
+  width: 250px; 
+  text-align: center;
+}
+
+/* phone & date part */
+ .date > .line, .phone > .line {
+  display: inline-block;
+  border-bottom: 1px solid #000;
+  width: 100px; 
+}

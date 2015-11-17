@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang='en'>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    
+    <!-- Custom CSS -->
+    <link rel='stylesheet' type='text/css' href='css/index.css'>
+    <style>
+    /*body {
+        padding-top: 20px;
+         Required padding for .navbar-fixed-top. Remove if using .navbar-static-top. Change if height of navigation changes. 
+    }*/
+    </style>
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" integrity="sha512-dTfge/zgoMYpP7QbHy4gWMEGsbsdZeCXz7irItjcC3sPUFtf0kuFbDz/ixG7ArTxmDjLXDmezHubeNikyKGVyQ==" crossorigin="anonymous">
+
+    <!-- JavaScript / jQuery -->
+    <script type='text/javascript' src='http://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js'></script>
+    
+    <script type='text/javascript' src='js/utils.js'></script>
+    <script type='text/javascript' src='js/temp.js'></script>
+    <script type='text/javascript' src='js/hack.js'></script>
+</head>
+<title> Santa Clara University - Online Graduate Program of Studies Form </title>
+<body>
+<!--     <a class="center-block" href="http://www.scu.edu/engineering/cse/grad/degrees.cfm">
+        <img class="img-responsive center-block" src='http://law.scu.edu/wp-content/themes/strappress-child/images/scu-seal-red.png'/>
+    </a> -->
+    <div class='tier1 container'>
+        <div class="tier2-1 row text-center">
+            <h2>PROGRAM OF STUDIES - CS & ENGINEERING MS</h2>
+            <h4>(for students admitted beginning in fall 2008 and after) </h4>
+        </div>
+    </div>
+    <br>
+
+    <div class='tier1 container'>
+        <div class='tier2-1 container-fluid'>
+            <h2>Student Information:</h2>
+            <h4>Fill up SCU student info</h4>
+        </div>
+        <div class='tier2-2 container-fluid'>
+            <div class='table container-fluid'>
+                <div class='table-heading row container-fluid'>
+                    <div class='table-cell .col-xs-6 .col-md-3'>first name</div>
+                    <div class='table-cell .col-xs-6 .col-md-3'>last name</div>
+                    <div class='table-cell .col-xs-6 .col-md-3'>student id</div>
+                    <div class='table-cell .col-xs-6 .col-md-3'>email (school)</div>
+                </div>
+                <div class='table-row container-fluid'>
+                    <div class='table-cell'>
+                        <input type='text' name='fname' class='capitalize' placeholder='Jon'>
+                    </div>
+                    <div class='table-cell'>
+                        <input type='text' name='lname' class='capitalize' placeholder='Doe'>
+                    </div>
+                    <div class='table-cell'>
+                        <input type='text' name='stdid' class='capitalize' placeholder='W082391'>
+                    </div>
+                    <div class='table-cell'>
+                        <input type='text' name='email' placeholder='i.e. jdoe@scu.edu'>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class='tier1 container'>
+        <div class='tier2-1 container-fluid'>
+            <h2>Approved Transfer Credit:</h2>
+            <div class='tier3-1'>
+                <div class='table container-fluid'>
+                    <div class='table-row container-fluid' id='student_type'>
+                        <div class='table-cell'>
+                            <h4>Student is a ____</h4>
+                        </div>
+                        <div class='table-cell'>
+                            <h5> 9001quarter units</h5>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class='tier2-2 container-fluid'>
+            <div class='table container' id='transferTable'>
+                <div class='table-heading container-fluid'>
+                    <div class='table-cell'>Course</div>
+                    <div class='table-cell'>Institution</div>
+                    <div class='table-cell'>Grade</div>
+                    <div class='table-cell'>Quarter Units</div>
+                </div>
+            </div>
+        </div>
+        <div class='tier2-3 container-fluid'>
+            <p id='messageBox1-1'></p>
+            <p id='messageBox1-3' class='warning'></p>
+        </div>
+    </div>
+
+    <div class='tier1 container'>
+        <div class='tier2-1 container-fluid'>
+            <h2>Foundational Courses:</h2>
+            <p>Mark the courses (or equivalences) the student is required to take.</p>
+        </div>
+        <div class='tier2-2 container-fluid'>
+            <div class='tier3 container-fluid'>
+                <div class='table container-fluid'>
+                    <div class='table-heading container-fluid'>
+                        <div class='table-cell'>Selection</div>
+                        <div class='table-cell'>Course #</div>
+                        <div class='table-cell'>Title</div>
+                        <div class='table-cell'>Units</div>
+                    </div>
+                    <div class='table-row container-fluid'>
+                        <div class='table-cell'>
+                            <select name='coen20' class='reqsel' style='width:180px;'/>
+                                <option value="required">Required</option>
+                                <option value="waived">Waived</option>
+                            </select>
+                        </div>
+                        <div class='table-cell'>COEN20</div>
+                        <div class='table-cell'>Assembly Language</div>
+                        <div class='table-cell'>4</div>
+                    </div>
+                    <div class='table-row container-fluid'>
+                        <div class='table-cell'>
+                           <select name='coen21' class='reqsel' style='width:180px;'/>
+                                <option value="required">Required</option>
+                                <option value="waived">Waived</option>
+                            </select>
+                        </div>
+                        <div class='table-cell'>COEN21</div>
+                        <div class='table-cell'>Logic Design</div>
+                        <div class='table-cell'>4</div>
+                    </div>
+                    <div class='table-row container-fluid'>
+                        <div class='table-cell'>
+                            <select name='coen12' class='reqsel' style='width:180px;'/>
+                                <option value="required">Required</option>
+                                <option value="waived">Waived</option>
+                            </select>
+                        </div>
+                        <div class='table-cell'>COEN12</div>
+                        <div class='table-cell'>Data Structure</div>
+                        <div class='table-cell'>4</div>
+                    </div>
+                    <div class='table-row container-fluid'>
+                        <div class='table-cell'>
+                            <select name='coen19' class='reqsel' style='width:180px;'/>
+                                <option value="required">Required</option>
+                                <option value="waived">Waived</option>
+                            </select>
+                        </div>
+                        <div class='table-cell'>COEN19</div>
+                        <div class='table-cell'>Discrete Math</div>
+                        <div class='table-cell'>4</div>
+                    </div>
+                    <div class='table-row container-fluid'>
+                        <div class='table-cell'>
+                            <select name='amth210' class='reqsel' style='width:180px;'/>
+                                <option value="required">Required</option>
+                                <option value="waived">Waived</option>
+                            </select>
+                        </div>
+                        <div class='table-cell'>AMTH210</div>
+                        <div class='table-cell'>Probability</div>
+                        <div class='table-cell'>4</div>
+                    </div>
+                </div>
+            </div>
+            <div class='tier3 container-fluid'>
+                <p id='messageBox2-1'>
+                    <p id='messageBox2-2'></p>
+                    <p id='messageBox2-3' class='warning'></p>
+            </div>
+        </div>
+    </div>
+
+    <div class='tier1 container'>
+        <div class='tier2-1 container-fluid'>
+            <h2>Computer Science and Engineering Core Courses:</h2>
+            <p>Mark the courses the student is required to take.</p>
+            <br>
+        </div>
+        <div class='tier2-2 container-fluid'>
+            <div class='tier3 container-fluid'>
+                <div class='table container-fluid'>
+                    <div class='table-heading container-fluid'>
+                        <div class='table-cell'>Checkbox</div>
+                        <div class='table-cell'>Course #</div>
+                        <div class='table-cell'>Title</div>
+                        <div class='table-cell'>Units</div>
+                    </div>
+                    <div class='table-row container-fluid'>
+                        <div class='table-cell'>
+                           <select name='coen210' class='reqsel2' style='width:180px;'/>
+                                <option value="0">Required</option>
+                                <option value="1">Waived</option>
+                                <option value="2">Transfered</option>
+                            </select>
+                        </div>
+                        <div class='table-cell'>COEN210</div>
+                        <div class='table-cell'>Computer Architecture</div>
+                        <div class='table-cell'>4</div>
+                    </div>
+                    <div class='table-row container-fluid'>
+                        <div class='table-cell'>
+                            <select name='coen279' class='reqsel2' style='width:180px;'/>
+                                <option value="0">Required</option>
+                                <option value="1">Waived</option>
+                                <option value="2">Transfered</option>
+                            </select>
+                        </div>
+                        <div class='table-cell'>COEN279</div>
+                        <div class='table-cell'>Design &amp Analysis: Algorithms </div>
+                        <div class='table-cell'>4</div>
+                    </div>
+                    <div class='table-row container-fluid'>
+                        <div class='table-cell'>    
+                            <select name='coen283' class='reqsel2' style='width:180px;'/>
+                                <option value="0">Required</option>
+                                <option value="1">Waived</option>
+                                <option value="2">Transfered</option>
+                            </select>
+                        </div>
+                        <div class='table-cell'>COEN283</div>
+                        <div class='table-cell'>Data Structures </div>
+                        <div class='table-cell'>4</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class='tier2-3 container-fluid'>
+            <div id='messageBox3-1'></div>
+            <div id='messageBox3-3'></div>
+        </div>
+    </div>
+
+    <div class='tier1 container'>
+        <div class='tier2-1 container-fluid'>
+            <h2>SCU Graduate Core Requirements: </h2>
+            <!-- <p>(min. 6 units), 1 course from each area:</p> -->
+        </div>
+        <div class='tier2-2 container-fluid'>
+            <div class='table container'>
+                <div class='table-row container-fluid'>
+                    <div class='table-cell'>
+                        <h4>Emerging Topics in Engineering</h4>
+                    </div>
+                    <div class='table-cell'>
+                        <input type="text" list='req_emerg' placeholder='Type a class like "amth308", or double-click' style='width:350px;' value=''/> 
+                        <datalist id='req_emerg'>
+                            <option value='amth308'>AMTH 308 Theory of Wavelets</option><!--2-->
+                            <option value='amth351'>AMTH 351 Quantum Computing</option><!--2-->
+                            <option value='amth367'>AMTH 367 Mathematical Finance</option><!--4-->
+                            <option value='amth387'>AMTH 387 Cryptology</option><!--4-->
+                            <option value='bioe256'>BIOE 256/ENGR 256 Introduction to Nanobioengineering</option><!--2-->
+                            <option value='ceng219'>CENG 219 Designing for Sustainable Construction</option><!--4-->
+                            <option value='coen331'>COEN 331 Wireless and Mobile Networks</option><!--4-->
+                            <option value='coen389'>COEN 389 Energy Efficient Computing</option><!--2-->
+                            <option value='elen280'>ELEN 280/MECH 287 Introduction to Alternative Energy Systems</option><!--2-->
+                            <option value='engr260'>ENGR 260 Nanoscale Science and Technology</option><!--2-->
+                            <option value='engr262'>ENGR 262 Nanomaterials</option><!--2-->
+                            <option value='engr273'>ENGR 273 Sustainable Energy and Ethics</option><!--2-->
+                            <option value='engr337'>ENGR 337 Sustainability and Green Information Technology</option><!--2-->
+                            <option value='engr371'>ENGR 371/MECH 371 Space Systems Design and Engineering I Technology</option><!--4-->
+                            <option value='engr372'>ENGR 372/MECH 372 Space Systems Design and Engineering II Technology</option><!--4-->
+                            <option value='mech234'>MECH 234 Combustion Technology</option><!--2-->
+                            <option value='mech268'>MECH 268 Computational Fluid Dynamics I</option><!--2-->
+                            <option value='mech295'>MECH 295 Special Topics in Thermofluid Sciences</option><!--2-->
+                        </datalist>
+                    </div>
+                </div>
+                <div class='table-row container-fluid'>
+                    <div class='table-cell'>
+                        <h4>Engineering and Business/Entrepreneurship</h4>
+                    </div>
+                    <div class='table-cell'>
+                        <input type="text" list='req_business' placeholder='Type a class like "amth367", or double-click' style='width:350px;' value=''/> 
+                        <datalist id='req_business'>
+                            <option value='amth367'>AMTH 367 Mathematical Finance</option><!--4-->
+                            <option value='ceng208'>CENG 208 Engineering Economics and Project Finance</option><!--3-->
+                            <option class='x' value='coen287'>COEN 287 Software Development Process Management</option><!--2-->
+                            <option value='engr302'>ENGR 302 Managing in the Multicultural Environment</option><!--2-->
+                            <option value='engr304'>ENGR 304 Building Global Teams</option><!--2-->
+                            <option value='engr336'>ENGR 336 Engineering for the Developing World</option><!--2-->
+                            <option value='engr338'>ENGR 338 Mobile Applications for Emerging Markets</option><!--2-->
+                        </datalist>
+                    </div>
+                </div>
+                <div class='table-row container-fluid'>
+                    <div class='table-cell'>
+                        <h4>Engineering and Society</h4>
+                    </div>
+                    <div class='table-cell'>
+                       <input type="text" list='req_society' placeholder='Type a class like "amth351", or double-click' style='width:350px;' value=''/> 
+                        <datalist id='req_society'>
+                            <option  value='amth308'>AMTH 308 Theory of Wavelets</option><!--2-->
+                            <option value='amth351'>AMTH 351 Quantum Computing</option><!--2-->
+                            <option value='amth367'>AMTH 367 Mathematical Finance</option><!--4-->
+                            <option value='amth387'>AMTH 387 Cryptology</option><!--4-->
+                            <option value='bioe256'>BIOE 256/ENGR 256 Introduction to Nanobioengineering</option><!--2-->
+                            <option value='ceng219'>CENG 219 Designing for Sustainable Construction</option><!--4-->
+                            <option value='coen331'>COEN 331 Wireless and Mobile Networks</option><!--4-->
+                            <option value='coen389'>COEN 389 Energy Efficient Computing</option><!--2-->
+                            <option value='elen280'>ELEN 280/MECH 287 Introduction to Alternative Energy Systems</option><!--2-->
+                            <option value='engr260'>ENGR 260 Nanoscale Science and Technology</option><!--2-->
+                            <option value='engr262'>ENGR 262 Nanomaterials</option><!--2-->
+                            <option value='engr273'>ENGR 273 Sustainable Energy and Ethics</option><!--2-->
+                            <option value='engr337'>ENGR 337 Sustainability and Green Information Technology</option><!--2-->
+                            <option value='mech371'>ENGR 371 Space Systems Design and Engineering I Technology</option><!--4-->
+                            <option value='mech372'>ENGR 372 Space Systems Design and Engineering II Technology</option><!--4-->
+                            <option value='mech234'>MECH 234 Combustion Technology</option><!--2-->
+                            <option value='mech268'>MECH 268 Computational Fluid Dynamics I</option><!--2-->
+                            <option value='mech295'>MECH 295 Special Topics in Thermofluid Sciences</option><!--2-->
+                        </datalist>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class='tier2-3 container-fluid'>
+            <p id='messageBox4-1'></p>
+            <p id='messageBox4-2'></p>
+            <p id='messageBox4-3a' class='warning'></p>
+            <p id='messageBox4-3b' class='warning'></p>
+        </div>
+    </div>
+
+    <div class='tier1 container'>
+        <div class='tier2-1 container-fluid'>
+            <h2>Track</h2>
+            <p>List track courses and additional courses totaling to 45 graduate units</P>
+        </div>
+        <div class='tier2-2 container-fluid'>
+            <div class='tier3 container-fluid'>
+                <div class='table container' id='transferTable2'>
+                    <div class='table-heading container-fluid'>
+                        <div class='table-cell'>Course + Course #</div>
+                        <div class='table-cell'>Units</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class='tier2-3 container-fluid'>
+            <p id='messageBox5-1'></p>
+            <p id='messageBox5-3a' class='warning'></p>
+            <p id='messageBox5-3b' class='warning'></p>
+            <p id='messageBox5-3c' class='warning'></p>
+        </div>
+    </div>
+
+    <div class='tier1 container'>
+        <div class='tier2-1 container-fluid'>
+            <h2>Units</h2>
+        </div>
+        <div class='tier2-2 container-fluid'>
+            <p id='messageBox6-1'></p>
+            <p id='messageBox6-2'></p>
+            <p id='messageBox6-3' class='warning'></p>
+        </div>
+        <div class='tier2-3 container-fluid'>
+            <div class='table'>
+                <div class='table-heading container-fluid'>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div class='tier1 container'>
+        <div class='tier2-1 container-fluid'>
+
+        </div>
+    </div>
+</body>
+
+</html>
