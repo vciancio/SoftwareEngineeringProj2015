@@ -87,13 +87,13 @@ function buildGradReqs() {
     var reqs_list = ["req_emerg", "req_business", "req_society"];
     var reqs_course = [req_emerg, req_business, req_society];
     var reqs_unit = [req_emerg_unit, req_business_unit, req_society_unit];
-    var reqs_grad = [];
+    var reqs_grad = {};
     for (var i=0; i<3; i++) {
         var gClass = new Object;
         gClass.area = reqs_list[i];
         gClass.course = reqs_course[i];
         gClass.unit = reqs_unit[i];
-        reqs_grad.push(gClass);
+        reqs_grad[reqs_list[i]] = gClass;
     }
     return reqs_grad;
 }
@@ -159,6 +159,7 @@ function processLoadResponse(result){
 
     //Set the Student Type
     $('input[value="'+ obj.transferCredits.student_type + '"]').prop('checked', true);
+    console.log('input[value="'+ obj.transferCredits.student_type + '"]');
 
     //Populate the Approved Transfer Credits
     for(var i=0; i<obj.transferCredits.mClasses.length; i++){
@@ -194,11 +195,13 @@ function processLoadResponse(result){
     var gradCoreKeys = Object.keys(obj.gradReqs);
     for(var i=0; i<gradCoreKeys.length; i++){
         var requirement = gradCoreKeys[i];
-        var value = obj.gradReqs[requirement];
-        setSelectionValueByName(requirement, value);
+        var value = obj.gradReqs[requirement].course;
+        setInputByName(requirement, value);
+        var units = obj.gradReqs[requirement].unit;
+        setInputByName(requirement + "_unit", units);
     }
 
-totalUnitAnalysis();
+    totalUnitAnalysis();
 }
 
 /*
