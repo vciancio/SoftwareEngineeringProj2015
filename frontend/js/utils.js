@@ -201,6 +201,11 @@ function processLoadResponse(result){
         setInputByName(requirement + "_unit", units);
     }
 
+    transferCreditsAnalysis();
+    coenFoundationalAnalysis();
+    coenCoreAnalysis();
+    gradCoreAnalysis();
+    trackAnalysis();
     totalUnitAnalysis();
 }
 

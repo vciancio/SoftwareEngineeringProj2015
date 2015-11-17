@@ -6,7 +6,7 @@ function addRow_TransferCredits(course, institution, grade, unit) {
     var table = document.getElementById("transferTable");
     c++;
     var tableRow = $("<div class='table-row container-fluid' id='row-transfer-credit" + c + "'>");
-    var input = $("<input type='text' class='lowercase no-white-space' name='course-for-tc' id='course" + c + "' value='" + course + "' placeholder='coen12'/>");
+    var input = $("<input type='text' name='course-for-tc' id='course" + c + "' value='" + course + "' placeholder='coen12'/>");
     input = input.on("keydown", function (e) {
         return e.which !== 32;
     }); // restriction on typing space 
@@ -40,7 +40,7 @@ function addRow_TrackUnits(course, units) {
     var table = document.getElementById("transferTable2");
     ct++;
     var tableRow = $("<div class='table-row container-fluid' id='row-for-track" + ct + "''>");
-    var input = $("<input type='text' name='course-for-track' class='lowercase no-white-space' id='course" + ct + "' value='" + course + "' />");
+    var input = $("<input type='text' name='course-for-track' id='course" + ct + "' value='" + course + "' />");
     input = input.on("keydown", function (e) {
         return e.which !== 32;
     });
@@ -77,6 +77,12 @@ function omitSpaceKey() {
     $('.no-white-space').on('input', function() {
         $(this).val($(this).val().replace(/ /g,""));
     });
+}
+
+function lowerAndSpaceless(element) {
+    var element = element.toLowerCase();
+    element = element.replace(/ /g,"");
+    return element;
 }
 
 
@@ -295,6 +301,7 @@ function transferCreditsValidation_Unit() {
 }
 
 function transferCreditsValidation_Duplicate() {
+
     var transfer = buildTransferCredits().mClasses;
     var transferCourseName = [];
     //exclude NULL values and rename it to none+i
@@ -303,7 +310,9 @@ function transferCreditsValidation_Duplicate() {
             var string = "none"+String(i);
             transferCourseName[i] = string;
         } else {
-            transferCourseName[i] = transfer[i].course;
+            var transferTemp = transfer[i].course;
+            transferTemp = lowerAndSpaceless(transferTemp);
+            transferCourseName[i] = transferTemp;
         }
     }
     //check duplicate names in courses
@@ -317,6 +326,7 @@ function transferCreditsValidation_Duplicate() {
 }
 
 function transferCreditsValidation_Coen() {
+    
     var transfer = buildTransferCredits().mClasses;
     var transferCourseName = [];
     //exclude NULL values and rename it to none+i
@@ -325,7 +335,9 @@ function transferCreditsValidation_Coen() {
             var string = "none"+String(i);
             transferCourseName[i] = string;
         } else {
-            transferCourseName[i] = transfer[i].course;
+            var transferTemp = transfer[i].course;
+            transferTemp = lowerAndSpaceless(transferTemp);
+            transferCourseName[i] = transferTemp;
         }
     }
 
@@ -341,6 +353,7 @@ function transferCreditsValidation_Coen() {
 }
 
 function transferCreditsValidation_Grad() {
+    
     var transfer = buildTransferCredits().mClasses;
     var transferCourseName = [];
     //exclude NULL values and rename it to none+i
@@ -349,7 +362,9 @@ function transferCreditsValidation_Grad() {
             var string = "none"+String(i);
             transferCourseName[i] = string;
         } else {
-            transferCourseName[i] = transfer[i].course;
+            var transferTemp = transfer[i].course;
+            transferTemp = lowerAndSpaceless(transferTemp);
+            transferCourseName[i] = transferTemp;
         }
     }
     var grad = buildGradReqs();
@@ -358,7 +373,6 @@ function transferCreditsValidation_Grad() {
         for (var j in grad) {
              if ((transferCourseName[i] == grad[j].course)) {
                 $('#messageBox1-3d').html("<b>WARNING</b>: You have duplicate course name in your Grad Core section.");
-                $("#messageBox4-3b").html("<b>WARNING</b>: You have duplicate course name in your Transfer Credit section.");
             }
         }
     }
@@ -372,13 +386,36 @@ function transferCreditsValidation_Track() {
      *      [] buildbuildTransferCredits():
      *      [] buildTrackUnits():
      */
-     var fail = false;
-     var transfer = buildTransferCredits().mClasses;
-     var track = buildTrackUnits();
 
-     for (var i in track) {
-        for (var j=0; j<transfer.length; j++) {
-            if ((track[i].course !== "") & ((transfer[j].course !== "")) & (track[i].course == transfer[j].course)) {
+    var transfer = buildTransferCredits().mClasses;
+    var transferCourseName = [];
+    for (var i in transfer) {
+        if (transfer[i].course == "") {
+            var string = "none"+String(i);
+            transferCourseName[i] = string;
+        } else {
+            var transferTemp = transfer[i].course;
+            transferTemp = lowerAndSpaceless(transferTemp);
+            transferCourseName[i] = transferTemp;
+        }
+    }
+
+    var track = buildTrackUnits();
+    var trackCourseName = [];
+    for (var i in transfer) {
+        if (track[i].course == "") {
+            var string = "none"+String(i);
+            trackCourseName[i] = string;
+        } else {
+            var trackTemp = track[i].course;
+            trackTemp = lowerAndSpaceless(trackTemp);
+            trackCourseName[i] = trackTemp;
+        }
+    }
+
+    for (var i in transferCourseName) {
+        for (var j in trackCourseName) {
+            if ((transferCourseName[i] !== "") & ((trackCourseName[j] !== "")) & (transferCourseName[i] == trackCourseName[j])) {
                 $("#messageBox1-3e").html("WARNING: You are not allowed to put TRANSFER CREDIT course here.");
             }
         }
@@ -449,7 +486,9 @@ function gradCoreValidation_Duplicate() {
             var string = "none"+String(i);
             gradCourseName[i] = string;
         } else {
-            gradCourseName[i] = grad[i].course;
+            var gradTemp = grad[i].course;
+            gradTemp = lowerAndSpaceless(gradTemp);
+            gradCourseName[i] = gradTemp;
         }
     }
 
@@ -470,15 +509,29 @@ function gradCoreValidation_Transfer() {
             var string = "none"+String(i);
             transferCourseName[i] = string;
         } else {
-            transferCourseName[i] = transfer[i].course;
+            var transferTemp = transfer[i].course;
+            transferTemp = lowerAndSpaceless(transferTemp);
+            transferCourseName[i] = transferTemp;
         }
     }
     
     var grad = buildGradReqs();
+    var gradCourseName = [];
+    for (var i in grad) {
+        if (grad[i].course == "") {
+            var string = "mone"+String(i);
+            gradCourseName[i] = string;
+        } else {
+            var gradTemp = grad[i].course;
+            gradTemp = lowerAndSpaceless(gradTemp);
+            gradCourseName[i] = gradTemp;
+        }
+    }
+
     //check duplicate names appearing in GradCore  
     for (var i in transferCourseName) {
-        for (var j in grad) {
-             if ((transferCourseName[i] == grad[j].course)) {
+        for (var j in gradCourseName) {
+             if ((transferCourseName[i] == gradCourseName[j])) {
                 $("#messageBox4-3c").html("<b>WARNING</b>: You have duplicate course name in your Transfer Credit section.");
             }
         }
@@ -487,11 +540,24 @@ function gradCoreValidation_Transfer() {
 
 function gradCoreValidation_Coen() {
     var coen = buildCoenCoreReqs();
+    
     var grad = buildGradReqs();
-    //check duplicate names appearing in GradCore  
+    var gradCourseName = [];
     for (var i in grad) {
+        if (grad[i].course == "") {
+            var string = "none"+String(i);
+            gradCourseName[i] = string;
+        } else {
+            var gradTemp = grad[i].course;
+            gradTemp = lowerAndSpaceless(gradTemp);
+            gradCourseName[i] = gradTemp;
+        }
+    }
+
+    //check duplicate names appearing in GradCore  
+    for (var i in gradCouresName) {
         for (var index in coen) {
-             if ((grad[i].course == index)) {
+             if ((gradCourseName[i] == index)) {
                 $("#messageBox4-3d").html("<b>WARNING</b>: You have duplicate course name in your Coen Core section.");
             }
         }
@@ -541,7 +607,9 @@ function trackValidation_Duplicate() {
             var string = "none"+String(i);
             trackCourseName[i] = string;
         } else {
-            trackCourseName[i] = track[i].course;
+            var trackTemp = track[i].course;
+            trackTemp = lowerAndSpaceless(trackTemp);
+            trackCourseName[i] = trackTemp;
         }
     }
     //check duplicate names in courses
@@ -563,12 +631,37 @@ function trackValidation_Transfer() {
      *      [] buildTrackUnits():
      */
 
-     var transfer = buildTransferCredits().mClasses;
-     var track = buildTrackUnits();
+    var transfer = buildTransferCredits().mClasses;
+    var transferCourseName = [];
+    //exclude NULL values and rename it to none+i
+    for (var i in transfer) {
+        if (transfer[i].course == "") {
+            var string = "none"+String(i);
+            transferCourseName[i] = string;
+        } else {
+            var transferTemp = transfer[i].course;
+            transferTemp = lowerAndSpaceless(transferTemp);
+            transferCourseName[i] = transferTemp;
+        }
+    }
 
-     for (var i in track) {
-        for (var j=0; j<transfer.length; j++) {
-            if ((track[i].course !== "") & ((transfer[j].course !== "")) & (track[i].course == transfer[j].course)) {
+    var track = buildTrackUnits();
+    var trackCourseName = [];
+    //exclude NULL values and rename it to none+i
+    for (var i in track) {
+        if (track[i].course == "") {
+            var string = "mone"+String(i);
+            trackCourseName[i] = string;
+        } else {
+            var trackTemp = track[i].course;
+            trackTemp = lowerAndSpaceless(trackTemp);
+            trackCourseName[i] = trackTemp;
+        }
+    }
+
+    for (var i in transferCourseName) {
+        for (var j in trackCourseName) {
+            if ((transferCourseName[i] !== "") & ((trackCourseName[j] !== "")) & (transferCourseName[i] == trackCourseName[j])) {
                 $("#messageBox5-3c").html("WARNING: You are not allowed to put TRANSFER CREDIT course here.");
             }
         }
@@ -583,21 +676,29 @@ function trackValidation_Coen() {
      *      [] buildCoenCoreReqs():
      *      [] buildTrackUnits():
      */
-
-    var fail = false;
-    var core = buildCoenCoreReqs();
+    
     var track = buildTrackUnits();
-    var coreClasses = Object.keys(core);
-
-    for (var j = 0; j < coreClasses.length; j++) {
-        for (var i = 0; i < track.length; i++) {
-            if (track[i].course == coreClasses[j]) {
-                fail = true;
-            }
+    var trackCourseName = [];
+    //exclude NULL values and rename it to none+i
+    for (var i in track) {
+        if (track[i].course == "") {
+            var string = "mone"+String(i);
+            trackCourseName[i] = string;
+        } else {
+            var trackTemp = track[i].course;
+            trackTemp = lowerAndSpaceless(trackTemp);
+            trackCourseName[i] = trackTemp;
         }
     }
-    if (fail) {
-        $("#messageBox5-3d").html("WARNING: You are not allowed to put COEN CORE course here.");
+
+    var coen = buildCoenCoreReqs();
+
+    for (var index in coen) {
+        for (var i in trackCourseName) {
+            if (trackCourseName[i] == index) {
+                $("#messageBox5-3d").html("WARNING: You are not allowed to put COEN CORE course here.");
+            }
+        }
     }
 }
 
@@ -610,29 +711,44 @@ function trackValidation_Grad() {
      *      [] buildTrackUnits():
      */
 
-    var grad = buildGradReqs();
-    var track = buildTrackUnits();
+    
+
     /* temporary variables set to specify non-input */
+    var grad = buildGradReqs();
     var gradCourseName = [];
     for (i in grad) {
         if (grad[i].course == "") {
             var string = "none"+String(i);
             gradCourseName[i] = string;
         } else {
-            gradCourseName[i] = grad[i].course;
+            var gradTemp = grad[i].course;
+            gradTemp = lowerAndSpaceless(gradTemp);
+            gradCourseName[i] = gradTemp;
         }
     }
 
-    for (var i = 0; i < track.length; i++) {
-        for (var j in gradCourseName) {
-            if (track[i].course == gradCourseName[j]) {
+    var track = buildTrackUnits();
+    var trackCourseName = [];
+    //exclude NULL values and rename it to none+i
+    for (var i in track) {
+        if (track[i].course == "") {
+            var string = "mone"+String(i);
+            trackCourseName[i] = string;
+        } else {
+            var trackTemp = track[i].course;
+            trackTemp = lowerAndSpaceless(trackTemp);
+            trackCourseName[i] = trackTemp;
+        }
+    }
+
+    for (var i in gradCourseName) {
+        for (var j in trackCourseName) {
+            if (trackCourseName[j] == gradCourseName[i]) {
                 $("#messageBox5-3e").html("WARNING: You included the same GRAD CORE course twice.");
             }
         }
     }
 }
-
-
 
 function totalValidation() {
     $("#messageBox6-3").html("");
