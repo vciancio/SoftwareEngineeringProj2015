@@ -192,7 +192,12 @@ function fillInGradCore(obj){
 }
 
 function completeUnitAnalysis(){
-
+    transferCreditsAnalysis();
+    coenFoundationalAnalysis();
+    coenCoreAnalysis();
+    gradCoreAnalysis();
+    trackAnalysis();
+    totalUnitAnalysis();
 }
 
 function processSaveResponse(result){

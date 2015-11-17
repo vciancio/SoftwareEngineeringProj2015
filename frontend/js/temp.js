@@ -555,7 +555,7 @@ function gradCoreValidation_Coen() {
     }
 
     //check duplicate names appearing in GradCore  
-    for (var i in gradCouresName) {
+    for (var i in gradCourseName) {
         for (var index in coen) {
              if ((gradCourseName[i] == index)) {
                 $("#messageBox4-3d").html("<b>WARNING</b>: You have duplicate course name in your Coen Core section.");
