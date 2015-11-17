@@ -290,16 +290,22 @@ function transferCreditsValidation() {
     $("#messageBox1-3a").html("");
     $("#messageBox1-3b").html("");
     $("#messageBox1-3c").html("");
-    $("#messageBox1-3d").html("");
+    $("#messageBox1-3d").html(""); 
+    $("#messageBox1-3e").html(""); 
 
     // unit checking
-    if (transferCreditsUnitCount() > isSCU()) {
-        $("#messageBox1-3a").html("<b>WARNING</b>: The number has exceeded the maximum unit allowed.");
-    }
-
+    
+    transferCreditsValidation_Unit();
     transferCreditsValidation_Duplicate();
     transferCreditsValidation_Coen();
     transferCreditsValidation_Grad();
+    transferCreditsValidation_Track();
+}
+
+function transferCreditsValidation_Unit() {
+    if (transferCreditsUnitCount() > isSCU()) {
+        $("#messageBox1-3a").html("<b>WARNING</b>: The number has exceeded the maximum unit allowed.");
+    }
 }
 
 function transferCreditsValidation_Duplicate() {
@@ -318,7 +324,7 @@ function transferCreditsValidation_Duplicate() {
     for (var i in transferCourseName) {
         for (var j in transferCourseName) {
              if ((transferCourseName[i] == transferCourseName[j]) && (i !== j)) {
-                $('#messageBox1-3b').html("<b>WARNING</b>: You have duplicate course name in this section.")
+                $('#messageBox1-3b').html("<b>WARNING</b>: You have duplicate course name in the Transfer Credits section.")
             }
         }
     }
@@ -365,11 +371,34 @@ function transferCreditsValidation_Grad() {
     for (var i in transferCourseName) {
         for (var j in grad) {
              if ((transferCourseName[i] == grad[j].course)) {
-                $('#messageBox1-3d').html("<b>WARNING</b>: You have duplicate course name in your Grad Core section.")
+                $('#messageBox1-3d').html("<b>WARNING</b>: You have duplicate course name in your Grad Core section.");
+                $("#messageBox4-3b").html("<b>WARNING</b>: You have duplicate course name in your Transfer Credit section.");
             }
         }
     }
 }
+
+function transferCreditsValidation_Track() {
+    /* 
+     *  + DISPLAY:  a warning message of violation for 5th section, 
+     *              with regards to duplicate name (appearing in TRANSFER CREDIT).
+     *  + DEPENDENCY:
+     *      [] buildbuildTransferCredits():
+     *      [] buildTrackUnits():
+     */
+     var fail = false;
+     var transfer = buildTransferCredits().mClasses;
+     var track = buildTrackUnits();
+
+     for (var i in track) {
+        for (var j=0; j<transfer.length; j++) {
+            if ((track[i].course !== "") & ((transfer[j].course !== "")) & (track[i].course == transfer[j].course)) {
+                $("#messageBox1-3e").html("WARNING: You are not allowed to put TRANSFER CREDIT course here.");
+            }
+        }
+     }
+}
+
 
 function coenFoundationalValidation() {
      
@@ -401,6 +430,7 @@ function coenCoreValidation() {
     var core = buildCoenCoreReqs();
 }
 
+
 function gradCoreValidation() {
     /* 
      *  + DISPLAY: a warning message of violation for 4th section.
@@ -409,10 +439,13 @@ function gradCoreValidation() {
      */
     $("#messageBox4-3a").html("");
     $("#messageBox4-3b").html("");
+    $("#messageBox4-3c").html("");
+    $("#messageBox4-3d").html("");
     
     gradCoreValidation_Unit();
     gradCoreValidation_Duplicate();
-
+    gradCoreValidation_Transfer();
+    gradCoreValidation_Coen();
 }
 
 function gradCoreValidation_Unit() {
@@ -442,6 +475,44 @@ function gradCoreValidation_Duplicate() {
     }
 }
 
+function gradCoreValidation_Transfer() {
+    var transfer = buildTransferCredits().mClasses;
+    var transferCourseName = [];
+    //exclude NULL values and rename it to none+i
+    for (var i in transfer) {
+        if (transfer[i].course == "") {
+            var string = "none"+String(i);
+            transferCourseName[i] = string;
+        } else {
+            transferCourseName[i] = transfer[i].course;
+        }
+    }
+    
+    var grad = buildGradReqs();
+    //check duplicate names appearing in GradCore  
+    for (var i in transferCourseName) {
+        for (var j in grad) {
+             if ((transferCourseName[i] == grad[j].course)) {
+                $("#messageBox4-3c").html("<b>WARNING</b>: You have duplicate course name in your Transfer Credit section.");
+            }
+        }
+    }
+}
+
+function gradCoreValidation_Coen() {
+    var coen = buildCoenCoreReqs();
+    var grad = buildGradReqs();
+    //check duplicate names appearing in GradCore  
+    for (var i in grad) {
+        for (var index in coen) {
+             if ((grad[i].course == index)) {
+                $("#messageBox4-3d").html("<b>WARNING</b>: You have duplicate course name in your Coen Core section.");
+            }
+        }
+    }
+}
+
+
 function trackValidation() {
     /* 
      *  + DISPLAY: a warning message of violation for 5th section.
@@ -458,9 +529,9 @@ function trackValidation() {
 
     trackValidation_Unit();
     trackValidation_Duplicate();
-    trackValidation_Grad();
-    trackValidation_Core();
     trackValidation_Transfer();
+    trackValidation_Coen();
+    trackValidation_Grad();
 }
 
 function trackValidation_Unit() {
@@ -497,38 +568,28 @@ function trackValidation_Duplicate() {
     }
 }
 
-function trackValidation_Grad() {
+function trackValidation_Transfer() {
     /* 
      *  + DISPLAY:  a warning message of violation for 5th section, 
-     *              with regards to duplicate name (appearing in GRAD CORE).
+     *              with regards to duplicate name (appearing in TRANSFER CREDIT).
      *  + DEPENDENCY:
-     *      [] buildGradReqs():
+     *      [] buildbuildTransferCredits():
      *      [] buildTrackUnits():
      */
+     var fail = false;
+     var transfer = buildTransferCredits().mClasses;
+     var track = buildTrackUnits();
 
-    var grad = buildGradReqs();
-    var track = buildTrackUnits();
-    /* temporary variables set to specify non-input */
-    var gradCourseName = [];
-    for (i in grad) {
-        if (grad[i].course == "") {
-            var string = "none"+String(i);
-            gradCourseName[i] = string;
-        } else {
-            gradCourseName[i] = grad[i].course;
-        }
-    }
-
-    for (var i = 0; i < track.length; i++) {
-        for (var j in gradCourseName) {
-            if (track[i].course == gradCourseName[j]) {
-                $("#messageBox5-3c").html("WARNING: You included the same GRAD CORE course twice.");
+     for (var i in track) {
+        for (var j=0; j<transfer.length; j++) {
+            if ((track[i].course !== "") & ((transfer[j].course !== "")) & (track[i].course == transfer[j].course)) {
+                $("#messageBox5-3c").html("WARNING: You are not allowed to put TRANSFER CREDIT course here.");
             }
         }
-    }
+     }
 }
 
-function trackValidation_Core() {
+function trackValidation_Coen() {
     /* 
      *  + DISPLAY:  a warning message of violation for 5th section, 
      *              with regards to duplicate name (appearing in GRAD CORE).
@@ -554,26 +615,40 @@ function trackValidation_Core() {
     }
 }
 
-function trackValidation_Transfer() {
+function trackValidation_Grad() {
     /* 
      *  + DISPLAY:  a warning message of violation for 5th section, 
-     *              with regards to duplicate name (appearing in TRANSFER CREDIT).
+     *              with regards to duplicate name (appearing in GRAD CORE).
      *  + DEPENDENCY:
-     *      [] buildbuildTransferCredits():
+     *      [] buildGradReqs():
      *      [] buildTrackUnits():
      */
-     var fail = false;
-     var transfer = buildTransferCredits().mClasses;
-     var track = buildTrackUnits();
 
-     for (var i in track) {
-        for (var j=0; j<transfer.length; j++) {
-            if ((track[i].course !== "") & ((transfer[j].course !== "")) & (track[i].course == transfer[j].course)) {
-                $("#messageBox5-3e").html("WARNING: You are not allowed to put TRANSFER CREDIT course here.");
+    var grad = buildGradReqs();
+    var track = buildTrackUnits();
+    /* temporary variables set to specify non-input */
+    var gradCourseName = [];
+    for (i in grad) {
+        if (grad[i].course == "") {
+            var string = "none"+String(i);
+            gradCourseName[i] = string;
+        } else {
+            gradCourseName[i] = grad[i].course;
+        }
+    }
+
+    for (var i = 0; i < track.length; i++) {
+        for (var j in gradCourseName) {
+            if (track[i].course == gradCourseName[j]) {
+                $("#messageBox5-3e").html("WARNING: You included the same GRAD CORE course twice.");
             }
         }
-     }
+    }
 }
+
+
+
+
 
 
 function totalValidation() {
@@ -714,6 +789,7 @@ $(document).ready(function () {
 
     //EVENT HANDLER for selection  change
     $("input[name='req_society']").change(function () {
+        transferCreditAnalysis();
         gradCoreAnalysis();
         trackAnalysis();
         totalUnitAnalysis();
@@ -721,6 +797,7 @@ $(document).ready(function () {
     });
 
     $("input[name='req_business']").change(function () {
+        transferCreditAnalysis();
         gradCoreAnalysis();
         trackAnalysis();
         totalUnitAnalysis();
@@ -728,8 +805,9 @@ $(document).ready(function () {
     });
 
     $("input[name='req_emerg']").change(function () {
-        trackAnalysis();
+        transferCreditAnalysis();
         gradCoreAnalysis();
+        trackAnalysis();
         totalUnitAnalysis();
         omitSpaceKey();
     });
