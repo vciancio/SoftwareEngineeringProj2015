@@ -81,8 +81,7 @@ function processPrintLoadResponse(result){
         var value = obj.gradReqs[requirement];
         setSelectionValueByName(requirement, value);
     }
-
-totalUnitAnalysis();
+    totalUnitAnalysis();
 }
 
 $(document).ready(function () {
