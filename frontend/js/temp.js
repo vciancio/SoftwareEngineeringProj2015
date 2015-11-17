@@ -756,7 +756,7 @@ function trackValidation_Grad() {
     for (var i in gradCourseName) {
         for (var j in trackCourseName) {
             if (trackCourseName[j] == gradCourseName[i]) {
-                $("#messageBox5-3e").html("WARNING: You included the same GRAD CORE course twice.");
+                $("#messageBox5-3e").html("WARNING: You have the same course listed in GRAD CORE.");
             }
         }
     }
