@@ -206,10 +206,12 @@ function completeUnitAnalysis(){
 
 function processSaveResponse(result){
     var json = JSON.parse(result);
-    if(!json.error){
-        alert("Your Form was saved successfully!");
+    if(json.error == "true"){
+        console.log("Couldn't save");
+        alert("Your Form couldn't be saved.\n" + json.message);
     } else {
-        alert("Your Form couldn't be saved. \n" + json.message);
+        console.log("Could Save");
+        alert("Your form was saved successfully!");   
     }
     console.log(response);
 }
@@ -266,10 +268,8 @@ function saveData(){
         dataType: "text",
         success: function (result) {
             switch (result) {
-                case true:
-                    processSaveResponse(result);
-                  break;
               default:
+                  processSaveResponse(result);
                   console.log(result);
           }
       },
@@ -290,7 +290,7 @@ function loadData(){
  */
 function callLoadServer(name, stdid, email, callback){
     var obj = buildDataObj();
-    var url = BASE_URL + "api/form.php?name=" + name + "&userid=" + stdid + "&student_email=" + email; 
+    var url = BASE_URL + "api/form.php?name=" + name + "&userid=" + stdid; 
     $.ajax({
         url: url,
         type: "GET",
@@ -299,7 +299,6 @@ function callLoadServer(name, stdid, email, callback){
             switch (result) {
                 default:
                 callback(result);
-                console.log(result);
             }
         },
         error: function (xhr, ajaxOptions, thrownError) {
@@ -312,7 +311,7 @@ function callLoadServer(name, stdid, email, callback){
 function printData(){
     saveData();
     var obj = buildDataObj();
-    var url = BASE_URL + "/frontend/form.html?name=" + obj.mForm.mName + "&stdid=" + obj.mForm.stdid + "&email=" + obj.mForm.email;
+    var url = BASE_URL + "frontend/form.html?name=" + obj.mForm.mName + "&stdid=" + obj.mForm.stdid;
     var win = window.open(url, '_blank');
     win.focus();
 }
