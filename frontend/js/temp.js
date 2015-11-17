@@ -14,9 +14,7 @@ function addRow_TransferCredits(course, institution, grade, unit) {
         transferCreditsAnalysis();
     }).append(input).appendTo(tableRow);
     var input = $("<input type='text' name='inst-for-tc' id='inst" + c + "' value='" + institution + "' ></p>");
-    $("<div class='table-cell'>").on('input', function() {
-        appendInstitutionName();
-    }).append(input).appendTo(tableRow);
+    $("<div class='table-cell'>").append(input).appendTo(tableRow);
     var input = $("<input type='text' name='grade-for-tc' id='grade" + c + "' value='" + grade + "' />");
     $("<div class='table-cell'>").append(input).appendTo(tableRow);
     var input = $("<input type='text' name='units-for-tc' id='qunit" + c + "' value='" + unit + "' />");
@@ -266,12 +264,12 @@ function isSCU() {
         $('input[name="inst-for-tc"]').val("SCU Accelerated Masters");
         maxtransfer = 20;
     } else if (where == 'transfer')  {
-        $('input[name="inst-for-tc"]').val($('input[name="inst-for-tc-p"]').val());
         maxtransfer = 9;
     }
     return maxtransfer;
 }
 
+/*
 function appendInstitutionName() {
     var where = $('input[name="where"]:checked').val();
     var transfer = buildTransferCredits().mClasses;
@@ -282,6 +280,7 @@ function appendInstitutionName() {
         }
     }
 }
+*/
 
 function transferCreditsValidation() {
     /* 
@@ -414,9 +413,9 @@ function transferCreditsValidation_Track() {
 
     var track = buildTrackUnits();
     var trackCourseName = [];
-    for (var i in transfer) {
+    for (var i in track) {
         if (track[i].course == "") {
-            var string = "none"+String(i);
+            var string = "mone"+String(i);
             trackCourseName[i] = string;
         } else {
             var trackTemp = track[i].course;
@@ -441,7 +440,7 @@ function coenFoundationalValidation() {
      *  + DEPENDENCY:
      *      [] buildFoundationalCourses():
      */
-
+    /*
     $('#messageBox2-1').html('');
     var output = '';
     var foundational = buildFoundationalCourses();
@@ -452,8 +451,9 @@ function coenFoundationalValidation() {
             output += '<p>' + index + ': waived </p>';
         }
     }
-    $('#messageBox2-1').html(output);
+    $('#messageBox2-1').html(output);*/
 }
+
 
 function coenCoreValidation() {
     /* 
@@ -798,7 +798,7 @@ function transferCreditsAnalysis() {
      *      [] buildTransferCredits(): 
      */
     transferCreditsValidation();
-    appendInstitutionName();
+    // appendInstitutionName();
     // $('#messageBox1-1').html("TOTAL UNITS = " + transferCreditsUnitCount());
     $('#messageBox1-2').html("TOTAL UNITS FOR TRANSFER CREDIT = " + transferCreditsUnitCount());
 }
