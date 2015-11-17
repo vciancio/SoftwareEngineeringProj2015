@@ -44,43 +44,24 @@ function processPrintLoadResponse(result){
     var student_type = obj.transferCredits.student_type;
     setStudentType(student_type);
 
-    //Populate the Approved Transfer Credits
-    for(var i=0; i<obj.transferCredits.mClasses.length; i++){
-        var mClass = obj.transferCredits.mClasses[i];
-        addRow_TransferCredits(mClass.course, mClass.institution, mClass.grade, mClass.credits);
-    }
-
+    //Remove the Row Auto-Generated at the beginning by onLoad
     removeRow_TrackUnits();
 
-    //Populate the Track Unit Corses
-    for(var i=0; i < obj.trackUnits.length; i++){
-        var mClass = obj.trackUnits[i];
-        addRow_TrackUnits(mClass.course, mClass.credits);
-    }
+    //Fill in the Track Units
+    fillInTrackUnits(obj);
 
-    //Populate the Foundational Courses
-    var foundationKeys = Object.keys(obj.foundationCourses);
-    for(var i=0; i < foundationKeys.length; i++){
-        var courseNumber = foundationKeys[i];
-        var value = obj.foundationCourses[courseNumber];
-        setSelectionValueByName(courseNumber, value);
-    }
+    //Fill in the Transfer Credits
+    fillInTransferCredits(obj);
 
-    //Populate the COEN Requirements
-    var coenReqsKeys = Object.keys(obj.coenReqs);
-    for(var i=0; i<coenReqsKeys.length; i++){
-        var courseNumber = coenReqsKeys[i];
-        var value = obj.coenReqs[courseNumber];
-        setSelectionValueByName(courseNumber, value);
-    }
+    //Fill in the COEN Requirements
+    fillInCoenReq(obj);
 
-    //Populate the Graduate Core Requirements
-    var gradCoreKeys = Object.keys(obj.gradReqs);
-    for(var i=0; i<gradCoreKeys.length; i++){
-        var requirement = gradCoreKeys[i];
-        var value = obj.gradReqs[requirement];
-        setSelectionValueByName(requirement, value);
-    }
+    //Fill in the Foundational Core
+    fillInFoundational(obj);
+
+    //Fill in the Grad Core
+    fillInGradCore(obj);
+
     totalUnitAnalysis();
 }
 
