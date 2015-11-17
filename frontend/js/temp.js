@@ -190,9 +190,21 @@ function trackUnitCount_Coen() {
      */
     var total = 0;
     var track = buildTrackUnits();
-    for (i = 0; i < track.length; i++) {
-        string = track[i].course;
-        if ((string.substr(0,4) == "coen") && Number(string.substr(4,3)) > 300) {
+    var trackCourseName = [];
+    for (var i in track) {
+        if (track[i].course == "") {
+            var string = "none"+String(i);
+            trackCourseName[i] = string;
+        } else {
+            var trackTemp = track[i].course;
+            trackTemp = lowerAndSpaceless(trackTemp);
+            trackCourseName[i] = trackTemp;
+        }
+    }
+
+    for (i in trackCourseName) {
+        var trackTemp = trackCourseName[i];
+        if ((trackTemp.substr(0,4) == "coen") && Number(trackTemp.substr(4,3)) > 300) {
             total += Number(track[i].credits);
         }
     }
