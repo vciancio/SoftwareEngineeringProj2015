@@ -2,7 +2,7 @@ var c = 0;
 var ct = 0;
 var maxtransfer = 9;
 var unit
-/*var classes = [ {'course': 'amth308', 'unit': 2},    {'course': 'amth351', 'unit': 2}, 
+var classes = [ {'course': 'amth308', 'unit': 2},    {'course': 'amth351', 'unit': 2}, 
                 {'course': 'amth367', 'unit': 4},    {'course': 'amth387', 'unit': 4},
                 {'course': 'bioe256', 'unit': 2},    {'course': 'ceng208', 'unit': 3},
                 {'course': 'ceng219', 'unit': 4},    {'course': 'coen287', 'unit': 2},
@@ -14,27 +14,31 @@ var unit
                 {'course': 'engr338', 'unit': 2},    {'course': 'mech371', 'unit': 4},
                 {'course': 'mech372', 'unit': 4},    {'course': 'mech234', 'unit': 2},
                 {'course': 'mech268', 'unit': 2},    {'course': 'mech295', 'unit': 2}
-];*/
-var classesTrack = [];
+];
 
 function addRow_TransferCredits(course, institution, grade, unit) {
     var table = document.getElementById("transferTable");
-    var tableRow = $("<div class='table-row container-fluid' id='row-transfer-credit" + (c + 1) + "'>");
-    var input = $("<input type='text' class='lowercase' name='course-for-tc' id='course" + (c + 1) + "' value='" + course + "' placeholder='coen12'/>");
+    c++;
+    var tableRow = $("<div class='table-row container-fluid' id='row-transfer-credit" + c + "'>");
+    var input = $("<input type='text' class='lowercase no-white-space' name='course-for-tc' id='course" + c + "' value='" + course + "' placeholder='coen12'/>");
     input = input.on("keydown", function (e) {
         return e.which !== 32;
     }); // restriction on typing space 
-    $("<div class='table-cell'>").append(input).appendTo(tableRow);
-    var input = $("<input type='text' name='inst-for-tc' id='inst" + (c + 1) + "' value='" + institution + "' />");
-    $("<div class='table-cell'>").append(input).appendTo(tableRow);
-    var input = $("<input type='text' name='grade-for-tc' id='grade" + (c + 1) + "' value='" + grade + "' />");
-    $("<div class='table-cell'>").append(input).appendTo(tableRow);
-    var input = $("<input type='text' name='units-for-tc' id='qunit" + (c + 1) + "' value='" + unit + "' />");
-    $("<div class='table-cell'>").on('input', function () {
+    $("<div class='table-cell'>").on('input', function() {
         transferCreditsAnalysis();
     }).append(input).appendTo(tableRow);
+    var input = $("<input type='text' name='inst-for-tc' id='inst" + c + "' value='" + institution + "' ></p>");
+    $("<div class='table-cell'>").on('input', function() {
+        appendInstitutionName();
+    }).append(input).appendTo(tableRow);
+    var input = $("<input type='text' name='grade-for-tc' id='grade" + c + "' value='" + grade + "' />");
+    $("<div class='table-cell'>").append(input).appendTo(tableRow);
+    var input = $("<input type='text' name='units-for-tc' id='qunit" + c + "' value='" + unit + "' />");
+    $("<div class='table-cell'>").on('input', function () {
+        transferCreditsAnalysis();
+        totalUnitAnalysis();
+    }).append(input).appendTo(tableRow);
     tableRow.appendTo(table);
-    c++;
 }
 
 function removeRow_TransferCredits() {
@@ -42,14 +46,15 @@ function removeRow_TransferCredits() {
         $("#row-transfer-credit" + c).remove();
         c--;
         transferCreditsAnalysis();
+        totalUnitAnalysis();
     }
 }
 
-
 function addRow_TrackUnits(course, units) {
     var table = document.getElementById("transferTable2");
-    var tableRow = $("<div class='table-row container-fluid' id='row-for-track" + (ct + 1) + "''>");
-    var input = $("<input type='text' name='course-for-track' class='lowercase' id='course" + (ct + 1) + "' value='" + course + "' />");
+    ct++;
+    var tableRow = $("<div class='table-row container-fluid' id='row-for-track" + ct + "''>");
+    var input = $("<input type='text' name='course-for-track' class='lowercase no-white-space' id='course" + ct + "' value='" + course + "' />");
     input = input.on("keydown", function (e) {
         return e.which !== 32;
     });
@@ -57,26 +62,36 @@ function addRow_TrackUnits(course, units) {
         trackAnalysis();
         totalUnitAnalysis();
     }).append(input).appendTo(tableRow);
-    var input = $("<input type='text' name='units-for-track' id='units" + (ct + 1) + "' value=" + units + " />");
+    var input = $("<input type='text' name='units-for-track' id='units" + ct + "' value=" + units + " />");
     $("<div class='table-cell'>").on('input', function () {
         trackAnalysis();
         totalUnitAnalysis();
     }).append(input).appendTo(tableRow);
     tableRow.appendTo(table);
-    trackAnalysis()
-    ct++;
+    trackAnalysis();
 }
-
 
 function removeRow_TrackUnits() {
     if (ct > 0) {
         $("#row-for-track" + ct).remove();
         ct--;
         trackAnalysis();
+        totalUnitAnalysis();
     }
 }
 
+function omitSpaceKey() {
+    /*
+     *  + REMOVES:  Any white spaces that appears on the targeted input texts
+     *              as soon as user pasted a string with white space included.
+     *  + DEPENDABILITY:
+     *      [] .no-white-space: an empty CSS class name in index.css
+     */
 
+    $('.no-white-space').on('input', function() {
+        $(this).val($(this).val().replace(/ /g,""));
+    });
+}
 
 
 /* -------------------------------------------------------------------------------- *
@@ -141,9 +156,9 @@ function coenCoreUnitCount() {
      */
     var total = 0;
     var core = buildCoenCoreReqs();
-    total += core.coen210 > 0? 0 : 4;
-    total += core.coen279 > 0? 0 : 4;
-    total += core.coen283 > 0? 0 : 4;
+    total += core.coen210 == 0? 4 : 0;
+    total += core.coen279 == 0? 4 : 0;
+    total += core.coen283 == 0? 4 : 0;
     return total;
 }
 
@@ -155,13 +170,8 @@ function gradCoreUnitCount() {
      */
     var total = 0;
     var core = buildGradReqs();
-    for (var index in classes){
-        if (classes[index].course == core.req_emerg)
-            total += classes[index].unit;
-        if (classes[index].course == core.req_business)
-            total += classes[index].unit;
-        if (classes[index].course == core.req_society)
-            total += classes[index].unit;
+    for (var i in core){
+        total += Number(core[i].unit);
     }
     return total;
 }
@@ -176,6 +186,23 @@ function trackUnitCount() {
     var track = buildTrackUnits();
     for (i = 0; i < track.length; i++) {
         total += Number(track[i].credits);
+    }
+    return total;
+}
+
+function trackUnitCount_Coen() {
+    /*
+     *  + RETURNS:  number of COEN units for listed item(s), listed in 5th section.
+     *  + DEPENDENCY:
+     *      [] buildTrackUnits():
+     */
+    var total = 0;
+    var track = buildTrackUnits();
+    for (i = 0; i < track.length; i++) {
+        string = track[i].course;
+        if ((string.substr(0,4) == "coen") && Number(string.substr(4,3)) > 300) {
+            total += Number(track[i].credits);
+        }
     }
     return total;
 }
@@ -227,16 +254,29 @@ function isSCU() {
      * verify if its SCU or Santa Clara University
      * then maximum unit capacity increases to 16
      * else maximum unit capacity stays to 9. */
-
     var where = $('input[name="where"]:checked').val();
     if (where == 'undergraduate') {
+        $('input[name="inst-for-tc"]').val("SCU Undergraduate");
         maxtransfer = 16;
     } else if (where == 'accelerated') {
+        $('input[name="inst-for-tc"]').val("SCU Accelerated Masters");
         maxtransfer = 20;
     } else if (where == 'transfer')  {
+        $('input[name="inst-for-tc"]').val($('input[name="inst-for-tc-p"]').val());
         maxtransfer = 9;
     }
     return maxtransfer;
+}
+
+function appendInstitutionName() {
+    var where = $('input[name="where"]:checked').val();
+    var transfer = buildTransferCredits().mClasses;
+    
+    if (where == 'transfer') {
+        for (i in transfer) {
+            transfer[i].institution = $('input[name="inst-for-tc-p"]').val();
+        }
+    }
 }
 
 function transferCreditsValidation() {
@@ -247,31 +287,109 @@ function transferCreditsValidation() {
      *      [] transferCreditsUnitCount():
      */
 
-    $("#messageBox1-3").html("");
-    var transfer = buildTransferCredits().mClasses;
+    $("#messageBox1-3a").html("");
+    $("#messageBox1-3b").html("");
+    $("#messageBox1-3c").html("");
+    $("#messageBox1-3d").html("");
+
+    // unit checking
     if (transferCreditsUnitCount() > isSCU()) {
-        $("#messageBox1-3").html("WARNING: The number has exceeded the maximum unit allowed.");
+        $("#messageBox1-3a").html("<b>WARNING</b>: The number has exceeded the maximum unit allowed.");
     }
-    for (i=0; i<transfer.length; i++) {
-        if ($('input[name="where"]:checked').val() == "transfer") {
-            $('input[name="inst-for-tc"]').val("");
-        } if ($('input[name="where"]:checked').val() == "undergraduate") {
-            $('input[name="inst-for-tc"]').val("SCU Undergraduate");
-        } if ($('input[name="where"]:checked').val() == "accelerated") {
-            $('input[name="inst-for-tc"]').val("SCU Accelerated Master");
+
+    transferCreditsValidation_Duplicate();
+    transferCreditsValidation_Coen();
+    transferCreditsValidation_Grad();
+}
+
+function transferCreditsValidation_Duplicate() {
+    var transfer = buildTransferCredits().mClasses;
+    var transferCourseName = [];
+    //exclude NULL values and rename it to none+i
+    for (var i in transfer) {
+        if (transfer[i].course == "") {
+            var string = "none"+String(i);
+            transferCourseName[i] = string;
+        } else {
+            transferCourseName[i] = transfer[i].course;
+        }
+    }
+    //check duplicate names in courses
+    for (var i in transferCourseName) {
+        for (var j in transferCourseName) {
+             if ((transferCourseName[i] == transferCourseName[j]) && (i !== j)) {
+                $('#messageBox1-3b').html("<b>WARNING</b>: You have duplicate course name in this section.")
+            }
         }
     }
 }
 
-// function coenFoundationalValidation() {
+function transferCreditsValidation_Coen() {
+    var transfer = buildTransferCredits().mClasses;
+    var transferCourseName = [];
+    //exclude NULL values and rename it to none+i
+    for (var i in transfer) {
+        if (transfer[i].course == "") {
+            var string = "none"+String(i);
+            transferCourseName[i] = string;
+        } else {
+            transferCourseName[i] = transfer[i].course;
+        }
+    }
+
+    var coen = buildCoenCoreReqs();
+    //check duplicate names appearing in GradCore  
+    for (var i in transferCourseName) {
+        for (var index in coen){
+            if ((transferCourseName[i] == index)) {
+                $('#messageBox1-3c').html("<b>WARNING</b>: You have duplicate course name in your Coen Core section.")
+            }
+        }
+    }
+}
+
+function transferCreditsValidation_Grad() {
+    var transfer = buildTransferCredits().mClasses;
+    var transferCourseName = [];
+    //exclude NULL values and rename it to none+i
+    for (var i in transfer) {
+        if (transfer[i].course == "") {
+            var string = "none"+String(i);
+            transferCourseName[i] = string;
+        } else {
+            transferCourseName[i] = transfer[i].course;
+        }
+    }
+    var grad = buildGradReqs();
+    //check duplicate names appearing in GradCore  
+    for (var i in transferCourseName) {
+        for (var j in grad) {
+             if ((transferCourseName[i] == grad[j].course)) {
+                $('#messageBox1-3d').html("<b>WARNING</b>: You have duplicate course name in your Grad Core section.")
+            }
+        }
+    }
+}
+
+function coenFoundationalValidation() {
      
-//      *  + DISPLAY: a warning message of violation for 2nd section.
-//      *  + DEPENDENCY:
-//      *      [] buildFoundationalCourses():
-     
-//     var fail = false;
-//     var foundational = buildFoundationalCourses();
-// }
+    /*  + DISPLAY: a warning message of violation for 2nd section.
+     *  + DEPENDENCY:
+     *      [] buildFoundationalCourses():
+     */
+
+    $('#messageBox2-1').html('');
+    var output = '';
+    var foundational = buildFoundationalCourses();
+    for (index in foundational) {
+        if (foundational[index] == 0) {
+            output += '<p>' + index + ': required </p>'; 
+        } else {
+            output += '<p>' + index + ': waived </p>';
+        }
+    }
+    $('#messageBox2-1').html(output);
+}
 
 function coenCoreValidation() {
     /* 
@@ -283,7 +401,6 @@ function coenCoreValidation() {
     var core = buildCoenCoreReqs();
 }
 
-
 function gradCoreValidation() {
     /* 
      *  + DISPLAY: a warning message of violation for 4th section.
@@ -292,24 +409,36 @@ function gradCoreValidation() {
      */
     $("#messageBox4-3a").html("");
     $("#messageBox4-3b").html("");
+    
+    gradCoreValidation_Unit();
+    gradCoreValidation_Duplicate();
+
+}
+
+function gradCoreValidation_Unit() {
     if (gradCoreUnitCount() < 6) {
         $("#messageBox4-3a").html("WARNING: Your minimum unit is not met.");
     }
-    var fail = false;
+}
+
+function gradCoreValidation_Duplicate() {
     var grad = buildGradReqs();
+    var gradCourseName = [];
     /* temporary variables set to specify non-input */
-    grad_em = grad.req_emerg !== "" ? grad.req_emerg:"none1";
-    grad_bs = grad.req_business !== "" ? grad.req_business:"none2";
-    grad_sc = grad.req_society !== "" ? grad.req_society:"none3";
-    if (grad_em == grad_bs) {
-        fail = true;
-    } else if (grad_em == grad_sc) {
-        fail = true;
-    } else if (grad_bs == grad_sc) {
-        fail = true;
+    for (i in grad) {
+        if (grad[i].course == "") {
+            var string = "none"+String(i);
+            gradCourseName[i] = string;
+        } else {
+            gradCourseName[i] = grad[i].course;
+        }
     }
-    if (fail) {
-        $("#messageBox4-3b").html("WARNING: You included the same course twice");
+
+    for (i in gradCourseName) {
+        for (j in gradCourseName) {
+            if ((gradCourseName[i] == gradCourseName[j]) & (i!==j))
+                $("#messageBox4-3b").html("WARNING: You included the same course twice");
+        }
     }
 }
 
@@ -324,10 +453,14 @@ function trackValidation() {
     $("#messageBox5-3a").html("");
     $("#messageBox5-3b").html("");
     $("#messageBox5-3c").html("");
+    $("#messageBox5-3d").html("");
+    $("#messageBox5-3e").html("");
 
     trackValidation_Unit();
+    trackValidation_Duplicate();
     trackValidation_Grad();
     trackValidation_Core();
+    trackValidation_Transfer();
 }
 
 function trackValidation_Unit() {
@@ -337,11 +470,30 @@ function trackValidation_Unit() {
      *      [] trackUnitCount():
      */
     
-    if (trackUnitCount() < 8) {
-        $("#messageBox5-3a").html("WARNING: Your minimum unit is not met.");
+    if (trackUnitCount_Coen() < 8) {
+        $("#messageBox5-3a").html("WARNING: Your COEN minimum unit is not met.");
     }
-    if (trackUnitCount() > 45) {
-        $("#messageBox5-3a").html("WARNING: The number has exceeded the maximum unit allowed.")
+}
+
+function trackValidation_Duplicate() {
+    var track = buildTrackUnits();
+    var trackCourseName = [];
+    //exclude NULL values and rename it to none+i
+    for (var i in track) {
+        if (track[i].course == "") {
+            var string = "none"+String(i);
+            trackCourseName[i] = string;
+        } else {
+            trackCourseName[i] = track[i].course;
+        }
+    }
+    //check duplicate names in courses
+    for (var i in trackCourseName) {
+        for (var j in trackCourseName) {
+             if ((trackCourseName[i] == trackCourseName[j]) && (i !== j)) {
+                $('#messageBox5-3b').html("<b>WARNING</b>: You have duplicate course name in your Track section.")
+            }
+        }
     }
 }
 
@@ -353,23 +505,26 @@ function trackValidation_Grad() {
      *      [] buildGradReqs():
      *      [] buildTrackUnits():
      */
-    var fail = false;
+
     var grad = buildGradReqs();
     var track = buildTrackUnits();
     /* temporary variables set to specify non-input */
-    grad_em = grad.req_emerg !== "" ? grad.req_emerg:"none1";
-    grad_bs = grad.req_business !== "" ? grad.req_business:"none2";
-    grad_sc = grad.req_society !== "" ? grad.req_society:"none3";
-
-    for (var i = 0; i < track.length; i++) {
-        if ((track[i].course == grad_em) ||
-            (track[i].course == grad_bs) ||
-            (track[i].course == grad_sc)) {
-            fail = true;
+    var gradCourseName = [];
+    for (i in grad) {
+        if (grad[i].course == "") {
+            var string = "none"+String(i);
+            gradCourseName[i] = string;
+        } else {
+            gradCourseName[i] = grad[i].course;
         }
     }
-    if (fail) {
-        $("#messageBox5-3b").html("WARNING: You included the same GRAD CORE course twice");
+
+    for (var i = 0; i < track.length; i++) {
+        for (var j in gradCourseName) {
+            if (track[i].course == gradCourseName[j]) {
+                $("#messageBox5-3c").html("WARNING: You included the same GRAD CORE course twice.");
+            }
+        }
     }
 }
 
@@ -387,19 +542,46 @@ function trackValidation_Core() {
     var track = buildTrackUnits();
     var coreClasses = Object.keys(core);
 
-    
     for (var j = 0; j < coreClasses.length; j++) {
         for (var i = 0; i < track.length; i++) {
-            if (track[i].course == coreClasses[j]){
+            if (track[i].course == coreClasses[j]) {
                 fail = true;
             }
         }
     }
     if (fail) {
-        $("#messageBox5-3c").html("WARNING: You are not allowed to put COEN CORE course here");
+        $("#messageBox5-3d").html("WARNING: You are not allowed to put COEN CORE course here.");
     }
 }
 
+function trackValidation_Transfer() {
+    /* 
+     *  + DISPLAY:  a warning message of violation for 5th section, 
+     *              with regards to duplicate name (appearing in TRANSFER CREDIT).
+     *  + DEPENDENCY:
+     *      [] buildbuildTransferCredits():
+     *      [] buildTrackUnits():
+     */
+     var fail = false;
+     var transfer = buildTransferCredits().mClasses;
+     var track = buildTrackUnits();
+
+     for (var i in track) {
+        for (var j=0; j<transfer.length; j++) {
+            if ((track[i].course !== "") & ((transfer[j].course !== "")) & (track[i].course == transfer[j].course)) {
+                $("#messageBox5-3e").html("WARNING: You are not allowed to put TRANSFER CREDIT course here.");
+            }
+        }
+     }
+}
+
+
+function totalValidation() {
+    $("#messageBox6-3").html("");
+    if (totalUnitCount() < 45) {
+        $('#messageBox6-3').html("<b>WARNING</b>: You must have at least total of 45 units");
+    }
+}
 
 /* -------------------------------------------------------------------------------- *
  *  FUNCTIONS:  OVERVIEW OF 'ANALYSIS'                                               *
@@ -430,19 +612,21 @@ function transferCreditsAnalysis() {
      *      [] buildTransferCredits(): 
      */
     transferCreditsValidation();
+    appendInstitutionName();
+    // $('#messageBox1-1').html("TOTAL UNITS = " + transferCreditsUnitCount());
     $('#messageBox1-2').html("TOTAL UNITS FOR TRANSFER CREDIT = " + transferCreditsUnitCount());
 }
 
-// function coenFoundationalAnalysis() {
+function coenFoundationalAnalysis() {
     /*
      *  + DISPLAY: number of units summed for checked item(s), listed in 2nd section.
      *  + DEPENDENCY: 
      *      [] coenFoundationalUnitCount()
      */
 
-    // coenFoundationalValidation();
+    coenFoundationalValidation();
     // $('#messageBox2-2').html("TOTAL UNITS FOR COEN FOUNDATOINAL = " + coenFoundationalUnitCount());
-// }
+}
 
 function coenCoreAnalysis() {
     /*
@@ -450,7 +634,7 @@ function coenCoreAnalysis() {
      *  + DEPENDENCY:
      *      []  coenCoreUnitCount():
      */
-
+    // $('#messageBox3-1').html("TOTAL UNITS = " + coenCoreUnitCount());
     $('#messageBox3-2').html("TOTAL UNITS FOR COEN CORE = " + coenCoreUnitCount());
 }
 
@@ -461,6 +645,7 @@ function gradCoreAnalysis() {
      *      []  gradCoreUnitCount():
      */
     gradCoreValidation();
+    // $('#messageBox4-1').html("TOTAL UNITS = " + gradCoreUnitCount());
     $('#messageBox4-2').html("TOTAL UNITS FOR GRAD CORE = " + gradCoreUnitCount());
 }
 
@@ -472,7 +657,9 @@ function trackAnalysis() {
      *      []  trackValidation():
      */
     trackValidation();
-    $('#messageBox5-2').html("TOTAL UNITS FOR TRACK = " + trackUnitCount());
+    // $('#messageBox5-1').html("TOTAL UNITS = " + trackUnitCount());
+    $('#messageBox5-2a').html("TOTAL UNITS FOR COEN IN TRACK = " + trackUnitCount_Coen());
+    $('#messageBox5-2b').html("TOTAL UNITS FOR TRACK = " + trackUnitCount());
 }
 
 function totalUnitAnalysis() {
@@ -481,16 +668,27 @@ function totalUnitAnalysis() {
      *  + DEPENDENCY:
      *      []  totalUnitCount():
      */
-    $('#messageBox6-2').html("TOTAL OF TOTAL UNITS = " + totalUnitCount());
+    totalValidation();
+    $('#messageBox6-1').html("TOTAL OF TOTAL UNITS = " + totalUnitCount());
 }
 
 
 
 /*JQUERY FUNCTIONS*/
 $(document).ready(function () {
+    // White Space Removal Initialization
+    omitSpaceKey();
+
     //ADD A FIRST ROW for 1st and 5th section.
     addRow_TransferCredits("", "", "", 0.0);
     addRow_TrackUnits("", 0.0);
+    omitSpaceKey();
+
+    // Tally Initialization
+    transferCreditsAnalysis();
+    coenFoundationalAnalysis();
+    coenCoreAnalysis();
+    totalUnitAnalysis();
 
     //EVENT HANDLER for text change
     $('input[type="text"]').on('input', function () {
@@ -498,32 +696,54 @@ $(document).ready(function () {
         gradCoreAnalysis(); /* section 4 */
         trackAnalysis(); /* section 5 */
         totalUnitAnalysis(); /* section 6 */
+        omitSpaceKey();
     });
 
-    //EVENT HANDLER for checkbox change
-    $('input[type="checkbox"]').change(function () {
-        // coenFoundationalAnalysis(); /* section 2 */
-        coenCoreAnalysis(); /* section 3 */
-        totalUnitAnalysis(); /* sectoin 6 */
+    $('select').change(function() {
+        coenFoundationalAnalysis();
+        coenCoreAnalysis();
+        totalUnitAnalysis();
+        gradCoreAnalysis();
+        trackAnalysis();
+    });
+
+    $('input[type="radio"]').change(function() {
+        transferCreditsAnalysis();
+        totalUnitAnalysis(); /* section 6 */
     });
 
     //EVENT HANDLER for selection  change
-    $("select[name='req_society']").change(function () {
+    $("input[name='req_society']").change(function () {
         gradCoreAnalysis();
         trackAnalysis();
         totalUnitAnalysis();
+        omitSpaceKey();
     });
 
-    $("select[name='req_business']").change(function () {
+    $("input[name='req_business']").change(function () {
         gradCoreAnalysis();
         trackAnalysis();
         totalUnitAnalysis();
+        omtiSpaceKey();
     });
 
-    $("select[name='req_emerg']").change(function () {
+    $("input[name='req_emerg']").change(function () {
         trackAnalysis();
         gradCoreAnalysis();
         totalUnitAnalysis();
+        omitSpaceKey();
+    });
+
+
+    //EVENT HANDLER for space-key restriction
+    $('input[name="req_emerg"]').on("keydown", function (e) {
+        return e.which !== 32;
+    });
+    $('input[name="req_business"]').on("keydown", function (e) {
+        return e.which !== 32;
+    });
+    $('input[name="req_society"]').on("keydown", function (e) {
+        return e.which !== 32;
     });
 
     /* 
@@ -532,12 +752,16 @@ $(document).ready(function () {
 
     $('#add_row').click(function () {
         addRow_TransferCredits("", "", "", 0.0);
+        omitSpaceKey();
         transferCreditsAnalysis();
+        totalUnitAnalysis();
     });
 
     $('#remove_row').click(function () {
         removeRow_TransferCredits();
+        omitSpaceKey();
         transferCreditsAnalysis();
+        totalUnitAnalysis();
     });
 
     /* 
@@ -546,14 +770,18 @@ $(document).ready(function () {
 
     // "select all wavied" button 
     $('#select_all2').click(function () {
-        $(".reqsel").val("required");
+        $(".reqsel").val("0");
+        coenFoundationalAnalysis();
         coenCoreAnalysis();
+        totalUnitAnalysis();
     });
 
     // "deselect all" button
     $('#deselect_all2').click(function () {
-        $(".reqsel").val("waived");
+        $(".reqsel").val("1");
+        coenFoundationalAnalysis();
         coenCoreAnalysis();
+        totalUnitAnalysis();
     });
 
 
@@ -565,17 +793,20 @@ $(document).ready(function () {
     $('#select_all3').click(function () { // on click select all button
         $(".reqsel2").val("0");
         coenCoreAnalysis();
+        totalUnitAnalysis();
     });
 
     // "deselect all" button
     $('#deselect_all3').click(function () { // on click select all button
         $(".reqsel2").val("1");
         coenCoreAnalysis();
+        totalUnitAnalysis();
     });
 
     $('#transfer_all3').click(function () {
         $(".reqsel2").val("2");
         coenCoreAnalysis();
+        totalUnitAnalysis();
     })
 
     /*
@@ -594,12 +825,16 @@ $(document).ready(function () {
      */
     $('#add_row5').click(function () {
         addRow_TrackUnits("", 0.0);
+        omitSpaceKey();
         trackAnalysis();
+        totalUnitAnalysis();
     });
 
     $('#remove_row5').click(function () {
         removeRow_TrackUnits();
+        omitSpaceKey();
         trackAnalysis();
+        totalUnitAnalysis();
     });
 
 }); /* END OF JQUERY FUNCTION */
