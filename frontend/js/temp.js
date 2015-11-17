@@ -1,20 +1,6 @@
 var c = 0;
 var ct = 0;
 var maxtransfer = 9;
-var unit
-var classes = [ {'course': 'amth308', 'unit': 2},    {'course': 'amth351', 'unit': 2}, 
-                {'course': 'amth367', 'unit': 4},    {'course': 'amth387', 'unit': 4},
-                {'course': 'bioe256', 'unit': 2},    {'course': 'ceng208', 'unit': 3},
-                {'course': 'ceng219', 'unit': 4},    {'course': 'coen287', 'unit': 2},
-                {'course': 'coen331', 'unit': 4},    {'course': 'coen389', 'unit': 2},
-                {'course': 'elen280', 'unit': 2},    {'course': 'engr260', 'unit': 2},
-                {'course': 'engr262', 'unit': 2},    {'course': 'engr273', 'unit': 2},    
-                {'course': 'engr302', 'unit': 2},    {'course': 'engr304', 'unit': 2},
-                {'course': 'engr336', 'unit': 2},    {'course': 'engr337', 'unit': 2}, 
-                {'course': 'engr338', 'unit': 2},    {'course': 'mech371', 'unit': 4},
-                {'course': 'mech372', 'unit': 4},    {'course': 'mech234', 'unit': 2},
-                {'course': 'mech268', 'unit': 2},    {'course': 'mech295', 'unit': 2}
-];
 
 function addRow_TransferCredits(course, institution, grade, unit) {
     var table = document.getElementById("transferTable");
@@ -576,7 +562,7 @@ function trackValidation_Transfer() {
      *      [] buildbuildTransferCredits():
      *      [] buildTrackUnits():
      */
-     var fail = false;
+
      var transfer = buildTransferCredits().mClasses;
      var track = buildTrackUnits();
 
@@ -645,9 +631,6 @@ function trackValidation_Grad() {
         }
     }
 }
-
-
-
 
 
 
