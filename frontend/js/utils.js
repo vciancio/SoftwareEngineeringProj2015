@@ -191,6 +191,10 @@ function fillInGradCore(obj){
     }
 }
 
+function completeUnitAnalysis(){
+
+}
+
 function processSaveResponse(result){
     var json = JSON.parse(result);
     if(!json.error){
@@ -234,7 +238,7 @@ function processLoadResponse(result){
     //Fill in the Grad Core
     fillInGradCore(obj);
 
-    totalUnitAnalysis();
+    completeUnitAnalysis();
 }
 
 /*

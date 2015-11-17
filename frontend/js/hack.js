@@ -62,7 +62,7 @@ function processPrintLoadResponse(result){
     //Fill in the Grad Core
     fillInGradCore(obj);
 
-    totalUnitAnalysis();
+    completeUnitAnalysis();
 }
 
 $(document).ready(function () {
