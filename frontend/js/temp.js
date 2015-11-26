@@ -276,7 +276,7 @@ function isSCU() {
 
 function transferCreditsValidation() {
     /* 
-     *  + DISPLAY: warning message(s) for 1st section, if triggered.
+     *  + DISPLAY: group of all warning message(s) for 1st section.
      *  + DEPENDENCY:
      *      [] transferCreditsValidation_Unit()
      *      [] transferCreditsValidation_Duplicate()
@@ -299,13 +299,26 @@ function transferCreditsValidation() {
 }
 
 function transferCreditsValidation_Unit() {
+    /*
+     *  + DISPLAYS:  a warning message if unit for "transfer credit" section 
+     *               has exceeded its limit.
+     *  + DEPENDENCY:
+     *      [] transferCreditsUnitCount()
+     *      [] isSCU()
+     */
     if (transferCreditsUnitCount() > isSCU()) {
         $("#messageBox1-3a").html("<b>WARNING</b>: The number has exceeded the maximum unit allowed.");
     }
 }
 
 function transferCreditsValidation_Duplicate() {
-
+    /*
+     *  + DISPLAYS:  a warning message if duplicate course names are found
+     *               within the "transfer credit" section.
+     *               .
+     *  + DEPENDENCY:
+     *      [] buildTransferCredits()
+     */
     var transfer = buildTransferCredits().mClasses;
     var transferCourseName = [];
     //exclude NULL values and rename it to none+i
@@ -330,7 +343,15 @@ function transferCreditsValidation_Duplicate() {
 }
 
 function transferCreditsValidation_Coen() {
-    
+    /*
+     *  + DISPLAYS:  a warning message if duplicate course names are found
+     *               between the "transfer credit" and "coen core" section.
+     *               .
+     *  + DEPENDENCY:
+     *      [] buildTransferCredits()
+     *      [] buildCoenCoreReqs()
+     *      [] lowerAndSpaceless()
+     */
     var transfer = buildTransferCredits().mClasses;
     var transferCourseName = [];
     //exclude NULL values and rename it to none+i
@@ -357,7 +378,15 @@ function transferCreditsValidation_Coen() {
 }
 
 function transferCreditsValidation_Grad() {
-    
+    /*
+     *  + DISPLAYS:  a warning message if duplicate course names are found
+     *               between the "transfer credit" and "grad core" section.
+     *               .
+     *  + DEPENDENCY:
+     *      [] buildTransferCredits()
+     *      [] buildGradReqs()
+     *      [] lowerAndSpaceless()
+     */
     var transfer = buildTransferCredits().mClasses;
     var transferCourseName = [];
     //exclude NULL values and rename it to none+i
@@ -383,12 +412,14 @@ function transferCreditsValidation_Grad() {
 }
 
 function transferCreditsValidation_Track() {
-    /* 
-     *  + DISPLAY:  a warning message of violation for 5th section, 
-     *              with regards to duplicate name (appearing in TRANSFER CREDIT).
+    /*
+     *  + DISPLAYS:  a warning message if duplicate course names are found
+     *               between the "transfer credit" and "track" section.
+     *               .
      *  + DEPENDENCY:
-     *      [] buildbuildTransferCredits():
-     *      [] buildTrackUnits():
+     *      [] buildTransferCredits()
+     *      [] buildTrackUnits()
+     *      [] lowerAndSpaceless()
      */
 
     var transfer = buildTransferCredits().mClasses;
@@ -461,10 +492,14 @@ function coenCoreValidation() {
 
 function gradCoreValidation() {
     /* 
-     *  + DISPLAY: a warning message of violation for 4th section.
+     *  + DISPLAY: group of all warning message(s) for "grad core" section.
      *  + DEPENDENCY:
-     *      [] buildGradReqs();
+     *      [] gradCoreValidation_Unit()
+     *      [] gradCoreValidation_Duplicate()
+     *      [] gradCoreValidation_Transfer()
+     *      [] gradCoreValidation_Coen()
      */
+
     $("#messageBox4-3a").html("");
     $("#messageBox4-3b").html("");
     $("#messageBox4-3c").html("");
@@ -477,12 +512,25 @@ function gradCoreValidation() {
 }
 
 function gradCoreValidation_Unit() {
+    /*
+     *  + DISPLAYS:  a warning message if unit for "grad core" section 
+     *               has exceeded its maximum.
+     *  + DEPENDENCY:
+     *      [] gradCoreUnitCount()
+     */
     if (gradCoreUnitCount() < 6) {
         $("#messageBox4-3a").html("WARNING: Your minimum unit is not met.");
     }
 }
 
 function gradCoreValidation_Duplicate() {
+    /*
+     *  + DISPLAYS:  a warning message if duplicate course names are found
+     *               within the "grad core" section.
+     *               .
+     *  + DEPENDENCY:
+     *      [] buildGradReqs()
+     */
     var grad = buildGradReqs();
     var gradCourseName = [];
     /* temporary variables set to specify non-input */
@@ -506,6 +554,28 @@ function gradCoreValidation_Duplicate() {
 }
 
 function gradCoreValidation_Transfer() {
+    /*
+     *  + DISPLAYS:  a warning message if duplicate course names are found
+     *               between the "grad core" and "transfer credit" section.
+     *               .
+     *  + DEPENDENCY:
+     *      [] buildGradReqs()
+     *      [] buildTransferCredits()
+     *      [] lowerAndSpaceless()
+     */
+    var grad = buildGradReqs();
+    var gradCourseName = [];
+    for (var i in grad) {
+        if (grad[i].course == "") {
+            var string = "mone"+String(i);
+            gradCourseName[i] = string;
+        } else {
+            var gradTemp = grad[i].course;
+            gradTemp = lowerAndSpaceless(gradTemp);
+            gradCourseName[i] = gradTemp;
+        }
+    }
+
     var transfer = buildTransferCredits().mClasses;
     var transferCourseName = [];
     //exclude NULL values and rename it to none+i
@@ -517,19 +587,6 @@ function gradCoreValidation_Transfer() {
             var transferTemp = transfer[i].course;
             transferTemp = lowerAndSpaceless(transferTemp);
             transferCourseName[i] = transferTemp;
-        }
-    }
-    
-    var grad = buildGradReqs();
-    var gradCourseName = [];
-    for (var i in grad) {
-        if (grad[i].course == "") {
-            var string = "mone"+String(i);
-            gradCourseName[i] = string;
-        } else {
-            var gradTemp = grad[i].course;
-            gradTemp = lowerAndSpaceless(gradTemp);
-            gradCourseName[i] = gradTemp;
         }
     }
 
@@ -544,8 +601,15 @@ function gradCoreValidation_Transfer() {
 }
 
 function gradCoreValidation_Coen() {
-    var coen = buildCoenCoreReqs();
-    
+    /*
+     *  + DISPLAYS:  a warning message if duplicate course names are found
+     *               between the "grad core" and "coen core" section.
+     *               .
+     *  + DEPENDENCY:
+     *      [] buildGradReqs()
+     *      [] buildCoenCoreReqs()
+     *      [] lowerAndSpaceless()
+     */
     var grad = buildGradReqs();
     var gradCourseName = [];
     for (var i in grad) {
@@ -559,6 +623,7 @@ function gradCoreValidation_Coen() {
         }
     }
 
+    var coen = buildCoenCoreReqs();
     //check duplicate names appearing in GradCore  
     for (var i in gradCourseName) {
         for (var index in coen) {
@@ -572,12 +637,15 @@ function gradCoreValidation_Coen() {
 
 function trackValidation() {
     /* 
-     *  + DISPLAY: a warning message of violation for 5th section.
+     *  + DISPLAYS: group of all warning message(s) for "track" section.
      *  + DEPENDENCY:
-     *      [] trackValidation_Unit():
-     *      [] trackValidation_Grad():
-     *      [] trackValidation_Core():
+     *      [] trackValidation_Unit()
+     *      [] trackValidation_Duplicate()
+     *      [] trackValidation_Transfer()
+     *      [] trackValidation_Coen()
+     *      [] trackValidation_Grad()
      */
+
     $("#messageBox5-3a").html("");
     $("#messageBox5-3b").html("");
     $("#messageBox5-3c").html("");
@@ -592,18 +660,25 @@ function trackValidation() {
 }
 
 function trackValidation_Unit() {
-    /* 
-     *  + DISPLAY: a warning message of violation for 5th section, with regards to units.
+    /*
+     *  + DISPLAYS:  a warning message if COEN unit for "track" section 
+     *               has NOT met its minimum.
      *  + DEPENDENCY:
-     *      [] trackUnitCount():
+     *      [] trackUnitCount_Coen()
      */
-    
     if (trackUnitCount_Coen() < 8) {
         $("#messageBox5-3a").html("WARNING: Your COEN minimum unit is not met.");
     }
 }
 
 function trackValidation_Duplicate() {
+    /*
+     *  + DISPLAYS:  a warning message if duplicate course names are found
+     *               within the "track" section.
+     *               .
+     *  + DEPENDENCY:
+     *      [] buildTrackUnits()
+     */
     var track = buildTrackUnits();
     var trackCourseName = [];
     //exclude NULL values and rename it to none+i
@@ -628,13 +703,28 @@ function trackValidation_Duplicate() {
 }
 
 function trackValidation_Transfer() {
-    /* 
-     *  + DISPLAY:  a warning message of violation for 5th section, 
-     *              with regards to duplicate name (appearing in TRANSFER CREDIT).
+    /*
+     *  + DISPLAYS:  a warning message if duplicate course names are found
+     *               between the "track" and "transfer credit" section.
+     *               .
      *  + DEPENDENCY:
-     *      [] buildbuildTransferCredits():
-     *      [] buildTrackUnits():
+     *      [] buildTrackUnits()
+     *      [] buildTransferCredits()
+     *      [] lowerAndSpaceless()
      */
+    var track = buildTrackUnits();
+    var trackCourseName = [];
+    //exclude NULL values and rename it to none+i
+    for (var i in track) {
+        if (track[i].course == "") {
+            var string = "mone"+String(i);
+            trackCourseName[i] = string;
+        } else {
+            var trackTemp = track[i].course;
+            trackTemp = lowerAndSpaceless(trackTemp);
+            trackCourseName[i] = trackTemp;
+        }
+    }
 
     var transfer = buildTransferCredits().mClasses;
     var transferCourseName = [];
@@ -650,20 +740,6 @@ function trackValidation_Transfer() {
         }
     }
 
-    var track = buildTrackUnits();
-    var trackCourseName = [];
-    //exclude NULL values and rename it to none+i
-    for (var i in track) {
-        if (track[i].course == "") {
-            var string = "mone"+String(i);
-            trackCourseName[i] = string;
-        } else {
-            var trackTemp = track[i].course;
-            trackTemp = lowerAndSpaceless(trackTemp);
-            trackCourseName[i] = trackTemp;
-        }
-    }
-
     for (var i in transferCourseName) {
         for (var j in trackCourseName) {
             if ((transferCourseName[i] !== "") & ((trackCourseName[j] !== "")) & (transferCourseName[i] == trackCourseName[j])) {
@@ -674,12 +750,14 @@ function trackValidation_Transfer() {
 }
 
 function trackValidation_Coen() {
-    /* 
-     *  + DISPLAY:  a warning message of violation for 5th section, 
-     *              with regards to duplicate name (appearing in GRAD CORE).
+    /*
+     *  + DISPLAYS:  a warning message if duplicate course names are found
+     *               between the "track" and "coen core" section.
+     *               .
      *  + DEPENDENCY:
-     *      [] buildCoenCoreReqs():
-     *      [] buildTrackUnits():
+     *      [] buildTrackUnits()
+     *      [] buildCoenCoreReqs()
+     *      [] lowerAndSpaceless()
      */
     
     var track = buildTrackUnits();
@@ -697,7 +775,7 @@ function trackValidation_Coen() {
     }
 
     var coen = buildCoenCoreReqs();
-
+    //check duplicate names appearing in CoenCore
     for (var index in coen) {
         for (var i in trackCourseName) {
             if (trackCourseName[i] == index) {
@@ -708,30 +786,16 @@ function trackValidation_Coen() {
 }
 
 function trackValidation_Grad() {
-    /* 
-     *  + DISPLAY:  a warning message of violation for 5th section, 
-     *              with regards to duplicate name (appearing in GRAD CORE).
+    /*
+     *  + DISPLAYS:  a warning message if duplicate course names are found
+     *               between the "track" and "grad core" section.
+     *               .
      *  + DEPENDENCY:
-     *      [] buildGradReqs():
-     *      [] buildTrackUnits():
+     *      [] buildTrackUnits()
+     *      [] buildGradReqs()
+     *      [] lowerAndSpaceless()
      */
-
     
-
-    /* temporary variables set to specify non-input */
-    var grad = buildGradReqs();
-    var gradCourseName = [];
-    for (i in grad) {
-        if (grad[i].course == "") {
-            var string = "none"+String(i);
-            gradCourseName[i] = string;
-        } else {
-            var gradTemp = grad[i].course;
-            gradTemp = lowerAndSpaceless(gradTemp);
-            gradCourseName[i] = gradTemp;
-        }
-    }
-
     var track = buildTrackUnits();
     var trackCourseName = [];
     //exclude NULL values and rename it to none+i
@@ -746,6 +810,19 @@ function trackValidation_Grad() {
         }
     }
 
+    var grad = buildGradReqs();
+    var gradCourseName = [];
+    for (i in grad) {
+        if (grad[i].course == "") {
+            var string = "none"+String(i);
+            gradCourseName[i] = string;
+        } else {
+            var gradTemp = grad[i].course;
+            gradTemp = lowerAndSpaceless(gradTemp);
+            gradCourseName[i] = gradTemp;
+        }
+    }
+
     for (var i in gradCourseName) {
         for (var j in trackCourseName) {
             if (trackCourseName[j] == gradCourseName[i]) {
@@ -756,6 +833,11 @@ function trackValidation_Grad() {
 }
 
 function totalValidation() {
+    /* 
+     *  + DISPLAY: a warning message if total overall units are under 45.
+     *  + DEPENDENCY:
+     *      [] totalUnitCount()
+     */
     $("#messageBox6-3").html("");
     if (totalUnitCount() < 45) {
         $('#messageBox6-3').html("<b>WARNING</b>: You must have at least total of 45 units");
@@ -786,9 +868,10 @@ function totalValidation() {
 
 function transferCreditsAnalysis() {
     /*
-     *  + DISPLAY: number of units for Transfer Credit listed in 1st section.
+     *  + DISPLAY: summed units and warning messages on "transfer credit" section.
      *  + dependency: 
-     *      [] buildTransferCredits(): 
+     *      [] transferCreditsValidation() 
+     *      [] transferCreditsUnitCount()
      */
     transferCreditsValidation();
     // appendInstitutionName();
@@ -798,8 +881,9 @@ function transferCreditsAnalysis() {
 
 function coenFoundationalAnalysis() {
     /*
-     *  + DISPLAY: number of units summed for checked item(s), listed in 2nd section.
-     *  + DEPENDENCY: 
+     *  + DISPLAY: summed units and warning messages on "coen foundational" section.
+     *  + dependency: 
+     *      [] coenFoundationalValidation() 
      *      [] coenFoundationalUnitCount()
      */
 
@@ -809,9 +893,9 @@ function coenFoundationalAnalysis() {
 
 function coenCoreAnalysis() {
     /*
-     *  + DISPLAY: number of units for checked item(s), listed in 3rd section.
-     *  + DEPENDENCY:
-     *      []  coenCoreUnitCount():
+     *  + DISPLAY: summed units on "coen core" section.
+     *  + dependency: 
+     *      [] coenCoreUnitCount()
      */
     // $('#messageBox3-1').html("TOTAL UNITS = " + coenCoreUnitCount());
     $('#messageBox3-2').html("TOTAL UNITS FOR COEN CORE = " + coenCoreUnitCount());
@@ -819,22 +903,26 @@ function coenCoreAnalysis() {
 
 function gradCoreAnalysis() {
     /*
-     *  + DISPLAY: total number of units for selected item(s), listed in 4th section.
-     *  + DEPENDENCY:
-     *      []  gradCoreUnitCount():
+     *  + DISPLAY: summed units and warning messages on "grad core" section.
+     *  + dependency: 
+     *      [] gradCoreValidation()
+     *      [] gradCoreUnitCount()
      */
+
     gradCoreValidation();
     // $('#messageBox4-1').html("TOTAL UNITS = " + gradCoreUnitCount());
     $('#messageBox4-2').html("TOTAL UNITS FOR GRAD CORE = " + gradCoreUnitCount());
 }
 
 function trackAnalysis() {
-    /* 
-     *  + DISPLAY: number of units for listed item(s), listed in 5th section.
-     *  + DEPENDENCY:
-     *      []  trackUnitCount():
-     *      []  trackValidation():
+    /*
+     *  + DISPLAY: summed units and warning messages on "track" section.
+     *  + dependency: 
+     *      [] trackValidation()
+     *      [] trackUnitCount_Coen()
+     *      [] trackUnitCount()
      */
+
     trackValidation();
     // $('#messageBox5-1').html("TOTAL UNITS = " + trackUnitCount());
     $('#messageBox5-2a').html("TOTAL UNITS FOR COEN IN TRACK = " + trackUnitCount_Coen());
@@ -843,9 +931,10 @@ function trackAnalysis() {
 
 function totalUnitAnalysis() {
     /*
-     *  + DISPLAY: total number of units for listed item(s), listed in 6th section.
-     *  + DEPENDENCY:
-     *      []  totalUnitCount():
+     *  + DISPLAY: summed units and warning messages for "total" section.
+     *  + dependency: 
+     *      [] totalValidation()
+     *      [] totalUnitCount());
      */
     totalValidation();
     $('#messageBox6-1').html("TOTAL OF TOTAL UNITS = " + totalUnitCount());

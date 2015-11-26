@@ -48,7 +48,7 @@
                     <div class='table-cell .col-xs-6 .col-md-3'><h4>First Name</h4></div>
                     <div class='table-cell .col-xs-6 .col-md-3'><h4>Last Name</h4></div>
                     <div class='table-cell .col-xs-6 .col-md-3'><h4>Student ID</h4></div>
-                    <div class='table-cell .col-xs-6 .col-md-3'><h4>E-mail (school)</h4></div>
+                    <div class='table-cell .col-xs-6 .col-md-3'><h4>Passphrase</h4></div>
                 </div> <!-- /table-heading -->
                 <div class='table-row container-fluid'>
                     <div class='table-cell'>
@@ -61,7 +61,7 @@
                         <input type='text' name='stdid' class='capitalize' placeholder='W082391'>
                     </div> <!-- /table-cell -->
                     <div class='table-cell'>
-                        <input type='text' name='email' placeholder='i.e. jdoe@scu.edu'>
+                        <input type='password' name='password' placeholder='******'>
                     </div> <!-- /table-cell -->
                 </div> <!-- /table-row -->
             </div><!-- /table -->
@@ -86,7 +86,7 @@
                 <div class='table-heading container-fluid'>
                     <div class='table-cell'><h4>Selection</h4></div>
                     <div class='table-cell'><h4>Student Status</h4></div>
-                    <div class="table-cell"><h4>Institution Name</h4></div>
+                    <div class="table-cell"></div>
                     <div class='table-cell'><h4>Maximum Units Allowed</h4></div>
                 </div> <!-- /table-heading -->
                 
@@ -94,7 +94,6 @@
                     <div class='table-cell'><input type='radio' name='where' value='transfer' checked></div>
                     <div class='table-cell'>Transfer Students</div>
                     <div class="table-cel">
-                        <input type='text' name='inst-for-tc-p'/>
                     </div>
                     <div class='table-cell'><h5>9 quarter units</h5></div>
                 </div> <!-- /table-row -->
@@ -128,10 +127,10 @@
                 
                 <div class='table container' id='transferTable'>
                     <div class='table-heading container-fluid'>
-                        <div class='table-cell'>Course</div>
-                        <div class='table-cell'>Institution</div>
-                        <div class='table-cell'>Grade</div>
-                        <div class='table-cell'>Quarter Units</div>
+                        <div class='table-cell'><h4>Course</h4></div>
+                        <div class='table-cell'><h4>Institution</h4></div>
+                        <div class='table-cell'><h4>Grade</h4></div>
+                        <div class='table-cell'><h4>Quarter Units</h4></div>
                     </div> <!-- /table-heading -->
                 </div> <!-- /table -->
             </div> <!-- /tier3 -->
@@ -373,7 +372,7 @@
                 <div class='table-row container-fluid'>
                     <div class='table-cell'>Emerging Topics in Engineering</div>
                     <div class='table-cell'>
-                        <input type="text" name='req_emerg' class='lowercase no-white-space' placeholder='Type a class like "amth367", or double-click' style='width:320px;' value=''/>
+                        <input type="text" name='req_emerg'placeholder='Type a class like "amth367", or double-click' style='width:320px;' value=''/>
                     </div>
                     <div class='table-cell'>
                         <input type="text" name='req_emerg_unit' style='width:100px;' value=''/>
@@ -383,7 +382,7 @@
                 <div class='table-row container-fluid'>
                     <div class='table-cell'>Engineering and Business/Entrepreneurship</div>
                     <div class='table-cell'>
-                        <input type="text" name='req_business' class='lowercase no-white-space' placeholder='Type a class like "amth367", or double-click' style='width:320px;' value=''/> 
+                        <input type="text" name='req_business' placeholder='Type a class like "amth367", or double-click' style='width:320px;' value=''/> 
                     </div>
                     <div class='table-cell'>
                         <input type="text" name='req_business_unit' style='width:100px;' value=''/> 
@@ -395,7 +394,7 @@
                         Engineering and Society
                     </div>
                     <div class='table-cell'>
-                       <input type="text" name='req_society' class='lowercase no-white-space' placeholder='Type a class like "amth351", or double-click' style='width:320px;' value=''/> 
+                       <input type="text" name='req_society' placeholder='Type a class like "amth351", or double-click' style='width:320px;' value=''/> 
                     </div>
                     <div class='table-cell'>
                         <input type="text" name='req_society_unit' style='width:100px;' value=''/> 
@@ -491,6 +490,11 @@
                     <div class="btn-group" role="group">
                         <button type='submit' class='btn btn-primary btn-lg' onclick='saveData()'>Save</button>
                     </div> <!-- /btn-group -->
+                    
+                    <div class="btn-group" role="group">
+                        <button type="submit" class="btn btn-success btn-lg" onclick='shareLink()'>Share</button>
+                    </div> <!-- /btn-group -->
+                    
                     <div class="btn-group" role="group">
                         <button type="submit" class="btn btn-danger btn-lg" onclick='printData()'>Print</button>
                     </div> <!-- /btn-group -->
