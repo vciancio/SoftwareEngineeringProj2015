@@ -88,27 +88,30 @@ function lowerAndSpaceless(element) {
  *  FUNCTIONS:    OVERVIEW OF 'UNIT COUNT'                                               *
  * -------------------------------------------------------------------------------- *
  *  - transferCreditsUnitCount()
- *      + RETURNS:  number of units for listed in 1st section.
+ *      + RETURNS:  total number of units in "transfer credit" section.
  *
  *  - coenFoundationalUnitCount()
- *      + RETURNS:  number of units for checked item(s), listed in 2nd section.
+ *      + RETURNS:  total number of units in "coen foundational" section.
  *  
  *  - coenCoreUnitCount()
- *      + RETURNS:  number of units for checked item(s), listed in 3rd section.
+ *      + RETURNS:  total number of units for checked item(s) in "coen core" section.
  *
  *  - gradCoreUnitCount()
- *      + RETURN:  number of units for selected item(s), listed in 4th section.
+ *      + RETURN:  total number of units in "grad core" section.
  *
  *  - trackUnitCount()
- *      + RETURNS:  number of units for listed item(s), listed in 5th section.
+ *      + RETURNS:  total number of units in "track" section.
+ *
+ *  - trackUnitCount_Coen()
+ *      + RETURNS:  total number of COEN units in "track" section.
  *
  *  - totalUnitCount()
- *      + RETURNS:  number of units for 1-5 sections, in 6th section.
+ *      + RETURNS:  total number of units in all sections.
  */
 
 function transferCreditsUnitCount() {
     /*
-     *  + RETURNS:  number of units for "transfer credit" section.
+     *  + RETURNS:  total number of units in "transfer credit" section.
      *  + DEPENDENCY:
      *      [] buildTransferCredits()
      */
@@ -122,7 +125,7 @@ function transferCreditsUnitCount() {
 
 // function coenFoundationalUnitCount() {
 //     /*
-//      *  + RETURNS:  number of units for checked item(s), listed in 2nd section.
+//      *  + RETURNS:  total number of units in "coen foundational" section.
 //      *  + DEPENDENCY:
 //      *      [] buildFoundationalCourses()
 //      */
@@ -156,7 +159,7 @@ function coenCoreUnitCount() {
 
 function gradCoreUnitCount() {
     /*
-     *  + RETURN:  total number of units listed in 4th section.
+     *  + RETURN:  total number of units in "grad core" section.
      *  + DEPENDENCY:
      *      [] buildGradReqs()
      */
@@ -170,7 +173,7 @@ function gradCoreUnitCount() {
 
 function trackUnitCount() {
     /*
-     *  + RETURNS:  total number of units listed in 5th section.
+     *  + RETURNS:  total number of units in "track" section.
      *  + DEPENDENCY:
      *      [] buildTrackUnits():
      */
@@ -184,7 +187,7 @@ function trackUnitCount() {
 
 function trackUnitCount_Coen() {
     /*
-     *  + RETURNS:  number of COEN units, listed in 5th section.
+     *  + RETURNS:  total number of COEN units in "track" section.
      *  + DEPENDENCY:
      *      [] buildTrackUnits()
      *      [] lowerAndSpaceless()
@@ -214,7 +217,7 @@ function trackUnitCount_Coen() {
 
 function totalUnitCount() {
     /*
-     *  + RETURNS: total overall number of units.
+     *  + RETURNS: total number of units in all sections.
      *  + DEPENDENCY:
      *      [] transferCreditsUnitCount():
      *      [] coenFoundationalUnitCount():
@@ -235,28 +238,32 @@ function totalUnitCount() {
 /* -------------------------------------------------------------------------------- *
  *  FUNCTIONS: OVERVIEW OF 'VALIDATION'                                               *
  * -------------------------------------------------------------------------------- *
- *  1. transferCreditsValidation()
- *      + DISPLAY: a warning message of violation for 1st section.
+ *  - isSCU()
+ *      + RETURNS:  number of maximum units, allowed for "transfer credit" section
+ * 
+ *  - transferCreditsValidation()
+ *      + DISPLAY:  group of all warning message(s) for "transfer credit" section
  *
- *  2. coenFoundationalValidation()
- *      + DISPLAY: a warning message of violation for 2nd section.
+ *  - coenFoundationalValidation()
+ *      + DISPLAY:  a warning message for "coen foundational" section.
  *
- *  3. coenCoreValidation()
- *      + DISPLAY: a warning message of violation for 3rd section.
+ *  - coenCoreValidation()
+ *      + DISPLAY:  a warning message for "coen core" section.
  *
- *  4. gradCoreValidation()
- *      + DISPLAY: a warning message of violation for 4th section.
+ *  - gradCoreValidation()
+ *      + DISPLAY:  group of all warning message(s) for "grad core" section.
  *
- *  5. trackValidation()
- *      + DISPLAY: a warning message of violation for 5th section.
+ *  - trackValidation()
+ *      + DISPLAY:  group of all warning message(s) for "track" section.
  *
- *  6. totalUnitValidation()
- *      + DISPLAY: a warning message of violation for 6th section.
+ *  - totalUnitValidation()
+ *      + DISPLAY:  a warning message if total overall units are under 45.
  */
+
 
 function isSCU() {
     /*
-     *  + RETURNS:  number of maximum units, allowed for 1st section.
+     *  + RETURNS:  number of maximum units, allowed for "transfer credit" section.
      *  + NOTE: undergraduate --> 16
      *          accelerated --> 20
      *          transfer --> 9
@@ -276,7 +283,7 @@ function isSCU() {
 
 function transferCreditsValidation() {
     /* 
-     *  + DISPLAY: group of all warning message(s) for 1st section.
+     *  + DISPLAY: group of all warning message(s) for "transfer credit" section.
      *  + DEPENDENCY:
      *      [] transferCreditsValidation_Unit()
      *      [] transferCreditsValidation_Duplicate()
@@ -460,7 +467,7 @@ function transferCreditsValidation_Track() {
 
 function coenFoundationalValidation() {
      
-    /*  + DISPLAY: a warning message of violation for 2nd section.
+    /*  + DISPLAY: a warning message of violation for "coen foundational" section.
      *  + DEPENDENCY:
      *      [] buildFoundationalCourses():
      */
@@ -492,7 +499,7 @@ function coenCoreValidation() {
 
 function gradCoreValidation() {
     /* 
-     *  + DISPLAY: group of all warning message(s) for "grad core" section.
+     *  + DISPLAY:  group of all warning message(s) for "grad core" section.
      *  + DEPENDENCY:
      *      [] gradCoreValidation_Unit()
      *      [] gradCoreValidation_Duplicate()
@@ -832,6 +839,7 @@ function trackValidation_Grad() {
     }
 }
 
+
 function totalValidation() {
     /* 
      *  + DISPLAY: a warning message if total overall units are under 45.
@@ -848,22 +856,22 @@ function totalValidation() {
  *  FUNCTIONS:  OVERVIEW OF 'ANALYSIS'                                               *
  * -------------------------------------------------------------------------------- *
  *  1. transferCreditsAnalysis()
- *      + DISPLAY: number of units for Transfer Credit listed in 1st section.
+ *      + DISPLAY: summed units and warning messages on "transfer credit" section.
  *
  *  2. coenFoundationalAnalysis()
- *      + DISPLAY: display number of units summed for checked item(s), listed in 2nd section.
+ *      + DISPLAY: summed units and warning messages on "coen foundational" section.
  *  
  *  3. coenCoreAnalysis()
- *      + DISPLAY: display number of units for checked item(s), listed in 3rd section.
+ *      + DISPLAY: summed units on "coen core" section.
  *
  *  4. gradCoreAnalysis()
- *      + DISPLAY: total number of units for selected item(s), listed in 4th section.
+ *      + DISPLAY: summed units and warning messages on "grad core" section.
  *
  *  5. trackAnalysis()
- *      + DISPLAY: total number of units for listed item(s), listed in 5th section.
+ *      + DISPLAY: summed units and warning messages on "track" section.
  *
  *  6. totalUnitAnalysis()
- *      + DISPLAY: total number of units for listed item(s), listed in 6th section.
+ *      + DISPLAY: summed units and warning messages for "total" section.
  */
 
 function transferCreditsAnalysis() {
