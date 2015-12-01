@@ -314,7 +314,7 @@ function callLoadServer(name, stdid, email, callback){
 }
 
 function printData(){
-    saveData();
+    // saveData();
     var obj = buildDataObj();
     var url = BASE_URL + "frontend/form.html?name=" + obj.mForm.mName + "&stdid=" + obj.mForm.stdid;
     var win = window.open(url, '_blank');
