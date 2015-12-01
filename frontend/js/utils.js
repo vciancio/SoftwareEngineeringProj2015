@@ -210,14 +210,18 @@ function completeUnitAnalysis(){
 }
 
 function processSaveResponse(result){
-    var json = JSON.parse(result);
-    if(json.error == "true"){
-        console.log("Couldn't save");
-        alert("Your Form couldn't be saved.\n" + json.message);
-    } else {
+    try{
+        var json = JSON.parse(result);
+        if(json.error == "true"){
+            console.log("Couldn't save");
+            alert("Your Form couldn't be saved.\n" + json.message);
+            return;
+        } 
+    } catch(err){
         console.log("Could Save");
         alert("Your form was saved successfully!");   
     }
+        
     console.log(response);
 }
 
