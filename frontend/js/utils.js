@@ -1,5 +1,5 @@
 // var BASE_URL = "http://linux.students.engr.scu.edu/~vciancio/Software_Final"
-var BASE_URL = "../"
+var BASE_URL = "../";
 
 
 /* JSON REQUEST / SERVER HANDLING */
@@ -29,6 +29,11 @@ function setInputByName(name, value){
 
 function getPass(){
     return $('input[name="password"]').val();
+}
+
+function shareLink(){
+    var obj = buildDataObj();
+    alert("Share the printable version of this form with this link.\n\n" + "http://students.engr.scu.edu/~vciancio/Software_Final/frontend/form.html?name=" + obj.mForm.mName + "&stdid=" + obj.mForm.stdid)
 }
 
 function buildTransferCredits(){

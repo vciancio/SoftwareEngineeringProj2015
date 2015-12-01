@@ -21,6 +21,7 @@ function setStudentType(type){
 
     var html = "<div class='table-cell'><h4>" + text + "</h4></div><div class='table-cell'><h5>Max Units: " + units + " quarter units</h5></div>";
     $('#student_type').html(html);
+    return units;
 }
 
 function processPrintLoadResponse(result){
@@ -42,7 +43,8 @@ function processPrintLoadResponse(result){
     removeRow_TransferCredits();
 
     var student_type = obj.transferCredits.student_type;
-    setStudentType(student_type);
+    maxtransfer = setStudentType(student_type);
+
 
     //Remove the Row Auto-Generated at the beginning by onLoad
     removeRow_TrackUnits();
