@@ -15,41 +15,43 @@ function generatePath($userid, $name){
 }
 
 function readRawJSON($path){
-  return file_get_contents($path);
+  $rawJson = file_get_contents($path);
+  $json = json_decode($rawJson);
+  return $rawJson;
 }
 
-function writeJson($path, $json){
-/*  if(is_writable(getcwd()."/db/")){
-    echo (getcwd()."/db/")." is Writable!\n";
-  }
-  else{
-    echo (getcwd()."/db/")." is not writable. gg rip\n";
+function writeJson($path, $rawJson){
+  $file = null;
+  $json = json_decode($rawJson);
+  if(file_exists($path)){
+    $rawTempJson = file_get_contents($path);
+    $jsonTemp = json_decode($rawTempJson);
+    $passes = strcmp($jsonTemp->pass, $json->pass);
+    if($passes){
+      echo generateError("Password was Incorrect");
+      return;
+    }
   }
 
-  if(file_exists($path)){
-    echo $path." exists!\n";
-  }
-  else{
-    echo $path." doesn't exist. Creating File.\n";
-  }
- */
-  $file = null;
   if(!$file = fopen($path, 'w')){
     echo generateError("Cannot open file");
   }
-  else{
-    fwrite($file,$json);
+  else {
+    fwrite($file,$rawJson);
     fclose($file); 
     echo generateSuccess("", "Saved the File");
   }
 }
 
 function handle_get(){
-  if($_GET["name"] && $_GET["userid"] && $_GET["student_email"]){
+  if($_GET["name"] && $_GET["userid"]){
     $userName = strtolower(str_replace(' ', '_', $_GET["name"]));
     $filePath = generatePath(strtolower($_GET["userid"]), $userName);
     if(file_exists($filePath)){
-      echo generateSuccess(readRawJSON($filePath), "");
+      $rawJson = readRawJSON($filePath);
+      $json = json_decode($rawJson);
+      $json->pass = "nicetrytroll";
+      echo generateSuccess(json_encode($json), "");
     }
     else{
       echo generateError("Student not Found");
@@ -61,8 +63,8 @@ function handle_post(){
   if($_GET["name"] && $_GET["userid"]){
     $userName = strtolower(str_replace(' ', '_', $_GET["name"]));
     $filePath = generatePath(strtolower($_GET["userid"]), $userName);
-    $json = file_get_contents('php://input'); 
-    writeJson($filePath, $json); 
+    $rawJson = file_get_contents('php://input');    
+    writeJson($filePath, $rawJson);
   }
   else{
     echo generateError("Error while generating / saving");
@@ -80,7 +82,4 @@ switch ($method) {
       handle_get(); 
       break;
 }
-
-//echo var_dump($_GET)."/n";
-//echo var_dump($_POST);
 ?>

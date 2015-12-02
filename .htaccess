@@ -1,0 +1,2 @@
+AddType application/x-httpd-php-cgi .php
+Action application/x-httpd-php-cgi /~vciancio/Software_Final_Backup/cgi-bin/php-cgi.cgi

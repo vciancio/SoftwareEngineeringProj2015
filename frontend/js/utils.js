@@ -1,4 +1,5 @@
-var BASE_URL = "http://linux.students.engr.scu.edu/~vciancio/Software2015"
+// var BASE_URL = "http://linux.students.engr.scu.edu/~vciancio/Software_Final"
+var BASE_URL = "../";
 
 
 /* JSON REQUEST / SERVER HANDLING */
@@ -24,6 +25,15 @@ function setCheckboxValueById(id, value){
 
 function setInputByName(name, value){
     $('input[name="'+name+'"]').val(value);
+}
+
+function getPass(){
+    return $('input[name="password"]').val();
+}
+
+function shareLink(){
+    var obj = buildDataObj();
+    alert("Share the printable version of this form with this link.\n\n" + "http://students.engr.scu.edu/~vciancio/Software_Final/frontend/form.html?name=" + obj.mForm.mName + "&stdid=" + obj.mForm.stdid)
 }
 
 function buildTransferCredits(){
@@ -123,7 +133,6 @@ function buildDataObj() {
 
     json.mName = $('input[name="fname"]').val() + " " + $('input[name="lname"]').val();
     json.stdid = $('input[name="stdid"]').val();
-    json.email = $('input[name="email"]').val();
     
     json.transferCredits = buildTransferCredits();
     json.foundationCourses = buildFoundationalCourses();
@@ -131,17 +140,88 @@ function buildDataObj() {
     json.gradReqs = buildGradReqs();
     json.trackUnits = buildTrackUnits();
     obj.mForm = json;
-
+    obj.pass = getPass();
     return obj;
 }
 
-function processSaveResponse(result){
-    var json = JSON.parse(result);
-    if(!json.error){
-        alert("Your Form was saved successfully!");
-    } else {
-        alert("Your Form couldn't be saved. \n" + json.message);
+function setStudentType(obj){
+    //Set the Student Type
+    $('input[value="'+ obj.transferCredits.student_type + '"]').prop('checked', true);
+    console.log('input[value="'+ obj.transferCredits.student_type + '"]');
+}
+
+function fillInTrackUnits(obj){
+    //Populate the Track Unit Corses
+    for(var i=0; i < obj.trackUnits.length; i++){
+        var mClass = obj.trackUnits[i];
+        addRow_TrackUnits(mClass.course, mClass.credits);
     }
+}
+
+function fillInTransferCredits(obj){
+    //Populate the Approved Transfer Credits
+    console.log(obj.transferCredits);
+    for(var i=0; i<obj.transferCredits.mClasses.length; i++){
+        var mClass = obj.transferCredits.mClasses[i];
+        console.log(mClass);
+        addRow_TransferCredits(mClass.course, mClass.institution, mClass.grade, mClass.credits);
+    }
+}
+
+function fillInFoundational(obj){
+    //Populate the Foundational Courses
+    var foundationKeys = Object.keys(obj.foundationCourses);
+    for(var i=0; i < foundationKeys.length; i++){
+        var courseNumber = foundationKeys[i];
+        var value = obj.foundationCourses[courseNumber];
+        setSelectionValueByName(courseNumber, value);
+    }
+}
+
+function fillInCoenReq(obj){
+    //Populate the COEN Requirements
+    var coenReqsKeys = Object.keys(obj.coenReqs);
+    for(var i=0; i<coenReqsKeys.length; i++){
+        var courseNumber = coenReqsKeys[i];
+        var value = obj.coenReqs[courseNumber];
+        setSelectionValueByName(courseNumber, value);
+    }
+}
+
+function fillInGradCore(obj){
+    //Populate the Graduate Core Requirements
+    var gradCoreKeys = Object.keys(obj.gradReqs);
+    for(var i=0; i<gradCoreKeys.length; i++){
+        var requirement = gradCoreKeys[i];
+        var value = obj.gradReqs[requirement].course;
+        setInputByName(requirement, value);
+        var units = obj.gradReqs[requirement].unit;
+        setInputByName(requirement + "_unit", units);
+    }
+}
+
+function completeUnitAnalysis(){
+    transferCreditsAnalysis();
+    coenFoundationalAnalysis();
+    coenCoreAnalysis();
+    gradCoreAnalysis();
+    trackAnalysis();
+    totalUnitAnalysis();
+}
+
+function processSaveResponse(result){
+    try{
+        var json = JSON.parse(result);
+        if(json.error == "true"){
+            console.log("Couldn't save");
+            alert("Your Form couldn't be saved.\n" + json.message);
+            return;
+        } 
+    } catch(err){
+        console.log("Could Save");
+        alert("Your form was saved successfully!");   
+    }
+        
     console.log(response);
 }
 
@@ -157,51 +237,28 @@ function processLoadResponse(result){
     console.log(obj);
     removeRow_TransferCredits();
 
-    //Set the Student Type
-    $('input[value="'+ obj.transferCredits.student_type + '"]').prop('checked', true);
-    console.log('input[value="'+ obj.transferCredits.student_type + '"]');
+    //Whether Transfer, Accelerated, etc.
+    setStudentType(obj)
 
-    //Populate the Approved Transfer Credits
-    for(var i=0; i<obj.transferCredits.mClasses.length; i++){
-        var mClass = obj.transferCredits.mClasses[i];
-        addRow_TransferCredits(mClass.course, mClass.institution, mClass.grade, mClass.credits);
-    }
-
+    //Remove the Row Auto-Generated at the beginning by onLoad
     removeRow_TrackUnits();
 
-    //Populate the Track Unit Corses
-    for(var i=0; i < obj.trackUnits.length; i++){
-        var mClass = obj.trackUnits[i];
-        addRow_TrackUnits(mClass.course, mClass.credits);
-    }
+    //Fill in the Track Units
+    fillInTrackUnits(obj);
 
-    //Populate the Foundational Courses
-    var foundationKeys = Object.keys(obj.foundationCourses);
-    for(var i=0; i < foundationKeys.length; i++){
-        var courseNumber = foundationKeys[i];
-        var value = obj.foundationCourses[courseNumber];
-        setSelectionValueByName(courseNumber, value);
-    }
+    //Fill in the Transfer Credits
+    fillInTransferCredits(obj);
 
-    //Populate the COEN Requirements
-    var coenReqsKeys = Object.keys(obj.coenReqs);
-    for(var i=0; i<coenReqsKeys.length; i++){
-        var courseNumber = coenReqsKeys[i];
-        var value = obj.coenReqs[courseNumber];
-        setSelectionValueByName(courseNumber, value);
-    }
+    //Fill in the COEN Requirements
+    fillInCoenReq(obj);
 
-    //Populate the Graduate Core Requirements
-    var gradCoreKeys = Object.keys(obj.gradReqs);
-    for(var i=0; i<gradCoreKeys.length; i++){
-        var requirement = gradCoreKeys[i];
-        var value = obj.gradReqs[requirement].course;
-        setInputByName(requirement, value);
-        var units = obj.gradReqs[requirement].unit;
-        setInputByName(requirement + "_unit", units);
-    }
+    //Fill in the Foundational Core
+    fillInFoundational(obj);
 
-    totalUnitAnalysis();
+    //Fill in the Grad Core
+    fillInGradCore(obj);
+
+    completeUnitAnalysis();
 }
 
 /*
@@ -210,7 +267,7 @@ function processLoadResponse(result){
  */
 function saveData(){
     var obj = buildDataObj();
-    var url = BASE_URL + "/api/form.php?name=" + obj.mForm.mName + "&userid=" + obj.mForm.stdid + "&student_email=" + obj.mForm.email; 
+    var url = BASE_URL + "api/form.php?name=" + obj.mForm.mName + "&userid=" + obj.mForm.stdid; 
     console.log(url);
 
     $.ajax({
@@ -220,10 +277,8 @@ function saveData(){
         dataType: "text",
         success: function (result) {
             switch (result) {
-                case true:
-                    processSaveResponse(result);
-                  break;
               default:
+                  processSaveResponse(result);
                   console.log(result);
           }
       },
@@ -244,7 +299,7 @@ function loadData(){
  */
 function callLoadServer(name, stdid, email, callback){
     var obj = buildDataObj();
-    var url = BASE_URL + "/api/form.php?name=" + name + "&userid=" + stdid + "&student_email=" + email; 
+    var url = BASE_URL + "api/form.php?name=" + name + "&userid=" + stdid; 
     $.ajax({
         url: url,
         type: "GET",
@@ -253,7 +308,6 @@ function callLoadServer(name, stdid, email, callback){
             switch (result) {
                 default:
                 callback(result);
-                console.log(result);
             }
         },
         error: function (xhr, ajaxOptions, thrownError) {
@@ -264,9 +318,9 @@ function callLoadServer(name, stdid, email, callback){
 }
 
 function printData(){
-    saveData();
+    // saveData();
     var obj = buildDataObj();
-    var url = BASE_URL + "/frontend/form.html?name=" + obj.mForm.mName + "&stdid=" + obj.mForm.stdid + "&email=" + obj.mForm.email;
+    var url = BASE_URL + "frontend/form.html?name=" + obj.mForm.mName + "&stdid=" + obj.mForm.stdid;
     var win = window.open(url, '_blank');
     win.focus();
 }

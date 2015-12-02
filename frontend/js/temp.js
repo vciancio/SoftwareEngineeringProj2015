@@ -281,6 +281,22 @@ function isSCU() {
     return maxtransfer;
 }
 
+<<<<<<< HEAD
+=======
+/*
+function appendInstitutionName() {
+    var where = $('input[name="where"]:checked').val();
+    var transfer = buildTransferCredits().mClasses;
+    
+    if (where == 'transfer') {
+        for (i in transfer) {
+            transfer[i].institution = $('input[name="inst-for-tc-p"]').val();
+        }
+    }
+}
+*/
+
+>>>>>>> develop
 function transferCreditsValidation() {
     /* 
      *  + DISPLAY: group of all warning message(s) for "transfer credit" section.
@@ -319,6 +335,7 @@ function transferCreditsValidation_Unit() {
 }
 
 function transferCreditsValidation_Duplicate() {
+<<<<<<< HEAD
     /*
      *  + DISPLAYS:  a warning message if duplicate course names are found
      *               within the "transfer credit" section.
@@ -326,6 +343,9 @@ function transferCreditsValidation_Duplicate() {
      *  + DEPENDENCY:
      *      [] buildTransferCredits()
      */
+=======
+
+>>>>>>> develop
     var transfer = buildTransferCredits().mClasses;
     var transferCourseName = [];
     //exclude NULL values and rename it to none+i
@@ -350,6 +370,7 @@ function transferCreditsValidation_Duplicate() {
 }
 
 function transferCreditsValidation_Coen() {
+<<<<<<< HEAD
     /*
      *  + DISPLAYS:  a warning message if duplicate course names are found
      *               between the "transfer credit" and "coen core" section.
@@ -359,6 +380,9 @@ function transferCreditsValidation_Coen() {
      *      [] buildCoenCoreReqs()
      *      [] lowerAndSpaceless()
      */
+=======
+    
+>>>>>>> develop
     var transfer = buildTransferCredits().mClasses;
     var transferCourseName = [];
     //exclude NULL values and rename it to none+i
@@ -385,6 +409,7 @@ function transferCreditsValidation_Coen() {
 }
 
 function transferCreditsValidation_Grad() {
+<<<<<<< HEAD
     /*
      *  + DISPLAYS:  a warning message if duplicate course names are found
      *               between the "transfer credit" and "grad core" section.
@@ -394,6 +419,9 @@ function transferCreditsValidation_Grad() {
      *      [] buildGradReqs()
      *      [] lowerAndSpaceless()
      */
+=======
+    
+>>>>>>> develop
     var transfer = buildTransferCredits().mClasses;
     var transferCourseName = [];
     //exclude NULL values and rename it to none+i
@@ -596,6 +624,22 @@ function gradCoreValidation_Transfer() {
             transferCourseName[i] = transferTemp;
         }
     }
+<<<<<<< HEAD
+=======
+    
+    var grad = buildGradReqs();
+    var gradCourseName = [];
+    for (var i in grad) {
+        if (grad[i].course == "") {
+            var string = "mone"+String(i);
+            gradCourseName[i] = string;
+        } else {
+            var gradTemp = grad[i].course;
+            gradTemp = lowerAndSpaceless(gradTemp);
+            gradCourseName[i] = gradTemp;
+        }
+    }
+>>>>>>> develop
 
     //check duplicate names appearing in GradCore  
     for (var i in transferCourseName) {
@@ -608,6 +652,7 @@ function gradCoreValidation_Transfer() {
 }
 
 function gradCoreValidation_Coen() {
+<<<<<<< HEAD
     /*
      *  + DISPLAYS:  a warning message if duplicate course names are found
      *               between the "grad core" and "coen core" section.
@@ -617,6 +662,10 @@ function gradCoreValidation_Coen() {
      *      [] buildCoenCoreReqs()
      *      [] lowerAndSpaceless()
      */
+=======
+    var coen = buildCoenCoreReqs();
+    
+>>>>>>> develop
     var grad = buildGradReqs();
     var gradCourseName = [];
     for (var i in grad) {
@@ -630,7 +679,10 @@ function gradCoreValidation_Coen() {
         }
     }
 
+<<<<<<< HEAD
     var coen = buildCoenCoreReqs();
+=======
+>>>>>>> develop
     //check duplicate names appearing in GradCore  
     for (var i in gradCourseName) {
         for (var index in coen) {
@@ -746,6 +798,23 @@ function trackValidation_Transfer() {
             transferCourseName[i] = transferTemp;
         }
     }
+<<<<<<< HEAD
+=======
+
+    var track = buildTrackUnits();
+    var trackCourseName = [];
+    //exclude NULL values and rename it to none+i
+    for (var i in track) {
+        if (track[i].course == "") {
+            var string = "mone"+String(i);
+            trackCourseName[i] = string;
+        } else {
+            var trackTemp = track[i].course;
+            trackTemp = lowerAndSpaceless(trackTemp);
+            trackCourseName[i] = trackTemp;
+        }
+    }
+>>>>>>> develop
 
     for (var i in transferCourseName) {
         for (var j in trackCourseName) {
@@ -782,7 +851,11 @@ function trackValidation_Coen() {
     }
 
     var coen = buildCoenCoreReqs();
+<<<<<<< HEAD
     //check duplicate names appearing in CoenCore
+=======
+
+>>>>>>> develop
     for (var index in coen) {
         for (var i in trackCourseName) {
             if (trackCourseName[i] == index) {
@@ -817,6 +890,12 @@ function trackValidation_Grad() {
         }
     }
 
+<<<<<<< HEAD
+=======
+    
+
+    /* temporary variables set to specify non-input */
+>>>>>>> develop
     var grad = buildGradReqs();
     var gradCourseName = [];
     for (i in grad) {
@@ -830,6 +909,23 @@ function trackValidation_Grad() {
         }
     }
 
+<<<<<<< HEAD
+=======
+    var track = buildTrackUnits();
+    var trackCourseName = [];
+    //exclude NULL values and rename it to none+i
+    for (var i in track) {
+        if (track[i].course == "") {
+            var string = "mone"+String(i);
+            trackCourseName[i] = string;
+        } else {
+            var trackTemp = track[i].course;
+            trackTemp = lowerAndSpaceless(trackTemp);
+            trackCourseName[i] = trackTemp;
+        }
+    }
+
+>>>>>>> develop
     for (var i in gradCourseName) {
         for (var j in trackCourseName) {
             if (trackCourseName[j] == gradCourseName[i]) {
@@ -839,7 +935,10 @@ function trackValidation_Grad() {
     }
 }
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> develop
 function totalValidation() {
     /* 
      *  + DISPLAY: a warning message if total overall units are under 45.
